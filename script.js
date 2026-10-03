@@ -1,16 +1,13 @@
+// ========================================================
+// MINHAS FINANÇAS
+// SCRIPT COMPLETO LIMPO
+// ========================================================
+
 const SUPABASE_URL =
     "https://ibqrxueyxrresvarfggm.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_K9BnZiIWoPCsxcP93FHL7g_vswpNF8r";
-
-// ========================================================
-// MINHAS FINANÇAS
-// SCRIPT COMPLETO
-// ========================================================
-
-// COLOQUE AQUI OS MESMOS DADOS QUE JÁ ESTAVAM NO SEU SCRIPT
-
+    "sb_publishable_K9BnZiIWoPCsxcP93FHL7g_vswpNF8r"
 
 const supabaseClient = supabase.createClient(
     SUPABASE_URL,
@@ -28,13 +25,14 @@ let categoriasCache = [];
 let tagsCache = [];
 let relacoesTagsCache = [];
 
+let contaEditandoId = null;
 let transacaoEditandoId = null;
+let contaExtratoId = null;
 
-let dataAtual = new Date();
+const dataAtual = new Date();
 
 let mesAtual = dataAtual.getMonth();
 let anoAtual = dataAtual.getFullYear();
-
 
 const meses = [
     "Janeiro",
@@ -102,7 +100,8 @@ function hoje() {
 
     const data = new Date();
 
-    const ano = data.getFullYear();
+    const ano =
+        data.getFullYear();
 
     const mes =
         String(
@@ -141,6 +140,12 @@ function formatarData(data) {
 }
 
 
+function numero(valor) {
+
+    return Number(valor || 0);
+}
+
+
 function escaparHTML(texto) {
 
     return String(texto || "")
@@ -152,27 +157,12 @@ function escaparHTML(texto) {
 }
 
 
-function numero(valor) {
-
-    return Number(valor || 0);
-}
-
-
 function estaEfetivada(item) {
 
-    if (
-        item.efetivada === true
-    ) {
-        return true;
-    }
-
-    if (
+    return (
+        item.efetivada === true ||
         item.status === "efetivada"
-    ) {
-        return true;
-    }
-
-    return false;
+    );
 }
 
 
@@ -297,7 +287,9 @@ function mostrarSistema() {
 
 
 document
-    .getElementById("btnMostrarCadastro")
+    .getElementById(
+        "btnMostrarCadastro"
+    )
     .addEventListener(
         "click",
         mostrarCadastro
@@ -305,7 +297,9 @@ document
 
 
 document
-    .getElementById("btnVoltarLogin")
+    .getElementById(
+        "btnVoltarLogin"
+    )
     .addEventListener(
         "click",
         mostrarLogin
@@ -313,7 +307,9 @@ document
 
 
 document
-    .getElementById("formCadastro")
+    .getElementById(
+        "formCadastro"
+    )
     .addEventListener(
         "submit",
         async function(event) {
@@ -322,18 +318,24 @@ document
 
             const email =
                 document
-                    .getElementById("emailCadastro")
+                    .getElementById(
+                        "emailCadastro"
+                    )
                     .value
                     .trim();
 
             const password =
                 document
-                    .getElementById("senhaCadastro")
+                    .getElementById(
+                        "senhaCadastro"
+                    )
                     .value;
 
             const mensagem =
                 document
-                    .getElementById("mensagemCadastro");
+                    .getElementById(
+                        "mensagemCadastro"
+                    );
 
 
             mensagem.textContent =
@@ -366,7 +368,9 @@ document
 
 
 document
-    .getElementById("formLogin")
+    .getElementById(
+        "formLogin"
+    )
     .addEventListener(
         "submit",
         async function(event) {
@@ -375,25 +379,34 @@ document
 
             const email =
                 document
-                    .getElementById("emailLogin")
+                    .getElementById(
+                        "emailLogin"
+                    )
                     .value
                     .trim();
 
             const password =
                 document
-                    .getElementById("senhaLogin")
+                    .getElementById(
+                        "senhaLogin"
+                    )
                     .value;
 
             const mensagem =
                 document
-                    .getElementById("mensagemLogin");
+                    .getElementById(
+                        "mensagemLogin"
+                    );
 
 
             mensagem.textContent =
                 "Entrando...";
 
 
-            const { data, error } =
+            const {
+                data,
+                error
+            } =
                 await supabaseClient
                     .auth
                     .signInWithPassword({
@@ -420,7 +433,9 @@ document
                 data.user
             );
 
-            abrirPagina("inicio");
+            abrirPagina(
+                "inicio"
+            );
 
             await carregarDados();
         }
@@ -428,7 +443,9 @@ document
 
 
 document
-    .getElementById("btnSair")
+    .getElementById(
+        "btnSair"
+    )
     .addEventListener(
         "click",
         async function() {
@@ -460,14 +477,16 @@ function atualizarUsuario(usuario) {
     }
 
     document
-        .getElementById("emailUsuario")
+        .getElementById(
+            "emailUsuario"
+        )
         .textContent =
         usuario.email || "";
 }
 
 
 // ========================================================
-// MENU
+// MENU LATERAL
 // ========================================================
 
 function abrirMenu() {
@@ -495,7 +514,9 @@ function fecharMenu() {
 
 
 document
-    .getElementById("btnMenu")
+    .getElementById(
+        "btnMenu"
+    )
     .addEventListener(
         "click",
         abrirMenu
@@ -508,6 +529,10 @@ menuOverlay
         fecharMenu
     );
 
+
+// ========================================================
+// PÁGINAS
+// ========================================================
 
 const titulosPaginas = {
 
@@ -525,17 +550,21 @@ const titulosPaginas = {
 };
 
 
-function abrirPagina(nome) {
+function abrirPagina(
+    nome,
+    preservarExtrato = false
+) {
 
     document
-        .querySelectorAll(".pagina")
+        .querySelectorAll(
+            ".pagina"
+        )
         .forEach(
-            pagina => {
+            function(pagina) {
 
                 pagina
                     .classList
                     .remove("ativa");
-
             }
         );
 
@@ -550,7 +579,6 @@ function abrirPagina(nome) {
         pagina
             .classList
             .add("ativa");
-
     }
 
 
@@ -559,31 +587,43 @@ function abrirPagina(nome) {
             "[data-pagina]"
         )
         .forEach(
-            botao => {
+            function(botao) {
 
                 botao
                     .classList
                     .toggle(
                         "ativo",
-                        botao
-                            .dataset
-                            .pagina === nome
+                        botao.dataset.pagina ===
+                        nome
                     );
-
             }
         );
 
 
     document
-        .getElementById("tituloPagina")
+        .getElementById(
+            "tituloPagina"
+        )
         .textContent =
         titulosPaginas[nome] ||
         "Minhas Finanças";
 
 
+    if (
+        nome === "transacoes" &&
+        !preservarExtrato
+    ) {
+
+        contaExtratoId =
+            null;
+    }
+
+
     const btnMais =
         document
-            .getElementById("btnMais");
+            .getElementById(
+                "btnMais"
+            );
 
 
     btnMais.style.display =
@@ -606,7 +646,7 @@ document
         "[data-pagina]"
     )
     .forEach(
-        botao => {
+        function(botao) {
 
             botao.addEventListener(
                 "click",
@@ -616,37 +656,64 @@ document
                         botao.dataset.pagina
                     );
 
+
+                    if (
+                        botao.dataset.pagina ===
+                        "transacoes"
+                    ) {
+
+                        aplicarFiltros();
+                    }
                 }
             );
-
         }
     );
 
 
 document
-    .getElementById("btnVerContas")
+    .getElementById(
+        "btnVerContas"
+    )
     .addEventListener(
         "click",
-        () =>
-            abrirPagina("contas")
+        function() {
+
+            abrirPagina(
+                "contas"
+            );
+        }
     );
 
 
 document
-    .getElementById("btnVerTransacoes")
+    .getElementById(
+        "btnVerTransacoes"
+    )
     .addEventListener(
         "click",
-        () =>
-            abrirPagina("transacoes")
+        function() {
+
+            abrirPagina(
+                "transacoes"
+            );
+
+            aplicarFiltros();
+        }
     );
 
 
 document
-    .getElementById("btnVerCategorias")
+    .getElementById(
+        "btnVerCategorias"
+    )
     .addEventListener(
         "click",
-        () =>
-            abrirPagina("categorias")
+        function() {
+
+            abrirPagina(
+                "categorias"
+            );
+        }
     );
 
 
@@ -657,7 +724,9 @@ document
 function atualizarNomeMes() {
 
     document
-        .getElementById("nomeMes")
+        .getElementById(
+            "nomeMes"
+        )
         .textContent =
         meses[mesAtual] +
         " " +
@@ -666,20 +735,28 @@ function atualizarNomeMes() {
 
 
 document
-    .getElementById("mesAnterior")
+    .getElementById(
+        "mesAnterior"
+    )
     .addEventListener(
         "click",
         function() {
 
             mesAtual--;
 
-            if (mesAtual < 0) {
+
+            if (
+                mesAtual < 0
+            ) {
 
                 mesAtual = 11;
                 anoAtual--;
             }
 
-            atualizarNomeMes();
+
+            contaExtratoId =
+                null;
+
 
             atualizarInterface();
         }
@@ -687,20 +764,28 @@ document
 
 
 document
-    .getElementById("mesSeguinte")
+    .getElementById(
+        "mesSeguinte"
+    )
     .addEventListener(
         "click",
         function() {
 
             mesAtual++;
 
-            if (mesAtual > 11) {
+
+            if (
+                mesAtual > 11
+            ) {
 
                 mesAtual = 0;
                 anoAtual++;
             }
 
-            atualizarNomeMes();
+
+            contaExtratoId =
+                null;
+
 
             atualizarInterface();
         }
@@ -712,7 +797,9 @@ document
 // ========================================================
 
 document
-    .getElementById("btnMais")
+    .getElementById(
+        "btnMais"
+    )
     .addEventListener(
         "click",
         function() {
@@ -725,7 +812,9 @@ document
 
 
 document
-    .getElementById("btnReceitaRapida")
+    .getElementById(
+        "btnReceitaRapida"
+    )
     .addEventListener(
         "click",
         function() {
@@ -742,7 +831,9 @@ document
 
 
 document
-    .getElementById("btnDespesaRapida")
+    .getElementById(
+        "btnDespesaRapida"
+    )
     .addEventListener(
         "click",
         function() {
@@ -759,7 +850,9 @@ document
 
 
 document
-    .getElementById("btnContaRapida")
+    .getElementById(
+        "btnContaRapida"
+    )
     .addEventListener(
         "click",
         function() {
@@ -768,11 +861,7 @@ document
                 .classList
                 .add("oculto");
 
-            abrirPagina("contas");
-
-            areaFormularioConta
-                .classList
-                .remove("oculto");
+            abrirNovaConta();
         }
     );
 
@@ -781,24 +870,134 @@ document
 // CONTAS
 // ========================================================
 
+function limparFormularioConta() {
+
+    contaEditandoId =
+        null;
+
+
+    document
+        .getElementById(
+            "formConta"
+        )
+        .reset();
+
+
+    document
+        .getElementById(
+            "saldoInicial"
+        )
+        .value = 0;
+
+
+    document
+        .getElementById(
+            "tituloFormConta"
+        )
+        .textContent =
+        "Nova conta";
+
+
+    document
+        .getElementById(
+            "mensagemConta"
+        )
+        .textContent =
+        "";
+}
+
+
+function abrirNovaConta() {
+
+    limparFormularioConta();
+
+    abrirPagina(
+        "contas"
+    );
+
+
+    areaFormularioConta
+        .classList
+        .remove("oculto");
+}
+
+
+function abrirEdicaoConta(
+    conta
+) {
+
+    contaEditandoId =
+        conta.id;
+
+
+    document
+        .getElementById(
+            "tituloFormConta"
+        )
+        .textContent =
+        "Editar conta";
+
+
+    document
+        .getElementById(
+            "nomeConta"
+        )
+        .value =
+        conta.nome || "";
+
+
+    document
+        .getElementById(
+            "tipoConta"
+        )
+        .value =
+        conta.tipo || "";
+
+
+    document
+        .getElementById(
+            "saldoInicial"
+        )
+        .value =
+        numero(
+            conta.saldo_inicial
+        );
+
+
+    document
+        .getElementById(
+            "mensagemConta"
+        )
+        .textContent =
+        "";
+
+
+    areaFormularioConta
+        .classList
+        .remove("oculto");
+}
+
+
 document
-    .getElementById("btnNovaConta")
+    .getElementById(
+        "btnNovaConta"
+    )
     .addEventListener(
         "click",
-        function() {
-
-            areaFormularioConta
-                .classList
-                .remove("oculto");
-        }
+        abrirNovaConta
     );
 
 
 document
-    .getElementById("btnCancelarConta")
+    .getElementById(
+        "btnCancelarConta"
+    )
     .addEventListener(
         "click",
         function() {
+
+            limparFormularioConta();
+
 
             areaFormularioConta
                 .classList
@@ -808,15 +1007,19 @@ document
 
 
 document
-    .getElementById("formConta")
+    .getElementById(
+        "formConta"
+    )
     .addEventListener(
         "submit",
         async function(event) {
 
             event.preventDefault();
 
+
             const usuario =
                 await pegarUsuario();
+
 
             if (!usuario) {
                 return;
@@ -825,65 +1028,103 @@ document
 
             const nome =
                 document
-                    .getElementById("nomeConta")
+                    .getElementById(
+                        "nomeConta"
+                    )
                     .value
                     .trim();
 
+
             const tipo =
                 document
-                    .getElementById("tipoConta")
+                    .getElementById(
+                        "tipoConta"
+                    )
                     .value;
+
 
             const saldoInicial =
                 numero(
                     document
-                        .getElementById("saldoInicial")
+                        .getElementById(
+                            "saldoInicial"
+                        )
                         .value
                 );
 
 
-            const { error } =
-                await supabaseClient
-                    .from("Contas")
-                    .insert([
-                        {
-                            nome,
-                            tipo,
+            const dadosConta = {
 
-                            saldo_inicial:
-                                saldoInicial,
+                nome,
 
-                            ativo:
-                                true,
+                tipo,
 
-                            user_id:
-                                usuario.id
-                        }
-                    ]);
+                saldo_inicial:
+                    saldoInicial,
+
+                ativo:
+                    true,
+
+                user_id:
+                    usuario.id
+            };
 
 
-            if (error) {
+            let erro =
+                null;
+
+
+            if (
+                contaEditandoId
+            ) {
+
+                const { error } =
+                    await supabaseClient
+                        .from("Contas")
+                        .update(
+                            dadosConta
+                        )
+                        .eq(
+                            "id",
+                            contaEditandoId
+                        );
+
+
+                erro =
+                    error;
+
+            } else {
+
+                const { error } =
+                    await supabaseClient
+                        .from("Contas")
+                        .insert([
+                            dadosConta
+                        ]);
+
+
+                erro =
+                    error;
+            }
+
+
+            if (
+                erro
+            ) {
 
                 document
-                    .getElementById("mensagemConta")
+                    .getElementById(
+                        "mensagemConta"
+                    )
                     .textContent =
                     "Erro: " +
-                    error.message;
+                    erro.message;
 
                 return;
             }
 
 
-            document
-                .getElementById("mensagemConta")
-                .textContent = "";
-
-
-            event.target.reset();
-
-            document
-                .getElementById("saldoInicial")
-                .value = 0;
+            limparFormularioConta();
 
 
             areaFormularioConta
@@ -897,45 +1138,749 @@ document
 
 
 // ========================================================
-// CATEGORIAS / PLANO DE CONTAS
+// MOSTRAR CONTAS
+// ========================================================
+
+function mostrarContas() {
+
+    const areaInicio =
+        document
+            .getElementById(
+                "contasInicio"
+            );
+
+
+    const areaPagina =
+        document
+            .getElementById(
+                "listaContas"
+            );
+
+
+    const select =
+        document
+            .getElementById(
+                "contaTransacao"
+            );
+
+
+    areaInicio.innerHTML =
+        "";
+
+    areaPagina.innerHTML =
+        "";
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Selecione uma conta
+        </option>
+
+    `;
+
+
+    contasCache.forEach(
+        function(conta) {
+
+            const saldo =
+                saldoConta(
+                    conta.id
+                );
+
+
+            const classe =
+                saldo < 0
+                    ? "saldo-negativo"
+                    : "saldo-positivo";
+
+
+            const inicial =
+                escaparHTML(
+                    (
+                        conta.nome ||
+                        "C"
+                    )
+                    .charAt(0)
+                    .toUpperCase()
+                );
+
+
+            const nome =
+                escaparHTML(
+                    conta.nome
+                );
+
+
+            const tipo =
+                escaparHTML(
+                    conta.tipo ||
+                    ""
+                );
+
+
+            areaInicio
+                .insertAdjacentHTML(
+                    "beforeend",
+                    `
+
+                    <div class="conta-resumo">
+
+                        <div class="icone-conta">
+                            ${inicial}
+                        </div>
+
+                        <div class="conta-info">
+
+                            <strong>
+                                ${nome}
+                            </strong>
+
+                            <small>
+                                ${tipo}
+                            </small>
+
+                        </div>
+
+                        <strong class="valor-conta ${classe}">
+                            ${formatarDinheiro(
+                                saldo
+                            )}
+                        </strong>
+
+                    </div>
+
+                    `
+                );
+
+
+            areaPagina
+                .insertAdjacentHTML(
+                    "beforeend",
+                    `
+
+                    <article class="conta-pagina">
+
+                        <div class="icone-conta">
+                            ${inicial}
+                        </div>
+
+
+                        <div class="conta-info">
+
+                            <strong>
+                                ${nome}
+                            </strong>
+
+                            <small>
+                                ${tipo}
+                            </small>
+
+                        </div>
+
+
+                        <div class="conta-lado-direito">
+
+                            <strong class="valor-conta ${classe}">
+                                ${formatarDinheiro(
+                                    saldo
+                                )}
+                            </strong>
+
+
+                            <div class="menu-conta">
+
+                                <button
+                                    type="button"
+                                    class="btn-menu-conta"
+                                    data-acao-conta="abrir"
+                                    data-id="${conta.id}"
+                                >
+                                    ⋮
+                                </button>
+
+
+                                <div
+                                    id="menu-conta-${conta.id}"
+                                    class="popup-conta oculto"
+                                >
+
+                                    <button
+                                        type="button"
+                                        data-acao-conta="editar"
+                                        data-id="${conta.id}"
+                                    >
+                                        Editar
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        data-acao-conta="extrato"
+                                        data-id="${conta.id}"
+                                    >
+                                        Extrato
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        data-acao-conta="reajustar"
+                                        data-id="${conta.id}"
+                                    >
+                                        Reajustar saldo
+                                    </button>
+                       
+                                    
+                                    <button
+                                        type="button"
+                                        data-acao-conta="arquivar"
+                                        data-id="${conta.id}"
+                                    >
+                                        Arquivar
+                                        </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                    `
+                );
+
+
+            const option =
+                document
+                    .createElement(
+                        "option"
+                    );
+
+
+            option.value =
+                conta.id;
+
+
+            option.textContent =
+                conta.nome;
+
+
+            select.appendChild(
+                option
+            );
+        }
+    );
+}
+
+
+// ========================================================
+// MENU DE CONTA
 // ========================================================
 
 document
-    .getElementById("formCategoria")
+    .getElementById(
+        "listaContas"
+    )
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            const botao =
+                event.target.closest(
+                    "[data-acao-conta]"
+                );
+
+
+            if (
+                !botao
+            ) {
+                return;
+            }
+
+
+            const acao =
+                botao.dataset
+                    .acaoConta;
+
+
+            const id =
+                Number(
+                    botao.dataset.id
+                );
+
+
+            if (
+                acao ===
+                "abrir"
+            ) {
+
+                document
+                    .querySelectorAll(
+                        ".popup-conta"
+                    )
+                    .forEach(
+                        function(popup) {
+
+                            if (
+                                popup.id !==
+                                `menu-conta-${id}`
+                            ) {
+
+                                popup
+                                    .classList
+                                    .add(
+                                        "oculto"
+                                    );
+                            }
+                        }
+                    );
+
+
+                const menu =
+                    document
+                        .getElementById(
+                            `menu-conta-${id}`
+                        );
+
+
+                if (
+                    menu
+                ) {
+
+                    menu
+                        .classList
+                        .toggle(
+                            "oculto"
+                        );
+                }
+
+
+                return;
+            }
+
+
+            if (
+                acao ===
+                "editar"
+            ) {
+
+                const conta =
+                    contasCache.find(
+                        function(item) {
+
+                            return (
+                                Number(
+                                    item.id
+                                ) ===
+                                id
+                            );
+                        }
+                    );
+
+
+                if (
+                    !conta
+                ) {
+                    return;
+                }
+
+
+                abrirEdicaoConta(
+                    conta
+                );
+
+
+                return;
+            }
+
+
+            if (
+                acao ===
+                "extrato"
+            ) {
+
+                abrirExtratoConta(
+                    id
+                );
+
+
+                return;
+            }
+
+
+            if (
+                acao ===
+                "reajustar"
+            ) {
+
+                await reajustarSaldoConta(
+                    id
+                );
+
+
+                return;
+            }
+            if (
+    acao ===
+    "arquivar"
+) {
+
+    await arquivarConta(
+        id
+    );
+
+    return;
+}
+        }
+    );
+
+
+// ========================================================
+// EXTRATO
+// ========================================================
+
+function abrirExtratoConta(
+    contaId
+) {
+
+    const conta =
+        contasCache.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                );
+            }
+        );
+
+
+    if (
+        !conta
+    ) {
+
+        alert(
+            "Conta não encontrada."
+        );
+
+        return;
+    }
+
+
+    contaExtratoId =
+        Number(
+            contaId
+        );
+
+
+    abrirPagina(
+        "transacoes",
+        true
+    );
+
+
+    document
+        .getElementById(
+            "tituloPagina"
+        )
+        .textContent =
+        "Extrato - " +
+        conta.nome;
+
+
+    document
+        .getElementById(
+            "buscaTransacao"
+        )
+        .value =
+        "";
+
+
+    document
+        .getElementById(
+            "filtroTipo"
+        )
+        .value =
+        "todos";
+
+
+    document
+        .getElementById(
+            "filtroStatus"
+        )
+        .value =
+        "todos";
+
+
+    aplicarFiltros();
+}
+
+
+// ========================================================
+// REAJUSTAR SALDO
+// ========================================================
+
+async function reajustarSaldoConta(
+    contaId
+) {
+
+    const conta =
+        contasCache.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                );
+            }
+        );
+
+
+    if (
+        !conta
+    ) {
+
+        alert(
+            "Conta não encontrada."
+        );
+
+        return;
+    }
+
+
+    const saldoAtual =
+        saldoConta(
+            contaId
+        );
+
+
+    const novoSaldoTexto =
+        prompt(
+            `Saldo atual de ${conta.nome}: ${formatarDinheiro(saldoAtual)}\n\nDigite o saldo correto da conta:`,
+            saldoAtual
+                .toFixed(2)
+                .replace(".", ",")
+        );
+
+
+    if (
+        novoSaldoTexto ===
+        null
+    ) {
+
+        return;
+    }
+
+
+    const textoLimpo =
+        String(
+            novoSaldoTexto
+        )
+        .trim()
+        .replace(/\s/g, "")
+        .replace(/\./g, "")
+        .replace(",", ".");
+
+
+    const novoSaldo =
+        Number(
+            textoLimpo
+        );
+
+
+    if (
+        Number.isNaN(
+            novoSaldo
+        )
+    ) {
+
+        alert(
+            "Digite um valor válido."
+        );
+
+        return;
+    }
+
+
+    const diferenca =
+        novoSaldo -
+        saldoAtual;
+
+
+    if (
+        Math.abs(
+            diferenca
+        ) <
+        0.005
+    ) {
+
+        alert(
+            "O saldo informado já é igual ao saldo atual."
+        );
+
+        return;
+    }
+
+
+    const usuario =
+        await pegarUsuario();
+
+
+    if (
+        !usuario
+    ) {
+        return;
+    }
+
+
+    const tipo =
+        diferenca > 0
+            ? "receita"
+            : "despesa";
+
+
+    const valor =
+        Math.abs(
+            diferenca
+        );
+
+
+    const { error } =
+        await supabaseClient
+            .from(
+                "transacoes"
+            )
+            .insert([
+                {
+                    descricao:
+                        "Ajuste de saldo",
+
+                    valor,
+
+                    tipo,
+
+                    data:
+                        hoje(),
+
+                    conta_id:
+                        Number(
+                            contaId
+                        ),
+
+                    status:
+                        "efetivada",
+
+                    efetivada:
+                        true,
+
+                    data_vencimento:
+                        hoje(),
+
+                    data_pagamento:
+                        hoje(),
+
+                    observacao:
+                        `Reajuste de saldo de ${formatarDinheiro(saldoAtual)} para ${formatarDinheiro(novoSaldo)}`,
+
+                    categoria_id:
+                        null,
+
+                    user_id:
+                        usuario.id
+                }
+            ]);
+
+
+    if (
+        error
+    ) {
+
+        alert(
+            "Erro ao reajustar saldo: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await carregarDados();
+
+
+    alert(
+        "Saldo reajustado para " +
+        formatarDinheiro(
+            novoSaldo
+        )
+    );
+}
+
+
+// ========================================================
+// CATEGORIAS
+// ========================================================
+
+document
+    .getElementById(
+        "formCategoria"
+    )
     .addEventListener(
         "submit",
         async function(event) {
 
             event.preventDefault();
 
+
             const usuario =
                 await pegarUsuario();
 
-            if (!usuario) {
+
+            if (
+                !usuario
+            ) {
                 return;
             }
 
 
             const nome =
                 document
-                    .getElementById("nomeCategoria")
+                    .getElementById(
+                        "nomeCategoria"
+                    )
                     .value
                     .trim();
 
+
             const tipo =
                 document
-                    .getElementById("tipoCategoria")
+                    .getElementById(
+                        "tipoCategoria"
+                    )
                     .value;
 
 
-            if (!nome) {
+            if (
+                !nome
+            ) {
                 return;
             }
 
 
             const { error } =
                 await supabaseClient
-                    .from("categorias")
+                    .from(
+                        "categorias"
+                    )
                     .insert([
                         {
                             user_id:
@@ -951,7 +1896,9 @@ document
                     ]);
 
 
-            if (error) {
+            if (
+                error
+            ) {
 
                 alert(
                     "Erro ao criar categoria: " +
@@ -964,24 +1911,215 @@ document
 
             event.target.reset();
 
+
             await carregarDados();
         }
     );
+
+
+function preencherCategoriasSelect(
+    tipo = ""
+) {
+
+    const select =
+        document
+            .getElementById(
+                "categoriaTransacao"
+            );
+
+
+    const valorAtual =
+        select.value;
+
+
+    select.innerHTML = `
+
+        <option value="">
+            Sem categoria
+        </option>
+
+    `;
+
+
+    categoriasCache
+        .filter(
+            function(categoria) {
+
+                return (
+                    !tipo ||
+                    categoria.tipo ===
+                    tipo
+                );
+            }
+        )
+        .forEach(
+            function(categoria) {
+
+                const option =
+                    document
+                        .createElement(
+                            "option"
+                        );
+
+
+                option.value =
+                    categoria.id;
+
+
+                option.textContent =
+                    categoria.nome;
+
+
+                select.appendChild(
+                    option
+                );
+            }
+        );
+
+
+    const existe =
+        Array
+            .from(
+                select.options
+            )
+            .some(
+                function(option) {
+
+                    return (
+                        option.value ===
+                        valorAtual
+                    );
+                }
+            );
+
+
+    if (
+        existe
+    ) {
+
+        select.value =
+            valorAtual;
+    }
+}
+
+
+function nomeCategoria(
+    id
+) {
+
+    const categoria =
+        categoriasCache.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        id
+                    )
+                );
+            }
+        );
+
+
+    return categoria
+        ? categoria.nome
+        : "Sem categoria";
+}
+
+
+function mostrarCategorias() {
+
+    const area =
+        document
+            .getElementById(
+                "listaCategorias"
+            );
+
+
+    area.innerHTML =
+        "";
+
+
+    if (
+        categoriasCache.length ===
+        0
+    ) {
+
+        area.innerHTML =
+            "<p>Nenhuma categoria cadastrada.</p>";
+
+        return;
+    }
+
+
+    categoriasCache.forEach(
+        function(categoria) {
+
+            const tipo =
+                categoria.tipo ===
+                    "receita"
+                    ? "Receita"
+                    : "Despesa";
+
+
+            area.insertAdjacentHTML(
+                "beforeend",
+                `
+
+                <div class="categoria-item">
+
+                    <div>
+
+                        <strong>
+                            ${escaparHTML(
+                                categoria.nome
+                            )}
+                        </strong>
+
+                        <div class="categoria-tipo">
+                            ${tipo}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                `
+            );
+        }
+    );
+
+
+    preencherCategoriasSelect(
+        document
+            .getElementById(
+                "tipo"
+            )
+            .value
+    );
+}
 
 
 // ========================================================
 // TRANSAÇÕES
 // ========================================================
 
-function preencherStatus(tipo) {
+function preencherStatus(
+    tipo
+) {
 
     const campo =
         document
-            .getElementById("status");
+            .getElementById(
+                "status"
+            );
 
 
     if (
-        tipo === "receita"
+        tipo ===
+        "receita"
     ) {
 
         campo.innerHTML = `
@@ -1014,7 +2152,9 @@ function preencherStatus(tipo) {
 
 
 document
-    .getElementById("tipo")
+    .getElementById(
+        "tipo"
+    )
     .addEventListener(
         "change",
         function() {
@@ -1032,39 +2172,63 @@ document
 
 function limparFormularioTransacao() {
 
-    transacaoEditandoId = null;
+    transacaoEditandoId =
+        null;
 
-    const form =
-        document
-            .getElementById("formTransacao");
-
-    form.reset();
 
     document
-        .getElementById("data")
+        .getElementById(
+            "formTransacao"
+        )
+        .reset();
+
+
+    document
+        .getElementById(
+            "data"
+        )
         .value =
         hoje();
 
+
     document
-        .getElementById("dataVencimento")
+        .getElementById(
+            "dataVencimento"
+        )
         .value =
         hoje();
 
-    document
-        .getElementById("dataPagamento")
-        .value = "";
 
     document
-        .getElementById("observacao")
-        .value = "";
+        .getElementById(
+            "dataPagamento"
+        )
+        .value =
+        "";
+
 
     document
-        .getElementById("tagsTransacao")
-        .value = "";
+        .getElementById(
+            "observacao"
+        )
+        .value =
+        "";
+
 
     document
-        .getElementById("mensagemTransacao")
-        .textContent = "";
+        .getElementById(
+            "tagsTransacao"
+        )
+        .value =
+        "";
+
+
+    document
+        .getElementById(
+            "mensagemTransacao"
+        )
+        .textContent =
+        "";
 }
 
 
@@ -1073,7 +2237,14 @@ function abrirFormularioTransacao(
     item = null
 ) {
 
-    abrirPagina("transacoes");
+    contaExtratoId =
+        null;
+
+
+    abrirPagina(
+        "transacoes"
+    );
+
 
     areaFormularioTransacao
         .classList
@@ -1083,31 +2254,44 @@ function abrirFormularioTransacao(
     limparFormularioTransacao();
 
 
-    if (item) {
+    if (
+        item
+    ) {
 
         transacaoEditandoId =
             item.id;
 
+
         document
-            .getElementById("tituloFormTransacao")
+            .getElementById(
+                "tituloFormTransacao"
+            )
             .textContent =
             "Editar lançamento";
 
 
         document
-            .getElementById("descricao")
+            .getElementById(
+                "descricao"
+            )
             .value =
             item.descricao || "";
 
 
         document
-            .getElementById("valor")
+            .getElementById(
+                "valor"
+            )
             .value =
-            numero(item.valor);
+            numero(
+                item.valor
+            );
 
 
         document
-            .getElementById("tipo")
+            .getElementById(
+                "tipo"
+            )
             .value =
             item.tipo;
 
@@ -1118,35 +2302,51 @@ function abrirFormularioTransacao(
 
 
         document
-            .getElementById("status")
+            .getElementById(
+                "status"
+            )
             .value =
-            estaEfetivada(item)
+            estaEfetivada(
+                item
+            )
                 ? "efetivada"
                 : "pendente";
 
 
         document
-            .getElementById("data")
+            .getElementById(
+                "data"
+            )
             .value =
-            item.data || hoje();
+            item.data ||
+            hoje();
 
 
         document
-            .getElementById("dataVencimento")
+            .getElementById(
+                "dataVencimento"
+            )
             .value =
-            item.data_vencimento || "";
+            item.data_vencimento ||
+            "";
 
 
         document
-            .getElementById("dataPagamento")
+            .getElementById(
+                "dataPagamento"
+            )
             .value =
-            item.data_pagamento || "";
+            item.data_pagamento ||
+            "";
 
 
         document
-            .getElementById("contaTransacao")
+            .getElementById(
+                "contaTransacao"
+            )
             .value =
-            item.conta_id || "";
+            item.conta_id ||
+            "";
 
 
         preencherCategoriasSelect(
@@ -1155,19 +2355,27 @@ function abrirFormularioTransacao(
 
 
         document
-            .getElementById("categoriaTransacao")
+            .getElementById(
+                "categoriaTransacao"
+            )
             .value =
-            item.categoria_id || "";
+            item.categoria_id ||
+            "";
 
 
         document
-            .getElementById("observacao")
+            .getElementById(
+                "observacao"
+            )
             .value =
-            item.observacao || "";
+            item.observacao ||
+            "";
 
 
         document
-            .getElementById("tagsTransacao")
+            .getElementById(
+                "tagsTransacao"
+            )
             .value =
             nomesTagsDaTransacao(
                 item.id
@@ -1180,7 +2388,9 @@ function abrirFormularioTransacao(
 
 
     document
-        .getElementById("tituloFormTransacao")
+        .getElementById(
+            "tituloFormTransacao"
+        )
         .textContent =
         tipo === "receita"
             ? "Nova Receita"
@@ -1189,14 +2399,22 @@ function abrirFormularioTransacao(
             : "Novo lançamento";
 
 
-    if (tipo) {
+    if (
+        tipo
+    ) {
 
         document
-            .getElementById("tipo")
+            .getElementById(
+                "tipo"
+            )
             .value =
             tipo;
 
-        preencherStatus(tipo);
+
+        preencherStatus(
+            tipo
+        );
+
 
         preencherCategoriasSelect(
             tipo
@@ -1206,7 +2424,9 @@ function abrirFormularioTransacao(
 
 
 document
-    .getElementById("btnNovaTransacao")
+    .getElementById(
+        "btnNovaTransacao"
+    )
     .addEventListener(
         "click",
         function() {
@@ -1217,7 +2437,9 @@ document
 
 
 document
-    .getElementById("btnCancelarTransacao")
+    .getElementById(
+        "btnCancelarTransacao"
+    )
     .addEventListener(
         "click",
         function() {
@@ -1226,30 +2448,40 @@ document
                 .classList
                 .add("oculto");
 
-            transacaoEditandoId = null;
+
+            transacaoEditandoId =
+                null;
         }
     );
 
 
 document
-    .getElementById("formTransacao")
+    .getElementById(
+        "formTransacao"
+    )
     .addEventListener(
         "submit",
         async function(event) {
 
             event.preventDefault();
 
+
             const usuario =
                 await pegarUsuario();
 
-            if (!usuario) {
+
+            if (
+                !usuario
+            ) {
                 return;
             }
 
 
             const descricao =
                 document
-                    .getElementById("descricao")
+                    .getElementById(
+                        "descricao"
+                    )
                     .value
                     .trim();
 
@@ -1257,70 +2489,93 @@ document
             const valor =
                 numero(
                     document
-                        .getElementById("valor")
+                        .getElementById(
+                            "valor"
+                        )
                         .value
                 );
 
 
             const tipo =
                 document
-                    .getElementById("tipo")
+                    .getElementById(
+                        "tipo"
+                    )
                     .value;
 
 
             const status =
                 document
-                    .getElementById("status")
+                    .getElementById(
+                        "status"
+                    )
                     .value;
 
 
             const data =
                 document
-                    .getElementById("data")
+                    .getElementById(
+                        "data"
+                    )
                     .value;
 
 
             const dataVencimento =
                 document
-                    .getElementById("dataVencimento")
-                    .value || null;
+                    .getElementById(
+                        "dataVencimento"
+                    )
+                    .value ||
+                null;
 
 
             let dataPagamento =
                 document
-                    .getElementById("dataPagamento")
-                    .value || null;
+                    .getElementById(
+                        "dataPagamento"
+                    )
+                    .value ||
+                null;
 
 
             const contaId =
                 Number(
                     document
-                        .getElementById("contaTransacao")
+                        .getElementById(
+                            "contaTransacao"
+                        )
                         .value
                 );
 
 
             const categoriaValor =
                 document
-                    .getElementById("categoriaTransacao")
+                    .getElementById(
+                        "categoriaTransacao"
+                    )
                     .value;
 
 
             const categoriaId =
                 categoriaValor
-                    ? Number(categoriaValor)
+                    ? Number(
+                        categoriaValor
+                    )
                     : null;
 
 
             const observacao =
                 document
-                    .getElementById("observacao")
+                    .getElementById(
+                        "observacao"
+                    )
                     .value
                     .trim();
 
 
             const efetivada =
-                status === "efetivada";
+                status ===
+                "efetivada";
 
 
             if (
@@ -1333,17 +2588,23 @@ document
             }
 
 
-            if (!efetivada) {
+            if (
+                !efetivada
+            ) {
 
-                dataPagamento = null;
+                dataPagamento =
+                    null;
             }
 
 
             const registro = {
 
                 descricao,
+
                 valor,
+
                 tipo,
+
                 data,
 
                 conta_id:
@@ -1360,7 +2621,6 @@ document
                     dataPagamento,
 
                 observacao:
-
                     observacao ||
                     null,
 
@@ -1382,15 +2642,21 @@ document
 
                 const { error } =
                     await supabaseClient
-                        .from("transacoes")
-                        .update(registro)
+                        .from(
+                            "transacoes"
+                        )
+                        .update(
+                            registro
+                        )
                         .eq(
                             "id",
                             transacaoEditandoId
                         );
 
 
-                if (error) {
+                if (
+                    error
+                ) {
 
                     mostrarErroTransacao(
                         error
@@ -1406,7 +2672,9 @@ document
                     error
                 } =
                     await supabaseClient
-                        .from("transacoes")
+                        .from(
+                            "transacoes"
+                        )
                         .insert([
                             registro
                         ])
@@ -1414,7 +2682,9 @@ document
                         .single();
 
 
-                if (error) {
+                if (
+                    error
+                ) {
 
                     mostrarErroTransacao(
                         error
@@ -1431,7 +2701,9 @@ document
 
             const textoTags =
                 document
-                    .getElementById("tagsTransacao")
+                    .getElementById(
+                        "tagsTransacao"
+                    )
                     .value;
 
 
@@ -1460,10 +2732,15 @@ function mostrarErroTransacao(
     error
 ) {
 
-    console.error(error);
+    console.error(
+        error
+    );
+
 
     document
-        .getElementById("mensagemTransacao")
+        .getElementById(
+            "mensagemTransacao"
+        )
         .textContent =
         "Erro: " +
         error.message;
@@ -1474,11 +2751,16 @@ function mostrarErroTransacao(
 // TAGS
 // ========================================================
 
-function limparNomeTag(nome) {
+function limparNomeTag(
+    nome
+) {
 
     return nome
         .trim()
-        .replace(/\s+/g, " ");
+        .replace(
+            /\s+/g,
+            " "
+        );
 }
 
 
@@ -1489,7 +2771,9 @@ async function salvarTagsDaTransacao(
 ) {
 
     await supabaseClient
-        .from("transacao_tags")
+        .from(
+            "transacao_tags"
+        )
         .delete()
         .eq(
             "transacao_id",
@@ -1502,7 +2786,9 @@ async function salvarTagsDaTransacao(
             ...new Set(
                 texto
                     .split(",")
-                    .map(limparNomeTag)
+                    .map(
+                        limparNomeTag
+                    )
                     .filter(Boolean)
             )
         ];
@@ -1515,21 +2801,30 @@ async function salvarTagsDaTransacao(
 
         let tag =
             tagsCache.find(
-                item =>
-                    item.nome
-                        .toLowerCase() ===
-                    nome.toLowerCase()
+                function(item) {
+
+                    return (
+                        item.nome
+                            .toLowerCase() ===
+                        nome
+                            .toLowerCase()
+                    );
+                }
             );
 
 
-        if (!tag) {
+        if (
+            !tag
+        ) {
 
             const {
                 data,
                 error
             } =
                 await supabaseClient
-                    .from("tags")
+                    .from(
+                        "tags"
+                    )
                     .insert([
                         {
                             user_id:
@@ -1542,7 +2837,9 @@ async function salvarTagsDaTransacao(
                     .single();
 
 
-            if (error) {
+            if (
+                error
+            ) {
 
                 console.error(
                     error
@@ -1552,7 +2849,9 @@ async function salvarTagsDaTransacao(
             }
 
 
-            tag = data;
+            tag =
+                data;
+
 
             tagsCache.push(
                 tag
@@ -1561,7 +2860,9 @@ async function salvarTagsDaTransacao(
 
 
         await supabaseClient
-            .from("transacao_tags")
+            .from(
+                "transacao_tags"
+            )
             .insert([
                 {
                     user_id:
@@ -1585,34 +2886,44 @@ function nomesTagsDaTransacao(
     const ids =
         relacoesTagsCache
             .filter(
-                item =>
-                    Number(
-                        item.transacao_id
-                    ) ===
-                    Number(
-                        transacaoId
-                    )
+                function(item) {
+
+                    return (
+                        Number(
+                            item.transacao_id
+                        ) ===
+                        Number(
+                            transacaoId
+                        )
+                    );
+                }
             )
             .map(
-                item =>
-                    Number(
+                function(item) {
+
+                    return Number(
                         item.tag_id
-                    )
+                    );
+                }
             );
 
 
     return tagsCache
         .filter(
-            tag =>
-                ids.includes(
+            function(tag) {
+
+                return ids.includes(
                     Number(
                         tag.id
                     )
-                )
+                );
+            }
         )
         .map(
-            tag =>
-                tag.nome
+            function(tag) {
+
+                return tag.nome;
+            }
         );
 }
 
@@ -1623,14 +2934,27 @@ function nomesTagsDaTransacao(
 
 async function buscarContas() {
 
-    const { data, error } =
-        await supabaseClient
-            .from("Contas")
-            .select("*")
-            .order("nome");
+    const {
+    data,
+    error
+} =
+    await supabaseClient
+        .from(
+            "Contas"
+        )
+        .select("*")
+        .eq(
+            "ativo",
+            true
+        )
+        .order(
+            "nome"
+        );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         console.error(
             "Erro contas:",
@@ -1647,9 +2971,14 @@ async function buscarContas() {
 
 async function buscarTransacoes() {
 
-    const { data, error } =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
-            .from("transacoes")
+            .from(
+                "transacoes"
+            )
             .select("*")
             .order(
                 "data",
@@ -1667,7 +2996,9 @@ async function buscarTransacoes() {
             );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         console.error(
             "Erro transações:",
@@ -1684,18 +3015,27 @@ async function buscarTransacoes() {
 
 async function buscarCategorias() {
 
-    const { data, error } =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
-            .from("categorias")
+            .from(
+                "categorias"
+            )
             .select("*")
             .eq(
                 "ativo",
                 true
             )
-            .order("nome");
+            .order(
+                "nome"
+            );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         console.error(
             "Erro categorias:",
@@ -1712,14 +3052,23 @@ async function buscarCategorias() {
 
 async function buscarTags() {
 
-    const { data, error } =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
-            .from("tags")
+            .from(
+                "tags"
+            )
             .select("*")
-            .order("nome");
+            .order(
+                "nome"
+            );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         console.error(
             "Erro tags:",
@@ -1736,13 +3085,20 @@ async function buscarTags() {
 
 async function buscarRelacoesTags() {
 
-    const { data, error } =
+    const {
+        data,
+        error
+    } =
         await supabaseClient
-            .from("transacao_tags")
+            .from(
+                "transacao_tags"
+            )
             .select("*");
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         console.error(
             "Erro relações tags:",
@@ -1758,23 +3114,26 @@ async function buscarRelacoesTags() {
 
 
 // ========================================================
-// CÁLCULOS
+// SALDOS
 // ========================================================
 
 function saldoInicialTotal() {
 
-    return contasCache
-        .reduce(
-            (
-                total,
-                conta
-            ) =>
+    return contasCache.reduce(
+        function(
+            total,
+            conta
+        ) {
+
+            return (
                 total +
                 numero(
                     conta.saldo_inicial
-                ),
-            0
-        );
+                )
+            );
+        },
+        0
+    );
 }
 
 
@@ -1785,28 +3144,34 @@ function saldoAtualTotal() {
 
 
     transacoesCache
-        .filter(estaEfetivada)
+        .filter(
+            estaEfetivada
+        )
         .forEach(
-            item => {
+            function(item) {
 
                 const valor =
-                    numero(item.valor);
+                    numero(
+                        item.valor
+                    );
+
 
                 if (
                     item.tipo ===
                     "receita"
                 ) {
 
-                    saldo += valor;
+                    saldo +=
+                        valor;
 
                 } else if (
                     item.tipo ===
                     "despesa"
                 ) {
 
-                    saldo -= valor;
+                    saldo -=
+                        valor;
                 }
-
             }
         );
 
@@ -1815,17 +3180,29 @@ function saldoAtualTotal() {
 }
 
 
-function saldoConta(contaId) {
+function saldoConta(
+    contaId
+) {
 
     const conta =
         contasCache.find(
-            item =>
-                Number(item.id) ===
-                Number(contaId)
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                );
+            }
         );
 
 
-    if (!conta) {
+    if (
+        !conta
+    ) {
         return 0;
     }
 
@@ -1838,16 +3215,24 @@ function saldoConta(contaId) {
 
     transacoesCache
         .filter(
-            item =>
-                Number(
-                    item.conta_id
-                ) ===
-                    Number(contaId)
-                &&
-                estaEfetivada(item)
+            function(item) {
+
+                return (
+                    Number(
+                        item.conta_id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                    &&
+                    estaEfetivada(
+                        item
+                    )
+                );
+            }
         )
         .forEach(
-            item => {
+            function(item) {
 
                 if (
                     item.tipo ===
@@ -1869,7 +3254,6 @@ function saldoConta(contaId) {
                             item.valor
                         );
                 }
-
             }
         );
 
@@ -1888,23 +3272,35 @@ function atualizarResumo() {
         transacoesDoMes();
 
 
-    let receitasEfetivadas = 0;
-    let despesasEfetivadas = 0;
+    let receitasEfetivadas =
+        0;
 
-    let aReceber = 0;
-    let aPagar = 0;
-    let vencidas = 0;
+    let despesasEfetivadas =
+        0;
+
+    let aReceber =
+        0;
+
+    let aPagar =
+        0;
+
+    let vencidas =
+        0;
 
 
     listaMes.forEach(
-        item => {
+        function(item) {
 
             const valor =
-                numero(item.valor);
+                numero(
+                    item.valor
+                );
 
 
             if (
-                estaEfetivada(item)
+                estaEfetivada(
+                    item
+                )
             ) {
 
                 if (
@@ -1944,16 +3340,16 @@ function atualizarResumo() {
 
 
                     if (
-                        estaVencida(item)
+                        estaVencida(
+                            item
+                        )
                     ) {
 
                         vencidas +=
                             valor;
                     }
                 }
-
             }
-
         }
     );
 
@@ -1963,15 +3359,15 @@ function atualizarResumo() {
 
 
     const saldoPrevisto =
-        saldoAtual
-        +
-        aReceber
-        -
+        saldoAtual +
+        aReceber -
         aPagar;
 
 
     document
-        .getElementById("saldoTotal")
+        .getElementById(
+            "saldoTotal"
+        )
         .textContent =
         formatarDinheiro(
             saldoAtual
@@ -1979,7 +3375,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("saldoCabecalho")
+        .getElementById(
+            "saldoCabecalho"
+        )
         .textContent =
         formatarDinheiro(
             saldoAtual
@@ -1987,7 +3385,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("totalAReceber")
+        .getElementById(
+            "totalAReceber"
+        )
         .textContent =
         formatarDinheiro(
             aReceber
@@ -1995,7 +3395,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("totalAPagar")
+        .getElementById(
+            "totalAPagar"
+        )
         .textContent =
         formatarDinheiro(
             aPagar
@@ -2003,7 +3405,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("totalVencido")
+        .getElementById(
+            "totalVencido"
+        )
         .textContent =
         formatarDinheiro(
             vencidas
@@ -2011,7 +3415,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("saldoPrevisto")
+        .getElementById(
+            "saldoPrevisto"
+        )
         .textContent =
         formatarDinheiro(
             saldoPrevisto
@@ -2019,7 +3425,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("totalReceitas")
+        .getElementById(
+            "totalReceitas"
+        )
         .textContent =
         formatarDinheiro(
             receitasEfetivadas
@@ -2027,7 +3435,9 @@ function atualizarResumo() {
 
 
     document
-        .getElementById("totalDespesas")
+        .getElementById(
+            "totalDespesas"
+        )
         .textContent =
         formatarDinheiro(
             despesasEfetivadas
@@ -2036,341 +3446,7 @@ function atualizarResumo() {
 
 
 // ========================================================
-// CONTAS NA TELA
-// ========================================================
-
-function mostrarContas() {
-
-    const areaInicio =
-        document
-            .getElementById("contasInicio");
-
-
-    const areaPagina =
-        document
-            .getElementById("listaContas");
-
-
-    const select =
-        document
-            .getElementById("contaTransacao");
-
-
-    areaInicio.innerHTML = "";
-    areaPagina.innerHTML = "";
-
-
-    select.innerHTML = `
-
-        <option value="">
-            Selecione uma conta
-        </option>
-
-    `;
-
-
-    contasCache.forEach(
-        conta => {
-
-            const saldo =
-                saldoConta(
-                    conta.id
-                );
-
-
-            const classe =
-                saldo < 0
-                    ? "saldo-negativo"
-                    : "saldo-positivo";
-
-
-            const inicial =
-                escaparHTML(
-                    (
-                        conta.nome ||
-                        "C"
-                    )
-                    .charAt(0)
-                    .toUpperCase()
-                );
-
-
-            const nome =
-                escaparHTML(
-                    conta.nome
-                );
-
-
-            const tipo =
-                escaparHTML(
-                    conta.tipo || ""
-                );
-
-
-            const html = `
-
-                <div class="conta-resumo">
-
-                    <div class="icone-conta">
-                        ${inicial}
-                    </div>
-
-                    <div class="conta-info">
-
-                        <strong>
-                            ${nome}
-                        </strong>
-
-                        <small>
-                            ${tipo}
-                        </small>
-
-                    </div>
-
-                    <strong
-                        class="valor-conta ${classe}"
-                    >
-                        ${formatarDinheiro(
-                            saldo
-                        )}
-                    </strong>
-
-                </div>
-
-            `;
-
-
-            areaInicio
-                .insertAdjacentHTML(
-                    "beforeend",
-                    html
-                );
-
-
-            areaPagina
-                .insertAdjacentHTML(
-                    "beforeend",
-                    `
-
-                    <article class="conta-pagina">
-
-                        <div class="icone-conta">
-                            ${inicial}
-                        </div>
-
-                        <div class="conta-info">
-
-                            <strong>
-                                ${nome}
-                            </strong>
-
-                            <small>
-                                ${tipo}
-                            </small>
-
-                        </div>
-
-                        <strong
-                            class="valor-conta ${classe}"
-                        >
-                            ${formatarDinheiro(
-                                saldo
-                            )}
-                        </strong>
-
-                    </article>
-
-                    `
-                );
-
-
-            const option =
-                document
-                    .createElement(
-                        "option"
-                    );
-
-
-            option.value =
-                conta.id;
-
-            option.textContent =
-                conta.nome;
-
-
-            select.appendChild(
-                option
-            );
-        }
-    );
-}
-
-
-// ========================================================
-// CATEGORIAS
-// ========================================================
-
-function preencherCategoriasSelect(
-    tipo = ""
-) {
-
-    const select =
-        document
-            .getElementById(
-                "categoriaTransacao"
-            );
-
-
-    const atual =
-        select.value;
-
-
-    select.innerHTML = `
-
-        <option value="">
-            Sem categoria
-        </option>
-
-    `;
-
-
-    categoriasCache
-        .filter(
-            categoria =>
-                !tipo ||
-                categoria.tipo === tipo
-        )
-        .forEach(
-            categoria => {
-
-                const option =
-                    document
-                        .createElement(
-                            "option"
-                        );
-
-
-                option.value =
-                    categoria.id;
-
-                option.textContent =
-                    categoria.nome;
-
-
-                select.appendChild(
-                    option
-                );
-            }
-        );
-
-
-    if (
-        [
-            ...select.options
-        ]
-        .some(
-            option =>
-                option.value ===
-                atual
-        )
-    ) {
-
-        select.value =
-            atual;
-    }
-}
-
-
-function nomeCategoria(id) {
-
-    const categoria =
-        categoriasCache.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
-
-
-    return categoria
-        ? categoria.nome
-        : "Sem categoria";
-}
-
-
-function mostrarCategorias() {
-
-    const area =
-        document
-            .getElementById(
-                "listaCategorias"
-            );
-
-
-    area.innerHTML = "";
-
-
-    if (
-        categoriasCache.length === 0
-    ) {
-
-        area.innerHTML = `
-            <p>
-                Nenhuma categoria cadastrada.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    categoriasCache.forEach(
-        categoria => {
-
-            const tipo =
-                categoria.tipo ===
-                    "receita"
-                    ? "Receita"
-                    : "Despesa";
-
-
-            area.insertAdjacentHTML(
-                "beforeend",
-                `
-
-                <div class="categoria-item">
-
-                    <div>
-
-                        <strong>
-                            ${escaparHTML(
-                                categoria.nome
-                            )}
-                        </strong>
-
-                        <div class="categoria-tipo">
-                            ${tipo}
-                        </div>
-
-                    </div>
-
-                </div>
-
-                `
-            );
-        }
-    );
-
-
-    preencherCategoriasSelect(
-        document
-            .getElementById("tipo")
-            .value
-    );
-}
-
-
-// ========================================================
-// FATURAMENTO / CATEGORIAS
+// RESUMO POR CATEGORIA
 // ========================================================
 
 function mostrarResumoCategorias() {
@@ -2382,7 +3458,8 @@ function mostrarResumoCategorias() {
             );
 
 
-    area.innerHTML = "";
+    area.innerHTML =
+        "";
 
 
     const movimentos =
@@ -2397,7 +3474,7 @@ function mostrarResumoCategorias() {
 
 
     movimentos.forEach(
-        item => {
+        function(item) {
 
             const chave =
                 item.categoria_id
@@ -2408,21 +3485,28 @@ function mostrarResumoCategorias() {
 
 
             if (
-                !totais.has(chave)
+                !totais.has(
+                    chave
+                )
             ) {
 
                 totais.set(
                     chave,
                     {
-                        receitas: 0,
-                        despesas: 0
+                        receitas:
+                            0,
+
+                        despesas:
+                            0
                     }
                 );
             }
 
 
             const registro =
-                totais.get(chave);
+                totais.get(
+                    chave
+                );
 
 
             if (
@@ -2431,26 +3515,36 @@ function mostrarResumoCategorias() {
             ) {
 
                 registro.receitas +=
-                    numero(item.valor);
+                    numero(
+                        item.valor
+                    );
 
-            } else {
+            } else if (
+                item.tipo ===
+                "despesa"
+            ) {
 
                 registro.despesas +=
-                    numero(item.valor);
+                    numero(
+                        item.valor
+                    );
             }
         }
     );
 
 
     if (
-        totais.size === 0
+        totais.size ===
+        0
     ) {
 
         area.innerHTML = `
+
             <p>
                 Ainda não há movimentações
                 categorizadas neste mês.
             </p>
+
         `;
 
         return;
@@ -2458,10 +3552,10 @@ function mostrarResumoCategorias() {
 
 
     totais.forEach(
-        (
+        function(
             valores,
             chave
-        ) => {
+        ) {
 
             const nome =
                 chave === "sem"
@@ -2480,10 +3574,13 @@ function mostrarResumoCategorias() {
                     <div>
 
                         <strong>
-                            ${escaparHTML(nome)}
+                            ${escaparHTML(
+                                nome
+                            )}
                         </strong>
 
                         <small>
+
                             Receita:
                             ${formatarDinheiro(
                                 valores.receitas
@@ -2495,16 +3592,19 @@ function mostrarResumoCategorias() {
                             ${formatarDinheiro(
                                 valores.despesas
                             )}
+
                         </small>
 
                     </div>
 
+
                     <strong>
+
                         ${formatarDinheiro(
-                            valores.receitas
-                            -
+                            valores.receitas -
                             valores.despesas
                         )}
+
                     </strong>
 
                 </div>
@@ -2520,13 +3620,23 @@ function mostrarResumoCategorias() {
 // LANÇAMENTOS
 // ========================================================
 
-function nomeConta(id) {
+function nomeConta(
+    id
+) {
 
     const conta =
         contasCache.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        id
+                    )
+                );
+            }
         );
 
 
@@ -2536,13 +3646,18 @@ function nomeConta(id) {
 }
 
 
-function statusDoItem(item) {
+function statusDoItem(
+    item
+) {
 
     if (
-        estaVencida(item)
+        estaVencida(
+            item
+        )
     ) {
 
         return {
+
             texto:
                 "Vencida",
 
@@ -2553,7 +3668,9 @@ function statusDoItem(item) {
 
 
     if (
-        estaEfetivada(item)
+        estaEfetivada(
+            item
+        )
     ) {
 
         return {
@@ -2595,7 +3712,9 @@ function htmlLancamento(
 
 
     const status =
-        statusDoItem(item);
+        statusDoItem(
+            item
+        );
 
 
     const tags =
@@ -2608,20 +3727,6 @@ function htmlLancamento(
         nomeCategoria(
             item.categoria_id
         );
-
-
-    const descricao =
-        escaparHTML(
-            item.descricao
-        );
-
-
-    const observacao =
-        item.observacao
-            ? escaparHTML(
-                item.observacao
-            )
-            : "";
 
 
     let complemento = `
@@ -2645,36 +3750,53 @@ function htmlLancamento(
     `;
 
 
-    if (tags.length) {
+    if (
+        tags.length
+    ) {
 
         complemento += `
 
             <small>
+
                 #${tags
-                    .map(escaparHTML)
-                    .join(" #")}
+                    .map(
+                        escaparHTML
+                    )
+                    .join(
+                        " #"
+                    )}
+
             </small>
 
         `;
     }
 
 
-    if (observacao) {
+    if (
+        item.observacao
+    ) {
 
         complemento += `
 
             <small>
-                ${observacao}
+
+                ${escaparHTML(
+                    item.observacao
+                )}
+
             </small>
 
         `;
     }
 
 
-    let acoes = "";
+    let acoes =
+        "";
 
 
-    if (comAcoes) {
+    if (
+        comAcoes
+    ) {
 
         acoes = `
 
@@ -2689,8 +3811,11 @@ function htmlLancamento(
                     Editar
                 </button>
 
+
                 ${
-                    estaPendente(item)
+                    estaPendente(
+                        item
+                    )
                         ? `
 
                         <button
@@ -2713,6 +3838,7 @@ function htmlLancamento(
                         : ""
                 }
 
+
                 <button
                     type="button"
                     class="btn-excluir"
@@ -2732,13 +3858,11 @@ function htmlLancamento(
 
         <div class="lancamento">
 
-            <div
-                class="icone-lancamento ${
-                    despesa
-                        ? "despesa"
-                        : "receita"
-                }"
-            >
+            <div class="icone-lancamento ${
+                despesa
+                    ? "despesa"
+                    : "receita"
+            }">
 
                 ${
                     despesa
@@ -2752,7 +3876,11 @@ function htmlLancamento(
             <div class="lancamento-info">
 
                 <strong>
-                    ${descricao}
+
+                    ${escaparHTML(
+                        item.descricao
+                    )}
+
                 </strong>
 
                 ${complemento}
@@ -2817,7 +3945,7 @@ function htmlLancamento(
 
 
 function mostrarLancamentos(
-    lista = null
+    lista
 ) {
 
     const area =
@@ -2832,17 +3960,21 @@ function mostrarLancamentos(
         transacoesDoMes();
 
 
-    area.innerHTML = "";
+    area.innerHTML =
+        "";
 
 
     if (
-        dados.length === 0
+        dados.length ===
+        0
     ) {
 
         area.innerHTML = `
+
             <div class="card-app">
-                Nenhum lançamento neste mês.
+                Nenhum lançamento encontrado.
             </div>
+
         `;
 
         return;
@@ -2850,7 +3982,7 @@ function mostrarLancamentos(
 
 
     dados.forEach(
-        item => {
+        function(item) {
 
             area.insertAdjacentHTML(
                 "beforeend",
@@ -2873,30 +4005,32 @@ function mostrarUltimosLancamentos() {
             );
 
 
-    area.innerHTML = "";
+    area.innerHTML =
+        "";
 
 
     const lista =
         transacoesDoMes()
-            .slice(0, 5);
+            .slice(
+                0,
+                5
+            );
 
 
     if (
-        lista.length === 0
+        lista.length ===
+        0
     ) {
 
-        area.innerHTML = `
-            <p>
-                Nenhum lançamento neste mês.
-            </p>
-        `;
+        area.innerHTML =
+            "<p>Nenhum lançamento neste mês.</p>";
 
         return;
     }
 
 
     lista.forEach(
-        item => {
+        function(item) {
 
             area.insertAdjacentHTML(
                 "beforeend",
@@ -2915,7 +4049,9 @@ function mostrarUltimosLancamentos() {
 // ========================================================
 
 document
-    .getElementById("listaTransacoes")
+    .getElementById(
+        "listaTransacoes"
+    )
     .addEventListener(
         "click",
         async function(event) {
@@ -2926,7 +4062,9 @@ document
                 );
 
 
-            if (!botao) {
+            if (
+                !botao
+            ) {
                 return;
             }
 
@@ -2939,12 +4077,21 @@ document
 
             const item =
                 transacoesCache.find(
-                    item =>
-                        Number(item.id) === id
+                    function(item) {
+
+                        return (
+                            Number(
+                                item.id
+                            ) ===
+                            id
+                        );
+                    }
                 );
 
 
-            if (!item) {
+            if (
+                !item
+            ) {
                 return;
             }
 
@@ -2954,7 +4101,8 @@ document
 
 
             if (
-                acao === "editar"
+                acao ===
+                "editar"
             ) {
 
                 abrirFormularioTransacao(
@@ -2967,7 +4115,8 @@ document
 
 
             if (
-                acao === "efetivar"
+                acao ===
+                "efetivar"
             ) {
 
                 await efetivarTransacao(
@@ -2979,7 +4128,8 @@ document
 
 
             if (
-                acao === "excluir"
+                acao ===
+                "excluir"
             ) {
 
                 await excluirTransacao(
@@ -3002,7 +4152,9 @@ async function efetivarTransacao(
 
 
     if (
-        !confirm(texto)
+        !confirm(
+            texto
+        )
     ) {
         return;
     }
@@ -3010,7 +4162,9 @@ async function efetivarTransacao(
 
     const { error } =
         await supabaseClient
-            .from("transacoes")
+            .from(
+                "transacoes"
+            )
             .update({
                 status:
                     "efetivada",
@@ -3027,7 +4181,9 @@ async function efetivarTransacao(
             );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         alert(
             "Erro: " +
@@ -3056,7 +4212,9 @@ async function excluirTransacao(
 
 
     await supabaseClient
-        .from("transacao_tags")
+        .from(
+            "transacao_tags"
+        )
         .delete()
         .eq(
             "transacao_id",
@@ -3066,7 +4224,9 @@ async function excluirTransacao(
 
     const { error } =
         await supabaseClient
-            .from("transacoes")
+            .from(
+                "transacoes"
+            )
             .delete()
             .eq(
                 "id",
@@ -3074,7 +4234,9 @@ async function excluirTransacao(
             );
 
 
-    if (error) {
+    if (
+        error
+    ) {
 
         alert(
             "Não foi possível excluir: " +
@@ -3097,7 +4259,9 @@ function aplicarFiltros() {
 
     const busca =
         document
-            .getElementById("buscaTransacao")
+            .getElementById(
+                "buscaTransacao"
+            )
             .value
             .trim()
             .toLowerCase();
@@ -3105,96 +4269,135 @@ function aplicarFiltros() {
 
     const tipo =
         document
-            .getElementById("filtroTipo")
+            .getElementById(
+                "filtroTipo"
+            )
             .value;
 
 
     const status =
         document
-            .getElementById("filtroStatus")
+            .getElementById(
+                "filtroStatus"
+            )
             .value;
 
 
-    const lista =
-        transacoesDoMes()
-            .filter(
-                item => {
-
-                    const buscaOk =
-                        !busca
-                        ||
-                        String(
-                            item.descricao ||
-                            ""
-                        )
-                        .toLowerCase()
-                        .includes(busca)
-                        ||
-                        String(
-                            item.observacao ||
-                            ""
-                        )
-                        .toLowerCase()
-                        .includes(busca)
-                        ||
-                        nomeCategoria(
-                            item.categoria_id
-                        )
-                        .toLowerCase()
-                        .includes(busca)
-                        ||
-                        nomesTagsDaTransacao(
-                            item.id
-                        )
-                        .some(
-                            tag =>
-                                tag
-                                    .toLowerCase()
-                                    .includes(
-                                        busca
-                                    )
-                        );
+    let lista =
+        transacoesDoMes();
 
 
-                    const tipoOk =
-                        tipo === "todos"
-                        ||
-                        item.tipo === tipo;
+    if (
+        contaExtratoId !==
+        null
+    ) {
 
-
-                    let statusOk =
-                        true;
-
-
-                    if (
-                        status ===
-                        "pendente"
-                    ) {
-
-                        statusOk =
-                            estaPendente(
-                                item
-                            );
-
-                    } else if (
-                        status ===
-                        "efetivada"
-                    ) {
-
-                        statusOk =
-                            estaEfetivada(
-                                item
-                            );
-                    }
-
+        lista =
+            lista.filter(
+                function(item) {
 
                     return (
-                        buscaOk &&
-                        tipoOk &&
-                        statusOk
+                        Number(
+                            item.conta_id
+                        ) ===
+                        Number(
+                            contaExtratoId
+                        )
                     );
                 }
             );
+    }
+
+
+    lista =
+        lista.filter(
+            function(item) {
+
+                const buscaOk =
+                    !busca
+                    ||
+                    String(
+                        item.descricao ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .includes(
+                        busca
+                    )
+                    ||
+                    String(
+                        item.observacao ||
+                        ""
+                    )
+                    .toLowerCase()
+                    .includes(
+                        busca
+                    )
+                    ||
+                    nomeCategoria(
+                        item.categoria_id
+                    )
+                    .toLowerCase()
+                    .includes(
+                        busca
+                    )
+                    ||
+                    nomesTagsDaTransacao(
+                        item.id
+                    )
+                    .some(
+                        function(tag) {
+
+                            return tag
+                                .toLowerCase()
+                                .includes(
+                                    busca
+                                );
+                        }
+                    );
+
+
+                const tipoOk =
+                    tipo ===
+                        "todos"
+                    ||
+                    item.tipo ===
+                        tipo;
+
+
+                let statusOk =
+                    true;
+
+
+                if (
+                    status ===
+                    "pendente"
+                ) {
+
+                    statusOk =
+                        estaPendente(
+                            item
+                        );
+
+                } else if (
+                    status ===
+                    "efetivada"
+                ) {
+
+                    statusOk =
+                        estaEfetivada(
+                            item
+                        );
+                }
+
+
+                return (
+                    buscaOk &&
+                    tipoOk &&
+                    statusOk
+                );
+            }
+        );
 
 
     mostrarLancamentos(
@@ -3204,7 +4407,9 @@ function aplicarFiltros() {
 
 
 document
-    .getElementById("buscaTransacao")
+    .getElementById(
+        "buscaTransacao"
+    )
     .addEventListener(
         "input",
         aplicarFiltros
@@ -3212,7 +4417,9 @@ document
 
 
 document
-    .getElementById("filtroTipo")
+    .getElementById(
+        "filtroTipo"
+    )
     .addEventListener(
         "change",
         aplicarFiltros
@@ -3220,7 +4427,9 @@ document
 
 
 document
-    .getElementById("filtroStatus")
+    .getElementById(
+        "filtroStatus"
+    )
     .addEventListener(
         "change",
         aplicarFiltros
@@ -3243,14 +4452,14 @@ function atualizarInterface() {
 
     mostrarResumoCategorias();
 
-    mostrarLancamentos();
+    aplicarFiltros();
 
     mostrarUltimosLancamentos();
 }
 
 
 // ========================================================
-// CARREGAR TUDO
+// CARREGAR DADOS
 // ========================================================
 
 async function carregarDados() {
@@ -3284,6 +4493,86 @@ async function carregarDados() {
     atualizarInterface();
 }
 
+async function arquivarConta(
+    contaId
+) {
+
+    const conta =
+        contasCache.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                );
+            }
+        );
+
+
+    if (
+        !conta
+    ) {
+
+        alert(
+            "Conta não encontrada."
+        );
+
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            `Arquivar a conta "${conta.nome}"?\n\nOs lançamentos antigos serão preservados.`
+        );
+
+
+    if (
+        !confirmar
+    ) {
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient
+            .from(
+                "Contas"
+            )
+            .update({
+                ativo:
+                    false
+            })
+            .eq(
+                "id",
+                contaId
+            );
+
+
+    if (
+        error
+    ) {
+
+        alert(
+            "Erro ao arquivar conta: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await carregarDados();
+
+
+    alert(
+        "Conta arquivada."
+    );
+}
 
 // ========================================================
 // INICIAR
@@ -3295,13 +4584,17 @@ async function iniciar() {
 
 
     document
-        .getElementById("data")
+        .getElementById(
+            "data"
+        )
         .value =
         hoje();
 
 
     document
-        .getElementById("dataVencimento")
+        .getElementById(
+            "dataVencimento"
+        )
         .value =
         hoje();
 
@@ -3327,7 +4620,9 @@ async function iniciar() {
             data.session.user
         );
 
-        abrirPagina("inicio");
+        abrirPagina(
+            "inicio"
+        );
 
         await carregarDados();
 

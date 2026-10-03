@@ -1321,3 +1321,133 @@ button {
     }
 
 }
+/* MENU DE 3 PONTOS DOS LANÇAMENTOS */
+
+.menu-acoes-lancamento {
+    position: relative;
+    margin-top: 8px;
+}
+
+.btn-tres-pontos {
+    border: 0;
+    background: transparent;
+    font-size: 24px;
+    padding: 3px 10px;
+    border-radius: 50%;
+}
+
+.btn-tres-pontos:hover {
+    background: #f1f3f5;
+}
+
+.popup-acoes {
+    position: absolute;
+    left: 0;
+    top: 36px;
+
+    z-index: 50;
+
+    min-width: 220px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, .18);
+
+    overflow: hidden;
+}
+
+.popup-acoes button {
+    width: 100%;
+
+    border: 0;
+    background: white;
+
+    padding: 13px 16px;
+
+    text-align: left;
+}
+
+.popup-acoes button:hover {
+    background: #f5f7fa;
+}
+
+.popup-acoes .acao-excluir {
+    color: #e53935;
+}
+/* =========================================
+   MENU DAS CONTAS
+========================================= */
+
+.conta-lado-direito {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-conta {
+    position: relative;
+}
+
+.btn-menu-conta {
+    width: 36px;
+    height: 36px;
+
+    border: 0;
+    background: transparent;
+
+    border-radius: 50%;
+
+    font-size: 24px;
+
+    color: #666;
+}
+
+.btn-menu-conta:hover {
+    background: #f1f3f5;
+}
+
+.popup-conta {
+    position: absolute;
+
+    right: 0;
+    top: 40px;
+
+    z-index: 60;
+
+    min-width: 180px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, .18);
+
+    overflow: hidden;
+}
+
+.popup-conta button {
+    width: 100%;
+
+    border: 0;
+
+    background: white;
+
+    padding: 14px 18px;
+
+    text-align: left;
+
+    font-size: 16px;
+}
+
+.popup-conta button:hover {
+    background: #f5f7fa;
+}
