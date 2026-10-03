@@ -1547,3 +1547,53 @@ button {
 .popup-transacao .acao-excluir {
     color: #c62828;
 }
+
+/* FORMULÁRIO DE TRANSAÇÕES */
+
+.campo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.campo-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+.campo-form input,
+.campo-form select,
+.campo-form textarea {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 15px;
+}
+
+.campo-form textarea {
+    resize: vertical;
+}
+
+.linha-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+
+    .linha-form {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+}

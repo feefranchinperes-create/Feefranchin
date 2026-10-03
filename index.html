@@ -646,7 +646,142 @@
 
                     </div>
 
+<div class="campo-form">
+    <label for="descricao">Descrição</label>
+    <input
+        type="text"
+        id="descricao"
+        required
+    >
+</div>
 
+<div class="campo-form">
+    <label for="valor">Valor</label>
+    <input
+        type="number"
+        id="valor"
+        step="0.01"
+        min="0"
+        required
+    >
+</div>
+
+<div class="linha-form">
+
+    <div class="campo-form">
+        <label for="tipo">Tipo</label>
+
+        <select id="tipo">
+            <option value="despesa">
+                Despesa
+            </option>
+
+            <option value="receita">
+                Receita
+            </option>
+        </select>
+    </div>
+
+
+    <div class="campo-form">
+        <label for="status">
+            Situação
+        </label>
+
+        <select id="status"></select>
+    </div>
+
+</div>
+
+<div class="linha-form">
+
+    <div class="campo-form">
+        <label for="data">
+            Data
+        </label>
+
+        <input
+            type="date"
+            id="data"
+            required
+        >
+    </div>
+
+
+    <div class="campo-form">
+        <label for="dataVencimento">
+            Vencimento
+        </label>
+
+        <input
+            type="date"
+            id="dataVencimento"
+        >
+    </div>
+
+</div>
+
+<div
+    class="campo-form"
+    id="grupoDataPagamento"
+>
+    <label
+        for="dataPagamento"
+        id="labelDataPagamento"
+    >
+        Data do pagamento
+    </label>
+
+    <input
+        type="date"
+        id="dataPagamento"
+    >
+</div>
+
+<div class="campo-form">
+    <label for="contaTransacao">
+        Conta
+    </label>
+
+    <select
+        id="contaTransacao"
+        required
+    ></select>
+</div>
+
+<div class="campo-form">
+    <label for="categoriaTransacao">
+        Categoria
+    </label>
+
+    <select
+        id="categoriaTransacao"
+    ></select>
+</div>
+
+<div class="campo-form">
+    <label for="tagsTransacao">
+        Tags
+    </label>
+
+    <input
+        type="text"
+        id="tagsTransacao"
+        placeholder="Ex.: mercado, casa, mensal"
+    >
+</div>
+
+<div class="campo-form">
+    <label for="observacao">
+        Observação
+    </label>
+
+    <textarea
+        id="observacao"
+        rows="3"
+        placeholder="Informações adicionais"
+    ></textarea>
+</div>
                     <div class="campo-app">
 
                         <label>Tipo</label>

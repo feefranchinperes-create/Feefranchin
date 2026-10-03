@@ -873,6 +873,73 @@ document
 // MÊS
 // ========================================================
 
+function atualizarCampoPagamento() {
+
+    const tipo =
+        document
+            .getElementById("tipo")
+            .value;
+
+    const status =
+        document
+            .getElementById("status")
+            .value;
+
+    const grupo =
+        document
+            .getElementById("grupoDataPagamento");
+
+    const label =
+        document
+            .getElementById("labelDataPagamento");
+
+    const campo =
+        document
+            .getElementById("dataPagamento");
+
+
+    if (
+        tipo === "receita"
+    ) {
+
+        label.textContent =
+            "Data do recebimento";
+
+    } else {
+
+        label.textContent =
+            "Data do pagamento";
+    }
+
+
+    if (
+        status === "efetivada"
+    ) {
+
+        grupo
+            .classList
+            .remove("oculto");
+
+
+        if (
+            !campo.value
+        ) {
+
+            campo.value =
+                hoje();
+        }
+
+    } else {
+
+        grupo
+            .classList
+            .add("oculto");
+
+        campo.value =
+            "";
+    }
+}
+
 function atualizarNomeMes() {
 
     document
@@ -2383,10 +2450,19 @@ document
             preencherCategoriasSelect(
                 this.value
             );
+
+            atualizarCampoPagamento();
         }
     );
 
-
+document
+    .getElementById(
+        "status"
+    )
+    .addEventListener(
+        "change",
+        atualizarCampoPagamento
+    );
 function limparFormularioTransacao() {
 
     transacaoEditandoId =
@@ -2517,7 +2593,7 @@ function abrirFormularioTransacao(
             item.tipo
         );
 
-
+        atualizarCampoPagamento();
         document
             .getElementById(
                 "status"
@@ -4838,7 +4914,7 @@ async function iniciar() {
     preencherStatus(
         "despesa"
     );
-
+atualizarCampoPagamento();
 
     const { data } =
         await supabaseClient
