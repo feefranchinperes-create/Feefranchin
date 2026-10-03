@@ -4365,12 +4365,13 @@ document
                     "[data-acao]"
                 );
 
-
-            if (
-                !botao
-            ) {
+            if (!botao) {
                 return;
             }
+
+
+            const acao =
+                botao.dataset.acao;
 
 
             const id =
@@ -4379,6 +4380,52 @@ document
                 );
 
 
+            // ABRIR / FECHAR MENU ⋮
+            if (
+                acao ===
+                "abrir-menu"
+            ) {
+
+                document
+                    .querySelectorAll(
+                        ".popup-transacao"
+                    )
+                    .forEach(
+                        function(menu) {
+
+                            if (
+                                menu.id !==
+                                `menu-transacao-${id}`
+                            ) {
+
+                                menu
+                                    .classList
+                                    .add("oculto");
+                            }
+                        }
+                    );
+
+
+                const menu =
+                    document
+                        .getElementById(
+                            `menu-transacao-${id}`
+                        );
+
+
+                if (menu) {
+
+                    menu
+                        .classList
+                        .toggle("oculto");
+                }
+
+
+                return;
+            }
+
+
+            // DAQUI PARA BAIXO PRECISA DA TRANSAÇÃO
             const item =
                 transacoesCache.find(
                     function(item) {
@@ -4393,17 +4440,17 @@ document
                 );
 
 
-            if (
-                !item
-            ) {
+            if (!item) {
+
+                alert(
+                    "Lançamento não encontrado."
+                );
+
                 return;
             }
 
 
-            const acao =
-                botao.dataset.acao;
-
-
+            // EDITAR
             if (
                 acao ===
                 "editar"
@@ -4418,6 +4465,7 @@ document
             }
 
 
+            // PAGAR / RECEBER
             if (
                 acao ===
                 "efetivar"
@@ -4431,6 +4479,7 @@ document
             }
 
 
+            // EXCLUIR
             if (
                 acao ===
                 "excluir"
@@ -4439,6 +4488,8 @@ document
                 await excluirTransacao(
                     item
                 );
+
+                return;
             }
         }
     );

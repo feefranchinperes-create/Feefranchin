@@ -1596,4 +1596,16 @@ button {
         gap: 0;
     }
 
+}.lancamento,
+.lancamento-info {
+    overflow: visible;
+}
+
+.menu-transacao {
+    position: relative;
+    z-index: 20;
+}
+
+.popup-transacao {
+    z-index: 999;
 }
