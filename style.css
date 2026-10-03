@@ -1,0 +1,759 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --topo: #162235;
+
+    --texto: #1f2937;
+    --muted: #6b7280;
+    --borda: #e5e7eb;
+
+    --azul: #2563eb;
+    --azul-hover: #1d4ed8;
+
+    --verde: #15803d;
+    --verde-bg: #ecfdf3;
+
+    --vermelho: #dc2626;
+    --vermelho-bg: #fff1f2;
+
+    --laranja: #d97706;
+
+    --sombra:
+        0 8px 25px rgba(15, 23, 42, .06);
+}
+
+body {
+    margin: 0;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--texto);
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.oculto {
+    display: none !important;
+}
+
+.texto-suave {
+    color: var(--muted);
+}
+
+
+/* LOGIN */
+
+.tela-auth {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+
+    background: white;
+
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-shadow: var(--sombra);
+}
+
+.logo-auth {
+    width: 52px;
+    height: 52px;
+
+    background: var(--azul);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.auth-card h1 {
+    margin-bottom: 5px;
+}
+
+.auth-card label {
+    display: block;
+
+    margin-top: 16px;
+    margin-bottom: 6px;
+
+    font-weight: 600;
+}
+
+.auth-card input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+}
+
+.btn-full {
+    width: 100%;
+    margin-top: 16px;
+}
+
+
+/* TOPO */
+
+.topo {
+    background: var(--topo);
+    color: white;
+}
+
+.topo-interno {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 22px 24px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topo-interno h1 {
+    color: white;
+
+    margin: 0 0 4px;
+}
+
+.topo-interno small {
+    color: #cbd5e1;
+}
+
+.btn-sair {
+    background: white;
+    color: #111827;
+
+    border: 0;
+    border-radius: 8px;
+
+    padding: 9px 15px;
+}
+
+
+/* MENU */
+
+.menu {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 8px 24px 20px;
+
+    display: flex;
+    gap: 8px;
+}
+
+.menu-btn {
+    border: 0;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        .10
+    );
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+}
+
+.menu-btn:hover,
+.menu-btn.ativo {
+    background: rgba(
+        255,
+        255,
+        255,
+        .20
+    );
+}
+
+
+/* CONTEÚDO */
+
+.container {
+    max-width: 1200px;
+
+    margin: 30px auto;
+
+    padding: 0 24px 50px;
+}
+
+.pagina {
+    display: none;
+}
+
+.pagina.ativa {
+    display: block;
+}
+
+.cabecalho-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+.cabecalho-pagina h2 {
+    margin: 0 0 5px;
+}
+
+
+/* BOTÕES */
+
+.btn {
+    border: 0;
+
+    padding: 11px 18px;
+
+    border-radius: 9px;
+
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--azul);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--azul-hover);
+}
+
+.btn-light {
+    background: white;
+
+    border:
+        1px solid var(--borda);
+
+    color: var(--texto);
+}
+
+.link-btn {
+    border: 0;
+    background: transparent;
+
+    color: var(--azul);
+
+    font-weight: 600;
+}
+
+
+/* RESUMO */
+
+.resumo {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.card-resumo {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    border:
+        1px solid var(--borda);
+
+    box-shadow: var(--sombra);
+}
+
+.card-resumo span,
+.card-resumo small {
+    display: block;
+
+    color: var(--muted);
+}
+
+.card-resumo strong {
+    display: block;
+
+    margin: 8px 0;
+
+    font-size: 26px;
+}
+
+.card-resumo.saldo strong {
+    color: var(--azul);
+}
+
+.card-resumo.receita strong {
+    color: var(--verde);
+}
+
+.card-resumo.despesa strong {
+    color: var(--vermelho);
+}
+
+
+/* BLOCOS */
+
+.bloco {
+    margin-top: 34px;
+}
+
+.bloco-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+.bloco-titulo h3 {
+    margin: 0;
+}
+
+
+/* AÇÕES RÁPIDAS */
+
+.acoes-rapidas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.acao {
+    border: 1px solid var(--borda);
+
+    background: white;
+
+    padding: 17px;
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    text-align: left;
+
+    box-shadow:
+        0 4px 15px
+        rgba(15, 23, 42, .04);
+}
+
+.acao:hover {
+    transform: translateY(-1px);
+}
+
+.acao-icone {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.acao strong,
+.acao small {
+    display: block;
+}
+
+.acao small {
+    color: var(--muted);
+
+    margin-top: 3px;
+}
+
+.acao.receita .acao-icone {
+    background: var(--verde-bg);
+    color: var(--verde);
+}
+
+.acao.despesa .acao-icone {
+    background: var(--vermelho-bg);
+    color: var(--vermelho);
+}
+
+.acao.conta .acao-icone {
+    background: #eff6ff;
+    color: var(--azul);
+}
+
+
+/* CONTAS INÍCIO */
+
+.contas-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+}
+
+.conta-inicio-card {
+    background: white;
+
+    padding: 19px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid var(--borda);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(15, 23, 42, .04);
+}
+
+.conta-inicio-card div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.conta-inicio-card small {
+    color: var(--muted);
+}
+
+.conta-inicio-card > strong {
+    font-size: 20px;
+}
+
+
+/* PAINÉIS */
+
+.painel {
+    background: white;
+
+    padding: 24px;
+
+    border-radius: 16px;
+
+    border:
+        1px solid var(--borda);
+
+    box-shadow: var(--sombra);
+
+    margin-bottom: 24px;
+}
+
+.painel h3 {
+    margin-top: 0;
+}
+
+
+/* FORMULÁRIO */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+.campo-grande {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: 600;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    padding: 11px;
+
+    background: white;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+
+    border-color: var(--azul);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, .10);
+}
+
+.acoes-form {
+    margin-top: 20px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+
+/* FILTROS */
+
+.filtros {
+    display: grid;
+
+    grid-template-columns:
+        1fr 180px;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.filtros input,
+.filtros select {
+    padding: 11px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: white;
+}
+
+
+/* TABELA */
+
+.tabela-box {
+    background: white;
+
+    border-radius: 15px;
+
+    border:
+        1px solid var(--borda);
+
+    overflow-x: auto;
+
+    box-shadow:
+        0 5px 18px
+        rgba(15, 23, 42, .04);
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid #eef0f3;
+}
+
+th {
+    background: #f8fafc;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+td {
+    font-size: 14px;
+}
+
+.tipo-receita {
+    color: var(--verde);
+
+    font-weight: 600;
+}
+
+.tipo-despesa {
+    color: var(--vermelho);
+
+    font-weight: 600;
+}
+
+
+/* EXCLUIR */
+
+.btn-excluir {
+    background: transparent;
+
+    border: 0;
+
+    color: var(--vermelho);
+
+    font-weight: 600;
+}
+
+
+/* CONTAS */
+
+.lista-contas {
+    display: grid;
+    gap: 16px;
+}
+
+.conta-card {
+    background: white;
+
+    border:
+        1px solid var(--borda);
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(15, 23, 42, .04);
+}
+
+.conta-card h3 {
+    margin-top: 0;
+}
+
+.conta-card p {
+    margin: 7px 0;
+}
+
+
+/* SALDOS */
+
+.saldo-positivo {
+    color: var(--verde) !important;
+}
+
+.saldo-negativo {
+    color: var(--vermelho) !important;
+}
+
+
+/* MENSAGENS */
+
+.mensagem {
+    margin-top: 15px;
+
+    font-weight: 600;
+}
+
+
+/* CELULAR */
+
+@media (
+    max-width: 700px
+) {
+
+    .topo-interno {
+        padding:
+            18px 15px 8px;
+    }
+
+    .menu {
+        padding:
+            8px 15px 15px;
+
+        overflow-x: auto;
+    }
+
+    .container {
+        margin-top: 20px;
+
+        padding:
+            0 14px 30px;
+    }
+
+    .resumo,
+    .acoes-rapidas,
+    .contas-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-grande {
+        grid-column: auto;
+    }
+
+    .cabecalho-pagina {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .filtros {
+        grid-template-columns: 1fr;
+    }
+
+    .acoes-form {
+        flex-direction: column;
+    }
+
+    .acoes-form button {
+        width: 100%;
+    }
+
+}

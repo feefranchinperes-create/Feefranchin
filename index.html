@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minhas Finanças</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <section id="telaLogin" class="tela-auth">
+
+        <div class="auth-card">
+
+            <div class="logo-auth">MF</div>
+
+            <h1>Minhas Finanças</h1>
+
+            <p class="texto-suave">
+                Controle sua vida financeira em um só lugar.
+            </p>
+
+            <form id="formLogin">
+
+                <label>E-mail</label>
+
+                <input
+                    type="email"
+                    id="emailLogin"
+                    required
+                >
+
+                <label>Senha</label>
+
+                <input
+                    type="password"
+                    id="senhaLogin"
+                    required
+                >
+
+                <button
+                    class="btn btn-primary btn-full"
+                    type="submit"
+                >
+                    Entrar
+                </button>
+
+            </form>
+
+            <button
+                id="btnMostrarCadastro"
+                class="btn btn-light btn-full"
+                type="button"
+            >
+                Criar uma conta
+            </button>
+
+            <p
+                id="mensagemLogin"
+                class="mensagem"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CADASTRO -->
+    <section id="telaCadastro" class="tela-auth oculto">
+
+        <div class="auth-card">
+
+            <div class="logo-auth">MF</div>
+
+            <h1>Criar conta</h1>
+
+            <form id="formCadastro">
+
+                <label>E-mail</label>
+
+                <input
+                    type="email"
+                    id="emailCadastro"
+                    required
+                >
+
+                <label>Senha</label>
+
+                <input
+                    type="password"
+                    id="senhaCadastro"
+                    minlength="6"
+                    required
+                >
+
+                <button
+                    class="btn btn-primary btn-full"
+                    type="submit"
+                >
+                    Cadastrar
+                </button>
+
+            </form>
+
+            <button
+                id="btnVoltarLogin"
+                class="btn btn-light btn-full"
+                type="button"
+            >
+                Voltar
+            </button>
+
+            <p
+                id="mensagemCadastro"
+                class="mensagem"
+            ></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SISTEMA -->
+    <div id="sistema" class="oculto">
+
+        <header class="topo">
+
+            <div class="topo-interno">
+
+                <div>
+                    <h1>Minhas Finanças</h1>
+
+                    <small id="emailUsuario">
+                        Usuário
+                    </small>
+                </div>
+
+                <button
+                    id="btnSair"
+                    class="btn-sair"
+                    type="button"
+                >
+                    Sair
+                </button>
+
+            </div>
+
+
+            <nav class="menu">
+
+                <button
+                    data-pagina="inicio"
+                    class="menu-btn ativo"
+                >
+                    Início
+                </button>
+
+                <button
+                    data-pagina="transacoes"
+                    class="menu-btn"
+                >
+                    Transações
+                </button>
+
+                <button
+                    data-pagina="contas"
+                    class="menu-btn"
+                >
+                    Contas
+                </button>
+
+            </nav>
+
+        </header>
+
+
+        <main class="container">
+
+            <!-- INÍCIO -->
+            <section id="inicio" class="pagina ativa">
+
+                <div class="cabecalho-pagina">
+
+                    <div>
+                        <h2>Visão geral</h2>
+
+                        <p class="texto-suave">
+                            Resumo da sua vida financeira.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- RESUMO -->
+                <div class="resumo">
+
+                    <article class="card-resumo saldo">
+
+                        <span>Saldo total</span>
+
+                        <strong id="saldoTotal">
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Todas as contas
+                        </small>
+
+                    </article>
+
+
+                    <article class="card-resumo receita">
+
+                        <span>Receitas</span>
+
+                        <strong id="totalReceitas">
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Total recebido
+                        </small>
+
+                    </article>
+
+
+                    <article class="card-resumo despesa">
+
+                        <span>Despesas</span>
+
+                        <strong id="totalDespesas">
+                            R$ 0,00
+                        </strong>
+
+                        <small>
+                            Total gasto
+                        </small>
+
+                    </article>
+
+                </div>
+
+
+                <!-- AÇÕES RÁPIDAS -->
+                <section class="bloco">
+
+                    <div class="bloco-titulo">
+                        <h3>Ações rápidas</h3>
+                    </div>
+
+                    <div class="acoes-rapidas">
+
+                        <button
+                            id="btnReceitaRapida"
+                            class="acao receita"
+                            type="button"
+                        >
+                            <span class="acao-icone">+</span>
+
+                            <div>
+                                <strong>Nova receita</strong>
+                                <small>Registrar entrada</small>
+                            </div>
+                        </button>
+
+
+                        <button
+                            id="btnDespesaRapida"
+                            class="acao despesa"
+                            type="button"
+                        >
+                            <span class="acao-icone">−</span>
+
+                            <div>
+                                <strong>Nova despesa</strong>
+                                <small>Registrar gasto</small>
+                            </div>
+                        </button>
+
+
+                        <button
+                            id="btnContaRapida"
+                            class="acao conta"
+                            type="button"
+                        >
+                            <span class="acao-icone">+</span>
+
+                            <div>
+                                <strong>Nova conta</strong>
+                                <small>Banco ou carteira</small>
+                            </div>
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CONTAS -->
+                <section class="bloco">
+
+                    <div class="bloco-titulo">
+
+                        <h3>Minhas contas</h3>
+
+                        <button
+                            id="btnVerContas"
+                            class="link-btn"
+                            type="button"
+                        >
+                            Ver todas
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="contasInicio"
+                        class="contas-grid"
+                    ></div>
+
+                </section>
+
+
+                <!-- ÚLTIMOS LANÇAMENTOS -->
+                <section class="bloco">
+
+                    <div class="bloco-titulo">
+
+                        <h3>Últimos lançamentos</h3>
+
+                        <button
+                            id="btnVerTransacoes"
+                            class="link-btn"
+                            type="button"
+                        >
+                            Ver todos
+                        </button>
+
+                    </div>
+
+
+                    <div class="tabela-box">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Conta</th>
+                                    <th>Tipo</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="ultimosLancamentos"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+
+            <!-- TRANSAÇÕES -->
+            <section id="transacoes" class="pagina">
+
+                <div class="cabecalho-pagina">
+
+                    <div>
+                        <h2>Transações</h2>
+
+                        <p class="texto-suave">
+                            Consulte receitas e despesas.
+                        </p>
+                    </div>
+
+                    <button
+                        id="btnNovaTransacao"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        + Nova transação
+                    </button>
+
+                </div>
+
+
+                <!-- FORMULÁRIO -->
+                <div
+                    id="areaFormularioTransacao"
+                    class="painel oculto"
+                >
+
+                    <div class="painel-titulo">
+
+                        <h3 id="tituloFormTransacao">
+                            Nova transação
+                        </h3>
+
+                    </div>
+
+
+                    <form id="formTransacao">
+
+                        <div class="form-grid">
+
+                            <div class="campo campo-grande">
+
+                                <label>Descrição</label>
+
+                                <input
+                                    id="descricao"
+                                    type="text"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>Valor</label>
+
+                                <input
+                                    id="valor"
+                                    type="number"
+                                    min="0.01"
+                                    step="0.01"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>Data</label>
+
+                                <input
+                                    id="data"
+                                    type="date"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>Tipo</label>
+
+                                <select
+                                    id="tipo"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="receita">
+                                        Receita
+                                    </option>
+
+                                    <option value="despesa">
+                                        Despesa
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>Conta</label>
+
+                                <select
+                                    id="contaTransacao"
+                                    required
+                                ></select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="acoes-form">
+
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                            >
+                                Salvar
+                            </button>
+
+                            <button
+                                id="btnCancelarTransacao"
+                                class="btn btn-light"
+                                type="button"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <p
+                        id="mensagemTransacao"
+                        class="mensagem"
+                    ></p>
+
+                </div>
+
+
+                <!-- FILTROS -->
+                <div class="filtros">
+
+                    <input
+                        id="buscaTransacao"
+                        type="search"
+                        placeholder="Buscar lançamento..."
+                    >
+
+                    <select id="filtroTipo">
+
+                        <option value="todos">
+                            Todos
+                        </option>
+
+                        <option value="receita">
+                            Receitas
+                        </option>
+
+                        <option value="despesa">
+                            Despesas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="tabela-box">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Conta</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="listaTransacoes"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTAS -->
+            <section id="contas" class="pagina">
+
+                <div class="cabecalho-pagina">
+
+                    <div>
+
+                        <h2>Contas</h2>
+
+                        <p class="texto-suave">
+                            Bancos, carteiras e dinheiro.
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="btnNovaConta"
+                        class="btn btn-primary"
+                        type="button"
+                    >
+                        + Nova conta
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="areaFormularioConta"
+                    class="painel oculto"
+                >
+
+                    <h3>Nova conta</h3>
+
+                    <form id="formConta">
+
+                        <div class="form-grid">
+
+                            <div class="campo campo-grande">
+
+                                <label>
+                                    Nome da conta
+                                </label>
+
+                                <input
+                                    id="nomeConta"
+                                    type="text"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>Tipo</label>
+
+                                <select
+                                    id="tipoConta"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="corrente">
+                                        Conta corrente
+                                    </option>
+
+                                    <option value="poupanca">
+                                        Poupança
+                                    </option>
+
+                                    <option value="dinheiro">
+                                        Dinheiro
+                                    </option>
+
+                                    <option value="outro">
+                                        Outro
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="campo">
+
+                                <label>
+                                    Saldo inicial
+                                </label>
+
+                                <input
+                                    id="saldoInicial"
+                                    type="number"
+                                    step="0.01"
+                                    value="0"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="acoes-form">
+
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                            >
+                                Salvar conta
+                            </button>
+
+                            <button
+                                id="btnCancelarConta"
+                                class="btn btn-light"
+                                type="button"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    <p
+                        id="mensagemConta"
+                        class="mensagem"
+                    ></p>
+
+                </div>
+
+
+                <div
+                    id="listaContas"
+                    class="lista-contas"
+                ></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="./script.js"></script>
+
+</body>
+</html>
