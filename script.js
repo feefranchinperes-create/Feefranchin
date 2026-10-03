@@ -3917,8 +3917,7 @@ function statusDoItem(
     };
 }
 
-
-function htmlLancamento(
+    function htmlLancamento(
     item,
     comAcoes = true
 ) {
@@ -4012,61 +4011,157 @@ function htmlLancamento(
 
 
     if (
-    comAcoes
-) {
+        comAcoes
+    ) {
 
-    acoes = `
+        acoes = `
 
-        <div class="menu-transacao">
-
-            <button
-                type="button"
-                class="btn-menu-transacao"
-                data-acao="abrir-menu"
-                data-id="${item.id}"
-            >
-                ⋮
-            </button>
-
-            <div
-                id="menu-transacao-${item.id}"
-                class="popup-transacao oculto"
-            >
+            <div class="menu-transacao">
 
                 <button
                     type="button"
-                    data-acao="editar"
+                    class="btn-menu-transacao"
+                    data-acao="abrir-menu"
                     data-id="${item.id}"
                 >
-                    Editar
+                    ⋮
                 </button>
+
+
+                <div
+                    id="menu-transacao-${item.id}"
+                    class="popup-transacao oculto"
+                >
+
+                    <button
+                        type="button"
+                        data-acao="editar"
+                        data-id="${item.id}"
+                    >
+                        Editar
+                    </button>
+
+
+                    ${
+                        estaPendente(item)
+                            ? `
+
+                            <button
+                                type="button"
+                                data-acao="efetivar"
+                                data-id="${item.id}"
+                            >
+                                ${
+                                    item.tipo ===
+                                    "receita"
+                                        ? "Receber"
+                                        : "Pagar"
+                                }
+                            </button>
+
+                            `
+                            : ""
+                    }
+
+
+                    <button
+                        type="button"
+                        data-acao="excluir"
+                        data-id="${item.id}"
+                        class="acao-excluir"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    return `
+
+        <div class="lancamento">
+
+            <div class="icone-lancamento ${
+                despesa
+                    ? "despesa"
+                    : "receita"
+            }">
 
                 ${
-                    estaPendente(item)
-                        ? `
-                        <button
-                            type="button"
-                            data-acao="efetivar"
-                            data-id="${item.id}"
-                        >
-                            ${
-                                item.tipo === "receita"
-                                    ? "Receber"
-                                    : "Pagar"
-                            }
-                        </button>
-                        `
-                        : ""
+                    despesa
+                        ? "−"
+                        : "+"
                 }
 
-                <button
-                    type="button"
-                    data-acao="excluir"
-                    data-id="${item.id}"
-                    class="acao-excluir"
+            </div>
+
+
+            <div class="lancamento-info">
+
+                <strong>
+
+                    ${escaparHTML(
+                        item.descricao
+                    )}
+
+                </strong>
+
+                ${complemento}
+
+                <span
+                    class="badge-status ${
+                        status.classe
+                    }"
                 >
-                    Excluir
-                </button>
+                    ${status.texto}
+                </span>
+
+                ${acoes}
+
+            </div>
+
+
+            <div class="lancamento-valor">
+
+                <strong
+                    class="${
+                        despesa
+                            ? "saldo-negativo"
+                            : "saldo-positivo"
+                    }"
+                >
+
+                    ${
+                        despesa
+                            ? "− "
+                            : "+ "
+                    }
+
+                    ${formatarDinheiro(
+                        item.valor
+                    )}
+
+                </strong>
+
+
+                <small>
+
+                    ${
+                        item.data_vencimento
+                            ? "Venc. " +
+                              formatarData(
+                                  item.data_vencimento
+                              )
+                            : formatarData(
+                                  item.data
+                              )
+                    }
+
+                </small>
 
             </div>
 
@@ -4074,6 +4169,28 @@ function htmlLancamento(
 
     `;
 }
+
+
+
+function mostrarLancamentos(
+    lista
+) {
+
+    const area =
+        document
+            .getElementById(
+                "listaTransacoes"
+            );
+
+
+    const dados =
+        lista ||
+        transacoesDoMes();
+
+
+    area.innerHTML =
+        "";
+
 
     if (
         dados.length ===
@@ -4209,51 +4326,6 @@ document
 
             const acao =
                 botao.dataset.acao;
-
-                if (
-    acao ===
-    "abrir-menu"
-) {
-
-    document
-        .querySelectorAll(
-            ".popup-transacao"
-        )
-        .forEach(
-            function(menu) {
-
-                if (
-                    menu.id !==
-                    `menu-transacao-${id}`
-                ) {
-
-                    menu
-                        .classList
-                        .add("oculto");
-                }
-            }
-        );
-
-
-    const menu =
-        document
-            .getElementById(
-                `menu-transacao-${id}`
-            );
-
-
-    if (
-        menu
-    ) {
-
-        menu
-            .classList
-            .toggle("oculto");
-    }
-
-
-    return;
-}
 
 
             if (
