@@ -12,17 +12,15 @@ const supabaseClient =
     );
 
 
-// ==========================================
-// ESTADO DO SISTEMA
-// ==========================================
-
 let contasCache = [];
 let transacoesCache = [];
 
+let mesAtual =
+    new Date().getMonth();
 
-// ==========================================
-// ELEMENTOS
-// ==========================================
+let anoAtual =
+    new Date().getFullYear();
+
 
 const telaLogin =
     document.getElementById(
@@ -40,9 +38,9 @@ const sistema =
     );
 
 
-// ==========================================
-// LOGIN / CADASTRO
-// ==========================================
+// ================================
+// LOGIN
+// ================================
 
 function mostrarLogin() {
 
@@ -99,23 +97,17 @@ document
     .getElementById(
         "btnMostrarCadastro"
     )
-    .addEventListener(
-        "click",
-        mostrarCadastro
-    );
+    .onclick =
+    mostrarCadastro;
 
 
 document
     .getElementById(
         "btnVoltarLogin"
     )
-    .addEventListener(
-        "click",
-        mostrarLogin
-    );
+    .onclick =
+    mostrarLogin;
 
-
-// CADASTRO
 
 document
     .getElementById(
@@ -127,12 +119,14 @@ document
 
             event.preventDefault();
 
+
             const email =
                 document
                     .getElementById(
                         "emailCadastro"
                     )
                     .value;
+
 
             const password =
                 document
@@ -141,15 +135,12 @@ document
                     )
                     .value;
 
+
             const mensagem =
                 document
                     .getElementById(
                         "mensagemCadastro"
                     );
-
-
-            mensagem.textContent =
-                "Criando conta...";
 
 
             const { error } =
@@ -161,25 +152,15 @@ document
                     });
 
 
-            if (error) {
-
-                mensagem.textContent =
-                    "Erro: " +
-                    error.message;
-
-                return;
-
-            }
-
-
             mensagem.textContent =
-                "Cadastro realizado.";
+                error
+                ? "Erro: " +
+                  error.message
+                : "Cadastro realizado.";
 
         }
     );
 
-
-// LOGIN
 
 document
     .getElementById(
@@ -191,12 +172,14 @@ document
 
             event.preventDefault();
 
+
             const email =
                 document
                     .getElementById(
                         "emailLogin"
                     )
                     .value;
+
 
             const password =
                 document
@@ -205,15 +188,12 @@ document
                     )
                     .value;
 
+
             const mensagem =
                 document
                     .getElementById(
                         "mensagemLogin"
                     );
-
-
-            mensagem.textContent =
-                "Entrando...";
 
 
             const { data, error } =
@@ -247,7 +227,9 @@ document
             );
 
 
-            abrirPagina("inicio");
+            abrirPagina(
+                "inicio"
+            );
 
 
             await carregarDados();
@@ -256,50 +238,95 @@ document
     );
 
 
-// SAIR
-
 document
     .getElementById(
         "btnSair"
     )
-    .addEventListener(
-        "click",
-        async function() {
+    .onclick =
+    async function() {
 
-            await supabaseClient
-                .auth
-                .signOut();
+        await supabaseClient
+            .auth
+            .signOut();
 
 
-            mostrarLogin();
+        mostrarLogin();
 
-        }
+    };
+
+
+// ================================
+// MENU LATERAL
+// ================================
+
+const menuLateral =
+    document.getElementById(
+        "menuLateral"
+    );
+
+const menuOverlay =
+    document.getElementById(
+        "menuOverlay"
     );
 
 
-// ==========================================
+function abrirMenu() {
+
+    menuLateral
+        .classList
+        .add("aberto");
+
+    menuOverlay
+        .classList
+        .remove("oculto");
+
+}
+
+
+function fecharMenu() {
+
+    menuLateral
+        .classList
+        .remove("aberto");
+
+    menuOverlay
+        .classList
+        .add("oculto");
+
+}
+
+
+document
+    .getElementById(
+        "btnMenu"
+    )
+    .onclick =
+    abrirMenu;
+
+
+menuOverlay.onclick =
+    fecharMenu;
+
+
+// ================================
 // USUÁRIO
-// ==========================================
+// ================================
 
 function atualizarUsuario(
     usuario
 ) {
 
-    const elemento =
-        document.getElementById(
-            "emailUsuario"
-        );
-
-
-    if (
-        elemento &&
-        usuario
-    ) {
-
-        elemento.textContent =
-            usuario.email;
-
+    if (!usuario) {
+        return;
     }
+
+
+    document
+        .getElementById(
+            "emailUsuario"
+        )
+        .textContent =
+        usuario.email;
 
 }
 
@@ -317,251 +344,238 @@ async function pegarUsuario() {
 }
 
 
-// ==========================================
-// NAVEGAÇÃO
-// ==========================================
+// ================================
+// PÁGINAS
+// ================================
 
-const paginas =
-    document.querySelectorAll(
-        ".pagina"
-    );
+const titulos = {
 
+    inicio:
+        "Resumo",
 
-const botoesMenu =
-    document.querySelectorAll(
-        "[data-pagina]"
-    );
+    contas:
+        "Contas",
+
+    transacoes:
+        "Transações"
+
+};
 
 
 function abrirPagina(
     nome
 ) {
 
-    paginas.forEach(
-        function(pagina) {
-
-            pagina.classList.remove(
-                "ativa"
-            );
-
-        }
-    );
+    document
+        .querySelectorAll(
+            ".pagina"
+        )
+        .forEach(
+            pagina =>
+                pagina.classList
+                    .remove(
+                        "ativa"
+                    )
+        );
 
 
     document
-        .getElementById(nome)
-        .classList.add("ativa");
+        .getElementById(
+            nome
+        )
+        .classList
+        .add(
+            "ativa"
+        );
 
 
-    botoesMenu.forEach(
-        function(botao) {
+    document
+        .querySelectorAll(
+            "[data-pagina]"
+        )
+        .forEach(
+            botao =>
+                botao.classList
+                    .toggle(
+                        "ativo",
+                        botao.dataset
+                            .pagina ===
+                            nome
+                    )
+        );
 
-            botao.classList.toggle(
-                "ativo",
-                botao.dataset.pagina ===
-                    nome
-            );
 
-        }
-    );
+    document
+        .getElementById(
+            "tituloPagina"
+        )
+        .textContent =
+        titulos[nome];
+
+
+    document
+        .querySelector(
+            ".botao-home"
+        )
+        .style.display =
+        nome === "inicio"
+            ? "block"
+            : "none";
+
+
+    fecharMenu();
 
 }
 
 
-botoesMenu.forEach(
-    function(botao) {
+document
+    .querySelectorAll(
+        "[data-pagina]"
+    )
+    .forEach(
+        function(botao) {
 
-        botao.addEventListener(
-            "click",
+            botao.onclick =
             function() {
 
                 abrirPagina(
                     botao.dataset.pagina
                 );
 
-            }
-        );
+            };
 
-    }
-);
+        }
+    );
 
-
-// ==========================================
-// ATALHOS INÍCIO
-// ==========================================
 
 document
     .getElementById(
         "btnVerContas"
     )
-    .addEventListener(
-        "click",
-        function() {
-
-            abrirPagina(
-                "contas"
-            );
-
-        }
-    );
+    .onclick =
+    () =>
+        abrirPagina(
+            "contas"
+        );
 
 
 document
     .getElementById(
         "btnVerTransacoes"
     )
-    .addEventListener(
-        "click",
-        function() {
-
-            abrirPagina(
-                "transacoes"
-            );
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "btnReceitaRapida"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            abrirFormularioTransacao(
-                "receita"
-            );
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "btnDespesaRapida"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            abrirFormularioTransacao(
-                "despesa"
-            );
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "btnContaRapida"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            abrirPagina(
-                "contas"
-            );
-
-
-            document
-                .getElementById(
-                    "areaFormularioConta"
-                )
-                .classList.remove(
-                    "oculto"
-                );
-
-        }
-    );
-
-
-// ==========================================
-// FORM TRANSAÇÃO
-// ==========================================
-
-const areaFormularioTransacao =
-    document.getElementById(
-        "areaFormularioTransacao"
-    );
-
-
-function abrirFormularioTransacao(
-    tipoSelecionado = ""
-) {
-
-    abrirPagina(
-        "transacoes"
-    );
-
-
-    areaFormularioTransacao
-        .classList.remove(
-            "oculto"
+    .onclick =
+    () =>
+        abrirPagina(
+            "transacoes"
         );
 
 
-    document
-        .getElementById(
-            "tipo"
-        )
-        .value =
-        tipoSelecionado;
+// ================================
+// MÊS
+// ================================
+
+const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+];
 
 
+function atualizarMes() {
+
     document
         .getElementById(
-            "tituloFormTransacao"
+            "nomeMes"
         )
         .textContent =
-        tipoSelecionado ===
-            "receita"
-            ? "Nova receita"
-            : tipoSelecionado ===
-              "despesa"
-            ? "Nova despesa"
-            : "Nova transação";
+        meses[mesAtual];
+
+
+    carregarDados();
 
 }
 
 
 document
     .getElementById(
-        "btnNovaTransacao"
+        "mesAnterior"
     )
-    .addEventListener(
-        "click",
-        function() {
+    .onclick =
+    function() {
 
-            abrirFormularioTransacao();
+        mesAtual--;
+
+        if (mesAtual < 0) {
+
+            mesAtual = 11;
+            anoAtual--;
 
         }
+
+        atualizarMes();
+
+    };
+
+
+document
+    .getElementById(
+        "mesSeguinte"
+    )
+    .onclick =
+    function() {
+
+        mesAtual++;
+
+        if (mesAtual > 11) {
+
+            mesAtual = 0;
+            anoAtual++;
+
+        }
+
+        atualizarMes();
+
+    };
+
+
+// ================================
+// BOTÃO +
+// ================================
+
+const menuMais =
+    document.getElementById(
+        "menuMais"
     );
 
 
 document
     .getElementById(
-        "btnCancelarTransacao"
+        "btnMais"
     )
-    .addEventListener(
-        "click",
-        function() {
+    .onclick =
+    function() {
 
-            areaFormularioTransacao
-                .classList.add(
-                    "oculto"
-                );
+        menuMais
+            .classList
+            .toggle(
+                "oculto"
+            );
 
-        }
-    );
+    };
 
 
-// ==========================================
+// ================================
 // FORM CONTA
-// ==========================================
+// ================================
 
 const areaFormularioConta =
     document.getElementById(
@@ -573,39 +587,176 @@ document
     .getElementById(
         "btnNovaConta"
     )
-    .addEventListener(
-        "click",
-        function() {
+    .onclick =
+    function() {
 
-            areaFormularioConta
-                .classList.remove(
-                    "oculto"
-                );
+        areaFormularioConta
+            .classList
+            .remove(
+                "oculto"
+            );
 
-        }
-    );
+    };
+
+
+document
+    .getElementById(
+        "btnContaRapida"
+    )
+    .onclick =
+    function() {
+
+        menuMais
+            .classList
+            .add(
+                "oculto"
+            );
+
+        abrirPagina(
+            "contas"
+        );
+
+        areaFormularioConta
+            .classList
+            .remove(
+                "oculto"
+            );
+
+    };
 
 
 document
     .getElementById(
         "btnCancelarConta"
     )
-    .addEventListener(
-        "click",
-        function() {
+    .onclick =
+    function() {
 
-            areaFormularioConta
-                .classList.add(
-                    "oculto"
-                );
+        areaFormularioConta
+            .classList
+            .add(
+                "oculto"
+            );
 
-        }
+    };
+
+
+// ================================
+// FORM TRANSAÇÃO
+// ================================
+
+const areaFormularioTransacao =
+    document.getElementById(
+        "areaFormularioTransacao"
     );
 
 
-// ==========================================
+function abrirTransacao(
+    tipo = ""
+) {
+
+    abrirPagina(
+        "transacoes"
+    );
+
+
+    areaFormularioTransacao
+        .classList
+        .remove(
+            "oculto"
+        );
+
+
+    document
+        .getElementById(
+            "tipo"
+        )
+        .value =
+        tipo;
+
+
+    document
+        .getElementById(
+            "tituloFormTransacao"
+        )
+        .textContent =
+        tipo === "receita"
+            ? "Nova Receita"
+            : tipo === "despesa"
+            ? "Nova Despesa"
+            : "Nova Transação";
+
+}
+
+
+document
+    .getElementById(
+        "btnNovaTransacao"
+    )
+    .onclick =
+    () =>
+        abrirTransacao();
+
+
+document
+    .getElementById(
+        "btnReceitaRapida"
+    )
+    .onclick =
+    function() {
+
+        menuMais
+            .classList
+            .add(
+                "oculto"
+            );
+
+        abrirTransacao(
+            "receita"
+        );
+
+    };
+
+
+document
+    .getElementById(
+        "btnDespesaRapida"
+    )
+    .onclick =
+    function() {
+
+        menuMais
+            .classList
+            .add(
+                "oculto"
+            );
+
+        abrirTransacao(
+            "despesa"
+        );
+
+    };
+
+
+document
+    .getElementById(
+        "btnCancelarTransacao"
+    )
+    .onclick =
+    function() {
+
+        areaFormularioTransacao
+            .classList
+            .add(
+                "oculto"
+            );
+
+    };
+
+
+// ================================
 // SALVAR CONTA
-// ==========================================
+// ================================
 
 document
     .getElementById(
@@ -653,17 +804,6 @@ document
                 );
 
 
-            const mensagem =
-                document
-                    .getElementById(
-                        "mensagemConta"
-                    );
-
-
-            mensagem.textContent =
-                "Salvando...";
-
-
             const { error } =
                 await supabaseClient
                     .from("Contas")
@@ -675,7 +815,8 @@ document
                             saldo_inicial:
                                 saldoInicial,
 
-                            ativo: true,
+                            ativo:
+                                true,
 
                             user_id:
                                 usuario.id
@@ -685,7 +826,11 @@ document
 
             if (error) {
 
-                mensagem.textContent =
+                document
+                    .getElementById(
+                        "mensagemConta"
+                    )
+                    .textContent =
                     "Erro: " +
                     error.message;
 
@@ -694,22 +839,12 @@ document
             }
 
 
-            mensagem.textContent =
-                "Conta salva.";
-
-
             event.target.reset();
 
 
-            document
-                .getElementById(
-                    "saldoInicial"
-                )
-                .value = 0;
-
-
             areaFormularioConta
-                .classList.add(
+                .classList
+                .add(
                     "oculto"
                 );
 
@@ -720,9 +855,9 @@ document
     );
 
 
-// ==========================================
+// ================================
 // SALVAR TRANSAÇÃO
-// ==========================================
+// ================================
 
 document
     .getElementById(
@@ -788,20 +923,11 @@ document
                 );
 
 
-            const mensagem =
-                document
-                    .getElementById(
-                        "mensagemTransacao"
-                    );
-
-
-            mensagem.textContent =
-                "Salvando...";
-
-
             const { error } =
                 await supabaseClient
-                    .from("transacoes")
+                    .from(
+                        "transacoes"
+                    )
                     .insert([
                         {
                             descricao,
@@ -820,17 +946,17 @@ document
 
             if (error) {
 
-                mensagem.textContent =
+                document
+                    .getElementById(
+                        "mensagemTransacao"
+                    )
+                    .textContent =
                     "Erro: " +
                     error.message;
 
                 return;
 
             }
-
-
-            mensagem.textContent =
-                "Transação salva.";
 
 
             event.target.reset();
@@ -845,7 +971,8 @@ document
 
 
             areaFormularioTransacao
-                .classList.add(
+                .classList
+                .add(
                     "oculto"
                 );
 
@@ -856,9 +983,9 @@ document
     );
 
 
-// ==========================================
-// BUSCAR DADOS
-// ==========================================
+// ================================
+// BUSCAR
+// ================================
 
 async function buscarContas() {
 
@@ -892,7 +1019,8 @@ async function buscarTransacoes() {
             .order(
                 "data",
                 {
-                    ascending: false
+                    ascending:
+                        false
                 }
             );
 
@@ -911,19 +1039,54 @@ async function buscarTransacoes() {
 }
 
 
-// ==========================================
-// CÁLCULO CONTA
-// ==========================================
+// ================================
+// FILTRAR POR MÊS
+// ================================
 
-function calcularSaldoConta(
-    conta
+function transacoesDoMes() {
+
+    return transacoesCache.filter(
+        function(item) {
+
+            if (!item.data) {
+                return false;
+            }
+
+
+            const data =
+                new Date(
+                    item.data +
+                    "T12:00:00"
+                );
+
+
+            return (
+                data.getMonth() ===
+                    mesAtual &&
+                data.getFullYear() ===
+                    anoAtual
+            );
+
+        }
+    );
+
+}
+
+
+// ================================
+// CÁLCULO
+// ================================
+
+function saldoDaConta(
+    conta,
+    transacoes
 ) {
 
     let receitas = 0;
     let despesas = 0;
 
 
-    transacoesCache.forEach(
+    transacoes.forEach(
         function(item) {
 
             if (
@@ -934,9 +1097,7 @@ function calcularSaldoConta(
                     conta.id
                 )
             ) {
-
                 return;
-
             }
 
 
@@ -969,39 +1130,35 @@ function calcularSaldoConta(
     );
 
 
-    const saldoInicial =
+    return (
         Number(
-            conta.saldo_inicial || 0
-        );
-
-
-    return {
-
-        saldoInicial,
-
-        receitas,
-
-        despesas,
-
-        saldoAtual:
-            saldoInicial +
-            receitas -
-            despesas
-
-    };
+            conta.saldo_inicial ||
+            0
+        )
+        +
+        receitas
+        -
+        despesas
+    );
 
 }
 
 
-// ==========================================
+// ================================
 // CONTAS
-// ==========================================
+// ================================
 
 function mostrarContas() {
 
-    const lista =
+    const listaPagina =
         document.getElementById(
             "listaContas"
+        );
+
+
+    const listaResumo =
+        document.getElementById(
+            "contasInicio"
         );
 
 
@@ -1011,7 +1168,8 @@ function mostrarContas() {
         );
 
 
-    lista.innerHTML = "";
+    listaPagina.innerHTML = "";
+    listaResumo.innerHTML = "";
 
 
     select.innerHTML = `
@@ -1024,80 +1182,96 @@ function mostrarContas() {
     contasCache.forEach(
         function(conta) {
 
-            const calculo =
-                calcularSaldoConta(
-                    conta
+            const saldo =
+                saldoDaConta(
+                    conta,
+                    transacoesCache
                 );
 
 
-            const classeSaldo =
-                calculo.saldoAtual < 0
+            const classe =
+                saldo < 0
                     ? "saldo-negativo"
                     : "saldo-positivo";
 
 
-            const card =
-                document.createElement(
-                    "article"
+            const inicial =
+                (
+                    conta.nome ||
+                    "C"
+                )
+                .charAt(0)
+                .toUpperCase();
+
+
+            listaResumo
+                .insertAdjacentHTML(
+                    "beforeend",
+                    `
+
+                    <div class="conta-resumo">
+
+                        <div class="icone-conta">
+                            ${inicial}
+                        </div>
+
+                        <div class="conta-info">
+
+                            <strong>
+                                ${conta.nome}
+                            </strong>
+
+                            <small>
+                                ${conta.tipo || ""}
+                            </small>
+
+                        </div>
+
+                        <strong class="valor-conta ${classe}">
+                            ${formatarDinheiro(
+                                saldo
+                            )}
+                        </strong>
+
+                    </div>
+
+                    `
                 );
 
 
-            card.className =
-                "conta-card";
+            listaPagina
+                .insertAdjacentHTML(
+                    "beforeend",
+                    `
 
+                    <article class="conta-pagina">
 
-            card.innerHTML = `
+                        <div class="icone-conta">
+                            ${inicial}
+                        </div>
 
-                <h3>
-                    ${conta.nome}
-                </h3>
+                        <div class="conta-info">
 
-                <p class="texto-suave">
-                    ${conta.tipo || ""}
-                </p>
+                            <strong>
+                                ${conta.nome}
+                            </strong>
 
-                <p>
-                    Saldo inicial:
-                    <strong>
-                        ${formatarDinheiro(
-                            calculo.saldoInicial
-                        )}
-                    </strong>
-                </p>
+                            <small>
+                                ${conta.tipo || ""}
+                            </small>
 
-                <p>
-                    Receitas:
-                    <strong class="tipo-receita">
-                        ${formatarDinheiro(
-                            calculo.receitas
-                        )}
-                    </strong>
-                </p>
+                        </div>
 
-                <p>
-                    Despesas:
-                    <strong class="tipo-despesa">
-                        ${formatarDinheiro(
-                            calculo.despesas
-                        )}
-                    </strong>
-                </p>
+                        <strong class="valor-conta ${classe}">
+                            ${formatarDinheiro(
+                                saldo
+                            )}
+                        </strong>
 
-                <p>
-                    Saldo atual:
-                    <strong class="${classeSaldo}">
-                        ${formatarDinheiro(
-                            calculo.saldoAtual
-                        )}
-                    </strong>
-                </p>
+                    </article>
 
-            `;
-
-
-            lista.appendChild(
-                card
-            );
+                    `
+                );
 
 
             const option =
@@ -1124,95 +1298,21 @@ function mostrarContas() {
 }
 
 
-// CONTAS INÍCIO
+// ================================
+// LANÇAMENTOS
+// ================================
 
-function mostrarContasInicio() {
-
-    const area =
-        document.getElementById(
-            "contasInicio"
-        );
-
-
-    area.innerHTML = "";
-
-
-    contasCache.forEach(
-        function(conta) {
-
-            const calculo =
-                calcularSaldoConta(
-                    conta
-                );
-
-
-            const classeSaldo =
-                calculo.saldoAtual < 0
-                    ? "saldo-negativo"
-                    : "saldo-positivo";
-
-
-            const card =
-                document.createElement(
-                    "article"
-                );
-
-
-            card.className =
-                "conta-inicio-card";
-
-
-            card.innerHTML = `
-
-                <div>
-
-                    <strong>
-                        ${conta.nome}
-                    </strong>
-
-                    <small>
-                        ${conta.tipo || ""}
-                    </small>
-
-                </div>
-
-                <strong class="${classeSaldo}">
-                    ${formatarDinheiro(
-                        calculo.saldoAtual
-                    )}
-                </strong>
-
-            `;
-
-
-            area.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-// ==========================================
-// TRANSAÇÕES
-// ==========================================
-
-function nomeContaPorId(
-    contaId
+function nomeConta(
+    id
 ) {
 
     const conta =
         contasCache.find(
-            function(item) {
-
-                return (
-                    Number(item.id) ===
-                    Number(contaId)
-                );
-
-            }
+            conta =>
+                Number(
+                    conta.id
+                ) ===
+                Number(id)
         );
 
 
@@ -1223,113 +1323,105 @@ function nomeContaPorId(
 }
 
 
-function criarLinhaTransacao(
-    item,
-    mostrarExcluir = false
+function criarLancamentoHTML(
+    item
 ) {
 
-    const linha =
-        document.createElement(
-            "tr"
-        );
+    const despesa =
+        item.tipo ===
+        "despesa";
 
 
     const classe =
-        item.tipo === "receita"
-            ? "tipo-receita"
-            : "tipo-despesa";
+        despesa
+            ? "despesa"
+            : "receita";
 
 
     const sinal =
-        item.tipo === "receita"
-            ? "+"
-            : "−";
+        despesa
+            ? "− "
+            : "+ ";
 
 
-    linha.innerHTML = `
+    return `
 
-        <td>
-            ${formatarData(
-                item.data
-            )}
-        </td>
+        <div class="lancamento">
 
-        <td>
-            ${item.descricao || ""}
-        </td>
+            <div class="icone-lancamento ${classe}">
+                ${
+                    despesa
+                        ? "−"
+                        : "+"
+                }
+            </div>
 
-        <td>
-            ${nomeContaPorId(
-                item.conta_id
-            )}
-        </td>
 
-        <td class="${classe}">
-            ${item.tipo}
-        </td>
+            <div class="lancamento-info">
 
-        <td class="${classe}">
-            ${sinal}
-            ${formatarDinheiro(
-                item.valor
-            )}
-        </td>
+                <strong>
+                    ${item.descricao || ""}
+                </strong>
 
-        ${
-            mostrarExcluir
-                ? `
-                    <td>
+                <small>
+                    ${nomeConta(
+                        item.conta_id
+                    )}
+                </small>
 
-                        <button
-                            class="btn-excluir"
-                            data-excluir="${item.id}"
-                        >
-                            Excluir
-                        </button>
+            </div>
 
-                    </td>
-                `
-                : ""
-        }
+
+            <div class="lancamento-valor">
+
+                <strong class="${
+                    despesa
+                        ? "saldo-negativo"
+                        : "saldo-positivo"
+                }">
+
+                    ${sinal}
+
+                    ${formatarDinheiro(
+                        item.valor
+                    )}
+
+                </strong>
+
+                <small>
+                    ${formatarData(
+                        item.data
+                    )}
+                </small>
+
+            </div>
+
+        </div>
 
     `;
-
-
-    return linha;
 
 }
 
 
-// TODAS
-
-function mostrarTransacoes(
-    lista = transacoesCache
+function mostrarLancamentos(
+    lista = transacoesDoMes()
 ) {
 
-    const tbody =
+    const area =
         document.getElementById(
             "listaTransacoes"
         );
 
 
-    tbody.innerHTML = "";
+    area.innerHTML = "";
 
 
     if (
         lista.length === 0
     ) {
 
-        tbody.innerHTML = `
-
-            <tr>
-
-                <td colspan="6">
-                    Nenhuma transação encontrada.
-                </td>
-
-            </tr>
-
-        `;
+        area.innerHTML =
+            "<p>Nenhum lançamento neste mês.</p>";
 
         return;
 
@@ -1337,12 +1429,12 @@ function mostrarTransacoes(
 
 
     lista.forEach(
-        function(item) {
+        item => {
 
-            tbody.appendChild(
-                criarLinhaTransacao(
-                    item,
-                    true
+            area.insertAdjacentHTML(
+                "beforeend",
+                criarLancamentoHTML(
+                    item
                 )
             );
 
@@ -1352,41 +1444,31 @@ function mostrarTransacoes(
 }
 
 
-// ÚLTIMOS
+function mostrarUltimos() {
 
-function mostrarUltimosLancamentos() {
-
-    const tbody =
+    const area =
         document.getElementById(
             "ultimosLancamentos"
         );
 
 
-    tbody.innerHTML = "";
+    area.innerHTML = "";
 
 
     const ultimos =
-        transacoesCache.slice(
-            0,
-            5
-        );
+        transacoesDoMes()
+            .slice(
+                0,
+                5
+            );
 
 
     if (
         ultimos.length === 0
     ) {
 
-        tbody.innerHTML = `
-
-            <tr>
-
-                <td colspan="5">
-                    Nenhum lançamento.
-                </td>
-
-            </tr>
-
-        `;
+        area.innerHTML =
+            "<p>Nenhum lançamento.</p>";
 
         return;
 
@@ -1394,12 +1476,12 @@ function mostrarUltimosLancamentos() {
 
 
     ultimos.forEach(
-        function(item) {
+        item => {
 
-            tbody.appendChild(
-                criarLinhaTransacao(
-                    item,
-                    false
+            area.insertAdjacentHTML(
+                "beforeend",
+                criarLancamentoHTML(
+                    item
                 )
             );
 
@@ -1409,193 +1491,21 @@ function mostrarUltimosLancamentos() {
 }
 
 
-// ==========================================
-// FILTROS
-// ==========================================
+// ================================
+// RESUMO
+// ================================
 
-function aplicarFiltros() {
+function atualizarResumo() {
 
-    const texto =
-        document
-            .getElementById(
-                "buscaTransacao"
-            )
-            .value
-            .toLowerCase();
+    const transacoes =
+        transacoesDoMes();
 
 
-    const tipo =
-        document
-            .getElementById(
-                "filtroTipo"
-            )
-            .value;
-
-
-    const filtradas =
-        transacoesCache.filter(
-            function(item) {
-
-                const descricao =
-                    (
-                        item.descricao ||
-                        ""
-                    )
-                    .toLowerCase();
-
-
-                const conta =
-                    nomeContaPorId(
-                        item.conta_id
-                    )
-                    .toLowerCase();
-
-
-                const textoOk =
-                    descricao.includes(
-                        texto
-                    ) ||
-                    conta.includes(
-                        texto
-                    );
-
-
-                const tipoOk =
-                    tipo === "todos" ||
-                    item.tipo === tipo;
-
-
-                return (
-                    textoOk &&
-                    tipoOk
-                );
-
-            }
-        );
-
-
-    mostrarTransacoes(
-        filtradas
-    );
-
-}
-
-
-document
-    .getElementById(
-        "buscaTransacao"
-    )
-    .addEventListener(
-        "input",
-        aplicarFiltros
-    );
-
-
-document
-    .getElementById(
-        "filtroTipo"
-    )
-    .addEventListener(
-        "change",
-        aplicarFiltros
-    );
-
-
-// ==========================================
-// EXCLUIR TRANSAÇÃO
-// ==========================================
-
-document
-    .getElementById(
-        "listaTransacoes"
-    )
-    .addEventListener(
-        "click",
-        async function(event) {
-
-            const botao =
-                event.target.closest(
-                    "[data-excluir]"
-                );
-
-
-            if (!botao) {
-                return;
-            }
-
-
-            const id =
-                Number(
-                    botao.dataset.excluir
-                );
-
-
-            const confirmar =
-                confirm(
-                    "Excluir este lançamento?"
-                );
-
-
-            if (!confirmar) {
-                return;
-            }
-
-
-            const { error } =
-                await supabaseClient
-                    .from(
-                        "transacoes"
-                    )
-                    .delete()
-                    .eq(
-                        "id",
-                        id
-                    );
-
-
-            if (error) {
-
-                alert(
-                    "Erro ao excluir: " +
-                    error.message
-                );
-
-                return;
-
-            }
-
-
-            await carregarDados();
-
-        }
-    );
-
-
-// ==========================================
-// DASHBOARD
-// ==========================================
-
-function atualizarDashboard() {
-
-    let saldoInicial = 0;
     let receitas = 0;
     let despesas = 0;
 
 
-    contasCache.forEach(
-        function(conta) {
-
-            saldoInicial +=
-                Number(
-                    conta.saldo_inicial ||
-                    0
-                );
-
-        }
-    );
-
-
-    transacoesCache.forEach(
+    transacoes.forEach(
         function(item) {
 
             const valor =
@@ -1611,13 +1521,7 @@ function atualizarDashboard() {
 
                 receitas += valor;
 
-            }
-
-
-            if (
-                item.tipo ===
-                "despesa"
-            ) {
+            } else {
 
                 despesas += valor;
 
@@ -1627,34 +1531,86 @@ function atualizarDashboard() {
     );
 
 
-    const saldo =
-        saldoInicial +
-        receitas -
-        despesas;
+    let saldoInicial = 0;
 
 
-    const saldoElemento =
-        document.getElementById(
+    contasCache.forEach(
+        conta => {
+
+            saldoInicial +=
+                Number(
+                    conta.saldo_inicial ||
+                    0
+                );
+
+        }
+    );
+
+
+    let saldoTotal = 0;
+
+
+    contasCache.forEach(
+        conta => {
+
+            saldoTotal +=
+                saldoDaConta(
+                    conta,
+                    transacoesCache
+                );
+
+        }
+    );
+
+
+    document
+        .getElementById(
             "saldoTotal"
-        );
-
-
-    saldoElemento.textContent =
+        )
+        .textContent =
         formatarDinheiro(
-            saldo
+            saldoTotal
         );
 
 
-    saldoElemento.classList.toggle(
-        "saldo-negativo",
-        saldo < 0
-    );
+    document
+        .getElementById(
+            "saldoCabecalho"
+        )
+        .textContent =
+        formatarDinheiro(
+            saldoTotal
+        );
 
 
-    saldoElemento.classList.toggle(
-        "saldo-positivo",
-        saldo >= 0
-    );
+    document
+        .getElementById(
+            "saldoContasResumo"
+        )
+        .textContent =
+        formatarDinheiro(
+            saldoTotal
+        );
+
+
+    document
+        .getElementById(
+            "saldoInicialResumo"
+        )
+        .textContent =
+        formatarDinheiro(
+            saldoInicial
+        );
+
+
+    document
+        .getElementById(
+            "saldoPrevisto"
+        )
+        .textContent =
+        formatarDinheiro(
+            saldoTotal
+        );
 
 
     document
@@ -1679,9 +1635,88 @@ function atualizarDashboard() {
 }
 
 
-// ==========================================
-// CARREGAR DADOS
-// ==========================================
+// ================================
+// FILTROS
+// ================================
+
+function aplicarFiltros() {
+
+    const texto =
+        document
+            .getElementById(
+                "buscaTransacao"
+            )
+            .value
+            .toLowerCase();
+
+
+    const tipo =
+        document
+            .getElementById(
+                "filtroTipo"
+            )
+            .value;
+
+
+    const lista =
+        transacoesDoMes()
+            .filter(
+                function(item) {
+
+                    const textoOk =
+                        (
+                            item.descricao ||
+                            ""
+                        )
+                        .toLowerCase()
+                        .includes(
+                            texto
+                        );
+
+
+                    const tipoOk =
+                        tipo ===
+                            "todos"
+                        ||
+                        item.tipo ===
+                            tipo;
+
+
+                    return (
+                        textoOk &&
+                        tipoOk
+                    );
+
+                }
+            );
+
+
+    mostrarLancamentos(
+        lista
+    );
+
+}
+
+
+document
+    .getElementById(
+        "buscaTransacao"
+    )
+    .oninput =
+    aplicarFiltros;
+
+
+document
+    .getElementById(
+        "filtroTipo"
+    )
+    .onchange =
+    aplicarFiltros;
+
+
+// ================================
+// CARREGAR
+// ================================
 
 async function carregarDados() {
 
@@ -1695,20 +1730,18 @@ async function carregarDados() {
 
     mostrarContas();
 
-    mostrarContasInicio();
+    mostrarLancamentos();
 
-    mostrarTransacoes();
+    mostrarUltimos();
 
-    mostrarUltimosLancamentos();
-
-    atualizarDashboard();
+    atualizarResumo();
 
 }
 
 
-// ==========================================
+// ================================
 // UTILIDADES
-// ==========================================
+// ================================
 
 function formatarDinheiro(
     valor
@@ -1744,15 +1777,6 @@ function formatarData(
         data.split("-");
 
 
-    if (
-        partes.length !== 3
-    ) {
-
-        return data;
-
-    }
-
-
     return (
         partes[2] +
         "/" +
@@ -1781,11 +1805,14 @@ document
     hoje();
 
 
-// ==========================================
-// INICIALIZAÇÃO
-// ==========================================
+// ================================
+// INICIAR
+// ================================
 
 async function iniciar() {
+
+    atualizarMes();
+
 
     const { data } =
         await supabaseClient
