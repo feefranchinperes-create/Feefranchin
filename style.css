@@ -1,3 +1,8 @@
+/* =========================================================
+   MINHAS FINANÇAS
+   CSS COMPLETO
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -6,32 +11,49 @@
     --azul: #258fe3;
     --azul-escuro: #1477c5;
 
-    --vermelho: #e94b3c;
     --verde: #16a765;
+    --vermelho: #e94b3c;
     --amarelo: #f7b500;
+    --roxo: #7c3aed;
 
     --fundo: #f6f8fb;
     --branco: #ffffff;
 
     --texto: #242424;
-    --cinza: #777;
+    --cinza: #777777;
+
     --borda: #e5e7eb;
 
     --sombra:
-        0 6px 18px
+        0 6px 20px
         rgba(0, 0, 0, .08);
 }
 
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html,
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: var(--fundo);
     color: var(--texto);
 }
 
 button,
 input,
-select {
+select,
+textarea {
     font: inherit;
 }
 
@@ -43,23 +65,29 @@ button {
     display: none !important;
 }
 
+.largura-total {
+    width: 100%;
+}
 
-/* LOGIN */
+
+/* =========================================================
+   LOGIN E CADASTRO
+========================================================= */
 
 .tela-auth {
     min-height: 100vh;
-    display: flex;
 
-    justify-content: center;
+    display: flex;
     align-items: center;
+    justify-content: center;
 
     padding: 20px;
 
     background:
         linear-gradient(
-            150deg,
-            var(--azul),
-            #0d69ac
+            145deg,
+            #258fe3,
+            #116db3
         );
 }
 
@@ -73,71 +101,109 @@ button {
 
     border-radius: 28px;
 
-    box-shadow: var(--sombra);
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, .18);
 }
 
 .auth-logo {
-    width: 56px;
-    height: 56px;
+    width: 58px;
+    height: 58px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     background: var(--azul);
 
     color: white;
 
+    font-size: 20px;
+    font-weight: bold;
+
     border-radius: 50%;
 
-    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.auth-card h1 {
+    margin:
+        0 0 8px;
+}
+
+.auth-card p {
+    color: var(--cinza);
 }
 
 .auth-card label {
     display: block;
+
     margin-top: 18px;
     margin-bottom: 7px;
+
+    font-weight: 600;
 }
 
 .auth-card input {
     width: 100%;
 
-    padding: 13px;
+    padding: 13px 14px;
 
     border:
-        1px solid #ddd;
+        1px solid #d6d9df;
 
     border-radius: 12px;
+
+    outline: none;
 }
 
-.largura-total {
-    width: 100%;
-    margin-top: 16px;
+.auth-card input:focus {
+    border-color: var(--azul);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 143, 227, .10);
 }
 
-.btn-principal,
-.salvar-topo {
+.btn-principal {
     border: 0;
+
     background: var(--azul);
+
     color: white;
 
-    padding: 12px 20px;
+    padding: 13px 20px;
 
-    border-radius: 25px;
+    border-radius: 24px;
+
+    font-weight: 600;
+
+    margin-top: 18px;
+}
+
+.btn-principal:hover {
+    background: var(--azul-escuro);
 }
 
 .btn-secundario {
-    border: 1px solid #ddd;
+    border:
+        1px solid #ddd;
 
     background: white;
 
+    color: var(--texto);
+
     padding: 12px 20px;
 
-    border-radius: 25px;
+    border-radius: 24px;
+
+    margin-top: 10px;
 }
 
 
-/* CABEÇALHO */
+/* =========================================================
+   CABEÇALHO
+========================================================= */
 
 .cabecalho-app {
     position: sticky;
@@ -149,16 +215,20 @@ button {
 
     color: white;
 
-    border-radius:
-        0 0 28px 28px;
-
     padding:
-        17px 20px 12px;
+        18px 20px 14px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, .08);
 }
 
 .cabecalho-linha {
-    display: flex;
+    max-width: 900px;
 
+    margin: auto;
+
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
@@ -170,38 +240,48 @@ button {
 
     color: white;
 
-    font-size: 29px;
+    font-size: 28px;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+}
+
+.icone-btn:hover {
+    background:
+        rgba(255, 255, 255, .12);
 }
 
 .titulo-app {
     flex: 1;
-    padding-left: 20px;
-}
 
-.titulo-app strong,
-.titulo-app small {
-    display: block;
+    padding-left: 12px;
 }
 
 .titulo-app strong {
-    font-size: 24px;
+    display: block;
+
+    font-size: 23px;
 }
 
 .titulo-app small {
-    margin-top: 2px;
+    display: block;
+
+    margin-top: 3px;
+
     opacity: .85;
 }
 
 .navegacao-mes {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
     max-width: 480px;
 
     margin:
-        20px auto 0;
+        15px auto 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navegacao-mes button {
@@ -212,6 +292,8 @@ button {
     color: white;
 
     font-size: 38px;
+
+    width: 55px;
 }
 
 .navegacao-mes strong {
@@ -219,15 +301,18 @@ button {
 }
 
 
-/* CONTEÚDO */
+/* =========================================================
+   CONTEÚDO
+========================================================= */
 
 .conteudo-app {
+    width: 100%;
     max-width: 900px;
 
     margin: auto;
 
     padding:
-        18px 15px 100px;
+        20px 15px 110px;
 }
 
 .pagina {
@@ -239,84 +324,111 @@ button {
 }
 
 
-/* SALDO */
+/* =========================================================
+   INDICADORES
+========================================================= */
 
-.painel-saldo {
-    background: var(--azul);
-
-    margin:
-        -18px -15px 20px;
-
-    padding:
-        20px 20px 35px;
-
-    color: white;
-
+.painel-indicadores {
     display: grid;
 
     grid-template-columns:
-        1fr 1.3fr 1fr;
+        repeat(5, 1fr);
 
-    gap: 15px;
+    gap: 12px;
 
-    text-align: center;
+    margin-bottom: 22px;
 }
 
-.painel-saldo small,
-.painel-saldo span {
+.indicador {
+    background: white;
+
+    border:
+        1px solid var(--borda);
+
+    border-radius: 20px;
+
+    padding: 18px;
+
+    min-height: 95px;
+
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, .03);
+}
+
+.indicador small,
+.indicador strong {
     display: block;
 }
 
-.painel-saldo small {
-    opacity: .7;
+.indicador small {
+    color: var(--cinza);
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
 }
 
-.painel-saldo span {
-    margin-top: 8px;
+.indicador strong {
+    font-size: 19px;
 }
 
-.saldo-central strong {
-    display: block;
+.indicador.destaque strong {
+    color: var(--azul);
+}
 
-    margin-top: 8px;
+.indicador.receber strong {
+    color: var(--verde);
+}
 
-    font-size: 31px;
+.indicador.pagar strong {
+    color: var(--vermelho);
+}
+
+.indicador.vencido strong {
+    color: var(--vermelho);
+}
+
+.indicador.previsto strong {
+    color: var(--roxo);
 }
 
 
-/* CARDS */
+/* =========================================================
+   CARDS
+========================================================= */
 
 .card-app {
     background: white;
 
     border:
-        1px solid
-        var(--borda);
+        1px solid var(--borda);
 
     border-radius: 26px;
 
-    margin-bottom: 20px;
-
     padding: 22px;
 
+    margin-bottom: 20px;
+
     box-shadow:
-        0 2px 8px
-        rgba(0,0,0,.025);
+        0 3px 12px
+        rgba(0, 0, 0, .035);
 }
 
 .card-titulo {
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
 
-    align-items: center;
+    gap: 15px;
 
-    margin-bottom: 16px;
+    margin-bottom: 15px;
 }
 
 .card-titulo h2 {
     margin: 0;
-    font-size: 23px;
+
+    font-size: 22px;
 }
 
 .link-btn {
@@ -326,23 +438,25 @@ button {
 
     color: var(--azul);
 
-    font-weight: bold;
+    font-weight: 600;
 }
 
 
-/* VISÃO GERAL */
+/* =========================================================
+   VISÃO GERAL
+========================================================= */
 
 .linha-resumo {
-    min-height: 63px;
-
     display: grid;
 
     grid-template-columns:
         48px 1fr auto;
 
+    align-items: center;
+
     gap: 12px;
 
-    align-items: center;
+    min-height: 64px;
 }
 
 .circulo {
@@ -350,15 +464,16 @@ button {
     height: 42px;
 
     display: inline-flex;
-
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 
     color: white;
 
     font-weight: bold;
+
+    flex-shrink: 0;
 }
 
 .azul {
@@ -378,12 +493,15 @@ button {
 }
 
 
-/* CONTAS */
+/* =========================================================
+   CONTAS
+========================================================= */
 
 .lista-contas-resumo,
 .lista-contas-pagina {
     display: grid;
-    gap: 13px;
+
+    gap: 12px;
 }
 
 .conta-resumo,
@@ -393,12 +511,14 @@ button {
     grid-template-columns:
         55px 1fr auto;
 
-    align-items: center;
-
     gap: 13px;
 
+    align-items: center;
+}
+
+.conta-resumo {
     padding:
-        13px 5px;
+        12px 4px;
 }
 
 .conta-pagina {
@@ -411,7 +531,9 @@ button {
 
     padding: 18px;
 
-    margin-bottom: 12px;
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, .03);
 }
 
 .icone-conta {
@@ -420,17 +542,17 @@ button {
 
     border-radius: 50%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     background: var(--azul);
 
     color: white;
 
-    font-size: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-weight: bold;
+
+    font-size: 19px;
 }
 
 .conta-info strong,
@@ -440,6 +562,7 @@ button {
 
 .conta-info small {
     color: var(--cinza);
+
     margin-top: 4px;
 }
 
@@ -448,7 +571,9 @@ button {
 }
 
 
-/* LANÇAMENTOS */
+/* =========================================================
+   LANÇAMENTOS
+========================================================= */
 
 .lista-lancamentos {
     display: grid;
@@ -465,10 +590,10 @@ button {
     align-items: center;
 
     padding:
-        14px 0;
+        15px 0;
 
     border-bottom:
-        1px solid #eee;
+        1px solid #eeeeee;
 }
 
 .lancamento:last-child {
@@ -479,23 +604,24 @@ button {
     width: 46px;
     height: 46px;
 
-    border-radius: 50%;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
+    border-radius: 50%;
+
+    font-size: 20px;
 }
 
 .icone-lancamento.receita {
     background: #e9f8ef;
+
     color: var(--verde);
 }
 
 .icone-lancamento.despesa {
     background: #fff0ef;
+
     color: var(--vermelho);
 }
 
@@ -506,7 +632,8 @@ button {
 
 .lancamento-info small {
     color: var(--cinza);
-    margin-top: 3px;
+
+    margin-top: 4px;
 }
 
 .lancamento-valor {
@@ -519,12 +646,94 @@ button {
 }
 
 .lancamento-valor small {
-    color: var(--cinza);
     margin-top: 4px;
+
+    color: var(--cinza);
 }
 
 
-/* FORM TELA */
+/* =========================================================
+   STATUS
+========================================================= */
+
+.badge-status {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    margin-top: 5px;
+}
+
+.badge-pendente {
+    background: #fff4d6;
+
+    color: #a16207;
+}
+
+.badge-pago {
+    background: #e8f8ef;
+
+    color: #16803d;
+}
+
+.badge-vencido {
+    background: #fff0ef;
+
+    color: #d33232;
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.acoes-lancamento {
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+    margin-top: 8px;
+}
+
+.acoes-lancamento button {
+    border: 0;
+
+    padding: 7px 10px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+}
+
+.btn-editar {
+    background: #edf4ff;
+
+    color: var(--azul);
+}
+
+.btn-efetivar {
+    background: #e8f8ef;
+
+    color: #16803d;
+}
+
+.btn-excluir {
+    background: #fff0ef;
+
+    color: #d33232;
+}
+
+
+/* =========================================================
+   FORMULÁRIO EM TELA
+========================================================= */
 
 .form-tela {
     position: fixed;
@@ -551,8 +760,10 @@ button {
 
     align-items: center;
 
+    gap: 10px;
+
     padding:
-        17px 20px;
+        16px 20px;
 
     background: white;
 
@@ -562,6 +773,8 @@ button {
 
 .form-topo h2 {
     margin: 0;
+
+    font-size: 21px;
 }
 
 .form-topo > button:first-child {
@@ -572,18 +785,36 @@ button {
     font-size: 25px;
 }
 
+.salvar-topo {
+    border: 0;
+
+    background: var(--azul);
+
+    color: white;
+
+    padding:
+        11px 18px;
+
+    border-radius: 22px;
+
+    font-weight: 600;
+}
+
 .form-tela form {
+    width: 100%;
     max-width: 700px;
 
     margin: auto;
+
+    padding-bottom: 40px;
 }
 
 .campo-app {
     padding:
-        20px 28px;
+        19px 25px;
 
     border-bottom:
-        1px solid #eee;
+        1px solid #eeeeee;
 }
 
 .campo-app label {
@@ -592,49 +823,117 @@ button {
     color: var(--cinza);
 
     margin-bottom: 8px;
+
+    font-size: 14px;
 }
 
 .campo-app input,
-.campo-app select {
+.campo-app select,
+.campo-app textarea {
     width: 100%;
 
     border: 0;
 
     background: transparent;
 
-    font-size: 19px;
-
     outline: none;
+
+    color: var(--texto);
+
+    font-size: 18px;
+}
+
+.campo-app textarea {
+    resize: vertical;
+
+    min-height: 90px;
+}
+
+.campo-app small {
+    display: block;
+
+    color: #999;
+
+    margin-top: 7px;
 }
 
 
-/* FILTROS */
+/* =========================================================
+   FILTROS
+========================================================= */
 
 .filtros-mobile {
     display: grid;
 
     grid-template-columns:
-        1fr 130px;
+        1fr 150px 170px;
 
     gap: 10px;
 
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .filtros-mobile input,
 .filtros-mobile select {
+    min-width: 0;
+
     padding: 12px;
 
     border:
-        1px solid #ddd;
+        1px solid #dddddd;
 
     background: white;
 
     border-radius: 15px;
+
+    outline: none;
 }
 
 
-/* BOTÃO FLUTUANTE */
+/* =========================================================
+   CATEGORIAS
+========================================================= */
+
+.categoria-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        14px 4px;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+.categoria-tipo {
+    color: var(--cinza);
+
+    font-size: 12px;
+}
+
+.resumo-categoria {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        12px 0;
+
+    border-bottom:
+        1px solid #eeeeee;
+}
+
+
+/* =========================================================
+   BOTÃO FLUTUANTE
+========================================================= */
 
 .botao-flutuante {
     position: fixed;
@@ -659,39 +958,37 @@ button {
 
     box-shadow:
         0 7px 20px
-        rgba(0,0,0,.2);
+        rgba(0, 0, 0, .20);
 }
 
-.botao-home {
-    display: none;
-}
-
-#inicio.ativa ~ .botao-home {
-    display: block;
+.botao-flutuante:hover {
+    background: var(--azul-escuro);
 }
 
 
-/* MENU MAIS */
+/* =========================================================
+   MENU +
+========================================================= */
 
 .menu-mais {
     position: fixed;
 
-    right: 24px;
+    right: 25px;
     bottom: 105px;
 
     z-index: 40;
 
     width: 260px;
 
+    overflow: hidden;
+
     background: white;
 
     border-radius: 24px;
 
     box-shadow:
-        0 10px 35px
-        rgba(0,0,0,.25);
-
-    overflow: hidden;
+        0 12px 35px
+        rgba(0, 0, 0, .25);
 }
 
 .menu-mais button {
@@ -700,26 +997,32 @@ button {
     border: 0;
 
     border-bottom:
-        1px solid #eee;
+        1px solid #eeeeee;
 
     background: white;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
 
     padding:
         15px 20px;
 
-    display: flex;
-
-    gap: 16px;
-
-    align-items: center;
-
     text-align: left;
 
-    font-size: 18px;
+    font-size: 17px;
+}
+
+.menu-mais button:hover {
+    background: #f8fafc;
 }
 
 
-/* MENU LATERAL */
+/* =========================================================
+   MENU LATERAL
+========================================================= */
 
 .menu-overlay {
     position: fixed;
@@ -729,19 +1032,19 @@ button {
     z-index: 80;
 
     background:
-        rgba(0,0,0,.55);
+        rgba(0, 0, 0, .55);
 }
 
 .menu-lateral {
     position: fixed;
 
+    left: -350px;
     top: 0;
-    left: -330px;
 
     z-index: 90;
 
-    width: 320px;
-    max-width: 84vw;
+    width: 330px;
+    max-width: 85vw;
 
     height: 100vh;
 
@@ -749,14 +1052,14 @@ button {
 
     background: white;
 
+    box-shadow:
+        5px 0 30px
+        rgba(0, 0, 0, .20);
+
     transition:
         left .25s ease;
 
-    box-shadow:
-        5px 0 25px
-        rgba(0,0,0,.18);
-
-    padding-bottom: 25px;
+    padding-bottom: 30px;
 }
 
 .menu-lateral.aberto {
@@ -767,7 +1070,7 @@ button {
     min-height: 160px;
 
     padding:
-        28px 25px;
+        28px 24px;
 
     display: flex;
 
@@ -776,25 +1079,22 @@ button {
     gap: 15px;
 
     border-bottom:
-        1px solid #eee;
+        1px solid #eeeeee;
 }
 
 .avatar {
-    width: 68px;
-    height: 68px;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
+    width: 67px;
+    height: 67px;
 
     border-radius: 50%;
 
-    background:
-        #dbeafe;
+    background: #dbeafe;
 
-    color:
-        var(--azul);
+    color: var(--azul);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 27px;
 }
@@ -805,44 +1105,53 @@ button {
 }
 
 .perfil-menu small {
-    max-width: 180px;
+    max-width: 185px;
+
+    margin-top: 5px;
+
+    color: var(--cinza);
 
     overflow: hidden;
 
     text-overflow: ellipsis;
 
-    color: var(--cinza);
-
-    margin-top: 5px;
+    white-space: nowrap;
 }
 
 .menu-opcoes {
-    padding: 15px 10px;
+    padding:
+        15px 10px;
 }
 
 .menu-item {
     width: 100%;
 
-    min-height: 55px;
+    min-height: 56px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 20px;
+    gap: 18px;
 
     border: 0;
 
     background: transparent;
 
-    border-radius: 14px;
+    border-radius: 15px;
 
     padding:
-        10px 18px;
+        10px 17px;
+
+    color: #333;
 
     text-align: left;
 
     font-size: 17px;
+}
+
+.menu-item:hover {
+    background: #f4f7fa;
 }
 
 .menu-item.ativo {
@@ -854,26 +1163,11 @@ button {
 }
 
 .menu-item span {
-    width: 28px;
-
-    font-size: 22px;
+    width: 30px;
 
     text-align: center;
-}
 
-.menu-item.desativado {
-    opacity: .45;
-}
-
-.titulo-grupo {
-    padding:
-        18px 18px 8px;
-
-    color: #777;
-
-    font-size: 12px;
-
-    letter-spacing: 2px;
+    font-size: 21px;
 }
 
 .btn-sair {
@@ -883,9 +1177,9 @@ button {
     margin:
         10px 15px;
 
-    border: 0;
-
     padding: 13px;
+
+    border: 0;
 
     border-radius: 12px;
 
@@ -895,35 +1189,135 @@ button {
 }
 
 
-/* CORES */
+/* =========================================================
+   VALORES POSITIVOS / NEGATIVOS
+========================================================= */
 
 .saldo-positivo {
-    color:
-        var(--verde) !important;
+    color: var(--verde) !important;
 }
 
 .saldo-negativo {
-    color:
-        var(--vermelho) !important;
+    color: var(--vermelho) !important;
 }
 
 
-/* DESKTOP */
+/* =========================================================
+   DESKTOP
+========================================================= */
 
 @media (min-width: 900px) {
-
-    .cabecalho-app {
-        border-radius:
-            0 0 24px 24px;
-    }
-
-    .card-app {
-        padding: 28px;
-    }
 
     .lista-contas-pagina {
         grid-template-columns:
             repeat(2, 1fr);
+    }
+
+    .card-app {
+        padding: 27px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .painel-indicadores {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .indicador.previsto {
+        grid-column:
+            1 / -1;
+    }
+
+    .filtros-mobile {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .filtros-mobile input {
+        grid-column:
+            1 / -1;
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .conteudo-app {
+        padding:
+            15px 12px 100px;
+    }
+
+    .cabecalho-app {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .painel-indicadores {
+        gap: 8px;
+    }
+
+    .indicador {
+        padding: 14px;
+    }
+
+    .indicador strong {
+        font-size: 16px;
+    }
+
+    .card-app {
+        padding: 18px;
+
+        border-radius: 23px;
+    }
+
+    .card-titulo h2 {
+        font-size: 20px;
+    }
+
+    .linha-resumo {
+        grid-template-columns:
+            45px 1fr auto;
+    }
+
+    .lancamento {
+        grid-template-columns:
+            47px 1fr;
+    }
+
+    .lancamento-valor {
+        grid-column: 2;
+
+        text-align: left;
+    }
+
+    .filtros-mobile {
+        grid-template-columns:
+            1fr;
+    }
+
+    .filtros-mobile input {
+        grid-column: auto;
+    }
+
+    .botao-flutuante {
+        width: 62px;
+        height: 62px;
+
+        right: 20px;
+        bottom: 22px;
     }
 
 }
