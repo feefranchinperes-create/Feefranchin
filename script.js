@@ -28,6 +28,8 @@ let contasArquivadasCache = [];
 let contaEditandoId = null;
 let transacaoEditandoId = null;
 let contaExtratoId = null;
+let serieEditandoId = null;
+let recorrenciaNumeroEditando = null;
 
 const dataAtual = new Date();
 
@@ -353,6 +355,78 @@ function transacoesDoMes() {
         .filter(pertenceAoMes);
 }
 
+function somarRecorrencia(
+    dataISO,
+    frequencia,
+    quantidade
+) {
+
+    if (!dataISO) {
+        return null;
+    }
+
+    const partes =
+        dataISO.split("-");
+
+    const data =
+        new Date(
+            Number(partes[0]),
+            Number(partes[1]) - 1,
+            Number(partes[2])
+        );
+
+
+    if (
+        frequencia ===
+        "semanal"
+    ) {
+
+        data.setDate(
+            data.getDate() +
+            (7 * quantidade)
+        );
+
+    } else if (
+        frequencia ===
+        "mensal"
+    ) {
+
+        data.setMonth(
+            data.getMonth() +
+            quantidade
+        );
+
+    } else if (
+        frequencia ===
+        "anual"
+    ) {
+
+        data.setFullYear(
+            data.getFullYear() +
+            quantidade
+        );
+    }
+
+
+    const ano =
+        data.getFullYear();
+
+    const mes =
+        String(
+            data.getMonth() + 1
+        )
+        .padStart(2, "0");
+
+    const dia =
+        String(
+            data.getDate()
+        )
+        .padStart(2, "0");
+
+
+    return `${ano}-${mes}-${dia}`;
+}
+
 
 // ========================================================
 // LOGIN
@@ -372,7 +446,49 @@ function mostrarLogin() {
         .classList
         .add("oculto");
 }
+const campoRecorrencia =
+    document.getElementById(
+        "recorrenciaTransacao"
+    );
 
+if (
+    campoRecorrencia
+) {
+
+    campoRecorrencia
+        .addEventListener(
+            "change",
+            function() {
+
+                const grupo =
+                    document.getElementById(
+                        "grupoQuantidadeRecorrencia"
+                    );
+
+                if (
+                    !grupo
+                ) {
+                    return;
+                }
+
+                if (
+                    this.value ===
+                    "nao"
+                ) {
+
+                    grupo
+                        .classList
+                        .add("oculto");
+
+                } else {
+
+                    grupo
+                        .classList
+                        .remove("oculto");
+                }
+            }
+        );
+}
 
 function mostrarCadastro() {
 
@@ -2388,25 +2504,20 @@ function mostrarCategorias() {
 }
 
 
+
 // ========================================================
 // TRANSAÇÕES
 // ========================================================
 
-function preencherStatus(
-    tipo
-) {
+function preencherStatus(tipo) {
 
     const campo =
-        document
-            .getElementById(
-                "status"
-            );
+        document.getElementById(
+            "status"
+        );
 
 
-    if (
-        tipo ===
-        "receita"
-    ) {
+    if (tipo === "receita") {
 
         campo.innerHTML = `
 
@@ -2437,10 +2548,12 @@ function preencherStatus(
 }
 
 
+// ========================================================
+// ALTERAÇÃO DO TIPO
+// ========================================================
+
 document
-    .getElementById(
-        "tipo"
-    )
+    .getElementById("tipo")
     .addEventListener(
         "change",
         function() {
@@ -2453,34 +2566,100 @@ document
                 this.value
             );
 
+            document
+                .getElementById(
+                    "areaFormularioTransacao"
+                )
+                .classList
+                .toggle(
+                    "tipo-receita",
+                    this.value ===
+                    "receita"
+                );
+
             atualizarCampoPagamento();
         }
     );
 
-document
-    .getElementById(
-        "areaFormularioTransacao"
-    )
-    .classList
-    .toggle(
-        "tipo-receita",
-        this.value === "receita"
-    );    
+
+// ========================================================
+// ALTERAÇÃO DO STATUS
+// ========================================================
 
 document
-    .getElementById(
-        "status"
-    )
+    .getElementById("status")
     .addEventListener(
         "change",
         atualizarCampoPagamento
     );
+
+
+// ========================================================
+// RECORRÊNCIA
+// ========================================================
+
+const campoRecorrenciaTransacao =
+    document.getElementById(
+        "recorrenciaTransacao"
+    );
+
+
+if (campoRecorrenciaTransacao) {
+
+    campoRecorrenciaTransacao
+        .addEventListener(
+            "change",
+            function() {
+
+                const grupo =
+                    document.getElementById(
+                        "grupoQuantidadeRecorrencia"
+                    );
+
+
+                if (!grupo) {
+                    return;
+                }
+
+
+                if (
+                    this.value ===
+                    "nao"
+                ) {
+
+                    grupo
+                        .classList
+                        .add("oculto");
+
+                } else {
+
+                    grupo
+                        .classList
+                        .remove("oculto");
+                }
+            }
+        );
+}
+
+
+// ========================================================
+// LIMPAR FORMULÁRIO
+// ========================================================
+
 function limparFormularioTransacao() {
 
     transacaoEditandoId =
         null;
 
+serieEditandoId =
+    null;
 
+recorrenciaNumeroEditando =
+    null;
+
+
+
+    
     document
         .getElementById(
             "formTransacao"
@@ -2530,12 +2709,40 @@ function limparFormularioTransacao() {
 
     document
         .getElementById(
+            "recorrenciaTransacao"
+        )
+        .value =
+        "nao";
+
+
+    document
+        .getElementById(
+            "quantidadeRecorrencia"
+        )
+        .value =
+        12;
+
+
+    document
+        .getElementById(
+            "grupoQuantidadeRecorrencia"
+        )
+        .classList
+        .add("oculto");
+
+
+    document
+        .getElementById(
             "mensagemTransacao"
         )
         .textContent =
         "";
 }
 
+
+// ========================================================
+// ABRIR FORMULÁRIO
+// ========================================================
 
 function abrirFormularioTransacao(
     tipo = "",
@@ -2559,14 +2766,26 @@ function abrirFormularioTransacao(
     limparFormularioTransacao();
 
 
-    if (
-        item
-    ) {
+    // ====================================================
+    // EDITAR
+    // ====================================================
+
+    if (item) {
 
         transacaoEditandoId =
             item.id;
 
+        serieEditandoId =
+    item.serie_id || null;
 
+recorrenciaNumeroEditando =
+    item.recorrencia_numero || null;
+
+
+
+
+
+    
         document
             .getElementById(
                 "tituloFormTransacao"
@@ -2580,7 +2799,8 @@ function abrirFormularioTransacao(
                 "descricao"
             )
             .value =
-            item.descricao || "";
+            item.descricao ||
+            "";
 
 
         document
@@ -2605,15 +2825,13 @@ function abrirFormularioTransacao(
             item.tipo
         );
 
-        atualizarCampoPagamento();
+
         document
             .getElementById(
                 "status"
             )
             .value =
-            estaEfetivada(
-                item
-            )
+            estaEfetivada(item)
                 ? "efetivada"
                 : "pendente";
 
@@ -2688,9 +2906,73 @@ function abrirFormularioTransacao(
             .join(", ");
 
 
+        const recorrencia =
+            item.recorrente
+                ? (
+                    item.frequencia ||
+                    "mensal"
+                )
+                : "nao";
+
+
+        document
+            .getElementById(
+                "recorrenciaTransacao"
+            )
+            .value =
+            recorrencia;
+
+
+        const grupo =
+            document.getElementById(
+                "grupoQuantidadeRecorrencia"
+            );
+
+
+        if (
+            recorrencia ===
+            "nao"
+        ) {
+
+            grupo
+                .classList
+                .add("oculto");
+
+        } else {
+
+            grupo
+                .classList
+                .remove("oculto");
+
+
+            document
+                .getElementById(
+                    "quantidadeRecorrencia"
+                )
+                .value =
+                item.recorrencia_total ||
+                12;
+        }
+
+
+        areaFormularioTransacao
+            .classList
+            .toggle(
+                "tipo-receita",
+                item.tipo ===
+                "receita"
+            );
+
+
+        atualizarCampoPagamento();
+
         return;
     }
 
+
+    // ====================================================
+    // NOVO LANÇAMENTO
+    // ====================================================
 
     document
         .getElementById(
@@ -2704,9 +2986,7 @@ function abrirFormularioTransacao(
             : "Novo lançamento";
 
 
-    if (
-        tipo
-    ) {
+    if (tipo) {
 
         document
             .getElementById(
@@ -2724,9 +3004,41 @@ function abrirFormularioTransacao(
         preencherCategoriasSelect(
             tipo
         );
+
+
+        areaFormularioTransacao
+            .classList
+            .toggle(
+                "tipo-receita",
+                tipo ===
+                "receita"
+            );
+
+    } else {
+
+        preencherStatus(
+            "despesa"
+        );
+
+        preencherCategoriasSelect(
+            "despesa"
+        );
+
+        areaFormularioTransacao
+            .classList
+            .remove(
+                "tipo-receita"
+            );
     }
+
+
+    atualizarCampoPagamento();
 }
 
+
+// ========================================================
+// BOTÃO NOVA TRANSAÇÃO
+// ========================================================
 
 document
     .getElementById(
@@ -2736,10 +3048,16 @@ document
         "click",
         function() {
 
-            abrirFormularioTransacao();
+            abrirFormularioTransacao(
+                "despesa"
+            );
         }
     );
 
+
+// ========================================================
+// CANCELAR
+// ========================================================
 
 document
     .getElementById(
@@ -2760,6 +3078,10 @@ document
     );
 
 
+// ========================================================
+// SALVAR TRANSAÇÃO
+// ========================================================
+
 document
     .getElementById(
         "formTransacao"
@@ -2771,166 +3093,290 @@ document
             event.preventDefault();
 
 
-            const usuario =
-                await pegarUsuario();
-
-
-            if (
-                !usuario
-            ) {
-                return;
-            }
-
-
-            const descricao =
-                document
-                    .getElementById(
-                        "descricao"
-                    )
-                    .value
-                    .trim();
-
-
-            const valor =
-                numero(
-                    document
-                        .getElementById(
-                            "valor"
-                        )
-                        .value
+            const mensagem =
+                document.getElementById(
+                    "mensagemTransacao"
                 );
 
 
-            const tipo =
-                document
-                    .getElementById(
-                        "tipo"
-                    )
-                    .value;
-                    
+            mensagem.textContent =
+                "Salvando...";
 
 
-            const status =
-                document
-                    .getElementById(
-                        "status"
-                    )
-                    .value;
+            try {
 
-                    const telaFormulario =
-    document.getElementById(
-        "areaFormularioTransacao"
-    );
-
-telaFormulario
-    .classList
-    .toggle(
-        "tipo-receita",
-        tipo === "receita"
-    );
+                const usuario =
+                    await pegarUsuario();
 
 
-            const data =
-                document
-                    .getElementById(
-                        "data"
-                    )
-                    .value;
+                if (!usuario) {
+
+                    mensagem.textContent =
+                        "Sua sessão não foi encontrada.";
+
+                    return;
+                }
 
 
-            const dataVencimento =
-                document
-                    .getElementById(
-                        "dataVencimento"
-                    )
-                    .value ||
-                null;
+                const descricao =
+                    document
+                        .getElementById(
+                            "descricao"
+                        )
+                        .value
+                        .trim();
 
 
-            let dataPagamento =
-                document
-                    .getElementById(
-                        "dataPagamento"
-                    )
-                    .value ||
-                null;
+                const valor =
+                    numero(
+                        document
+                            .getElementById(
+                                "valor"
+                            )
+                            .value
+                    );
 
 
-            const contaId =
-                Number(
+                const tipo =
+                    document
+                        .getElementById(
+                            "tipo"
+                        )
+                        .value;
+
+
+                const status =
+                    document
+                        .getElementById(
+                            "status"
+                        )
+                        .value;
+
+
+                const data =
+                    document
+                        .getElementById(
+                            "data"
+                        )
+                        .value;
+
+
+                const dataVencimento =
+                    document
+                        .getElementById(
+                            "dataVencimento"
+                        )
+                        .value ||
+                    null;
+
+
+                let dataPagamento =
+                    document
+                        .getElementById(
+                            "dataPagamento"
+                        )
+                        .value ||
+                    null;
+
+
+                const contaValor =
                     document
                         .getElementById(
                             "contaTransacao"
                         )
+                        .value;
+
+
+                if (!contaValor) {
+
+                    mensagem.textContent =
+                        "Selecione uma conta.";
+
+                    return;
+                }
+
+
+                const contaId =
+                    Number(
+                        contaValor
+                    );
+
+
+                const categoriaValor =
+                    document
+                        .getElementById(
+                            "categoriaTransacao"
+                        )
+                        .value;
+
+
+                const categoriaId =
+                    categoriaValor
+                        ? Number(
+                            categoriaValor
+                        )
+                        : null;
+
+
+                const observacao =
+                    document
+                        .getElementById(
+                            "observacao"
+                        )
                         .value
-                );
+                        .trim();
 
 
-            const categoriaValor =
-                document
-                    .getElementById(
-                        "categoriaTransacao"
-                    )
-                    .value;
+                const textoTags =
+                    document
+                        .getElementById(
+                            "tagsTransacao"
+                        )
+                        .value;
 
 
-            const categoriaId =
-                categoriaValor
-                    ? Number(
-                        categoriaValor
-                    )
-                    : null;
+                const recorrencia =
+                    document
+                        .getElementById(
+                            "recorrenciaTransacao"
+                        )
+                        .value;
 
 
-            const observacao =
-                document
-                    .getElementById(
-                        "observacao"
-                    )
-                    .value
-                    .trim();
+                const recorrente =
+                    recorrencia !==
+                    "nao";
 
 
-            const efetivada =
-                status ===
-                "efetivada";
+                const frequencia =
+                    recorrente
+                        ? recorrencia
+                        : null;
 
 
-            if (
-                efetivada &&
-                !dataPagamento
-            ) {
+                const quantidadeRecorrencia =
+                    recorrente
+                        ? Math.max(
+                            2,
+                            Math.min(
+                                120,
+                                Number(
+                                    document
+                                        .getElementById(
+                                            "quantidadeRecorrencia"
+                                        )
+                                        .value
+                                ) ||
+                                2
+                            )
+                        )
+                        : 1;
 
-                dataPagamento =
-                    hoje();
-            }
+
+                const efetivada =
+                    status ===
+                    "efetivada";
 
 
-            if (
-                !efetivada
-            ) {
+                if (
+                    efetivada &&
+                    !dataPagamento
+                ) {
 
-                dataPagamento =
-                    null;
-            }
+                    dataPagamento =
+                        hoje();
+                }
 
 
-            const registro = {
+                if (!efetivada) {
 
-                descricao,
+                    dataPagamento =
+                        null;
+                }
 
-                valor,
 
-                tipo,
+                const registro = {
 
-                data,
+                    descricao,
+
+                    valor,
+
+                    tipo,
+
+                    data,
+
+                    conta_id:
+                        contaId,
+
+                    status,
+
+                    efetivada,
+
+                    recorrente,
+
+                    frequencia,
+
+                    data_vencimento:
+                        dataVencimento,
+
+                    data_pagamento:
+                        dataPagamento,
+
+                    observacao:
+                        observacao ||
+                        null,
+
+                    categoria_id:
+                        categoriaId,
+
+                    user_id:
+                        usuario.id
+                };
+
+
+                // ============================================
+                // EDITANDO LANÇAMENTO EXISTENTE
+                // ============================================
+
+                if (
+    transacaoEditandoId
+) {
+
+    const {
+        data: atualizada,
+        error
+    } =
+        await supabaseClient
+            .from(
+                "transacoes"
+            )
+            .update({
+                descricao:
+                    descricao,
+
+                valor:
+                    valor,
+
+                tipo:
+                    tipo,
+
+                data:
+                    data,
 
                 conta_id:
                     contaId,
 
-                status,
+                status:
+                    status,
 
-                efetivada,
+                efetivada:
+                    efetivada,
+
+                recorrente:
+                    recorrente,
+
+                frequencia:
+                    frequencia,
 
                 data_vencimento:
                     dataVencimento,
@@ -2939,118 +3385,323 @@ telaFormulario
                     dataPagamento,
 
                 observacao:
-                    observacao ||
-                    null,
+                    observacao || null,
 
                 categoria_id:
-                    categoriaId,
-
-                user_id:
-                    usuario.id
-            };
-
-
-            let transacaoId =
-                transacaoEditandoId;
-
-
-            if (
+                    categoriaId
+            })
+            .eq(
+                "id",
                 transacaoEditandoId
-            ) {
-
-                const { error } =
-                    await supabaseClient
-                        .from(
-                            "transacoes"
-                        )
-                        .update(
-                            registro
-                        )
-                        .eq(
-                            "id",
-                            transacaoEditandoId
-                        );
+            )
+            .select()
+            .single();
 
 
-                if (
-                    error
-                ) {
+    if (
+        error
+    ) {
 
-                    mostrarErroTransacao(
-                        error
-                    );
+        console.error(
+            "Erro ao editar:",
+            error
+        );
 
-                    return;
-                }
+        mensagem.textContent =
+            "Erro ao editar: " +
+            error.message;
 
-            } else {
-
-                const {
-                    data: inserida,
-                    error
-                } =
-                    await supabaseClient
-                        .from(
-                            "transacoes"
-                        )
-                        .insert([
-                            registro
-                        ])
-                        .select("id")
-                        .single();
+        return;
+    }
 
 
-                if (
-                    error
-                ) {
-
-                    mostrarErroTransacao(
-                        error
-                    );
-
-                    return;
-                }
+    console.log(
+        "Lançamento atualizado:",
+        atualizada
+    );
 
 
-                transacaoId =
-                    inserida.id;
-            }
+    await salvarTagsDaTransacao(
+        transacaoEditandoId,
+        textoTags,
+        usuario.id
+    );
 
 
-            const textoTags =
-                document
-                    .getElementById(
-                        "tagsTransacao"
-                    )
-                    .value;
 
+// ATUALIZA O VALOR DESTA PARCELA
+// E DAS PRÓXIMAS DA MESMA SÉRIE
 
-            await salvarTagsDaTransacao(
-                transacaoId,
-                textoTags,
-                usuario.id
+if (
+    serieEditandoId &&
+    recorrenciaNumeroEditando
+) {
+
+    const {
+        error: erroSerie
+    } =
+        await supabaseClient
+            .from(
+                "transacoes"
+            )
+            .update({
+                valor:
+                    valor
+            })
+            .eq(
+                "serie_id",
+                serieEditandoId
+            )
+            .gte(
+                "recorrencia_numero",
+                recorrenciaNumeroEditando
             );
 
 
-            areaFormularioTransacao
-                .classList
-                .add("oculto");
+    if (
+        erroSerie
+    ) {
+
+        console.error(
+            "Erro ao atualizar série:",
+            erroSerie
+        );
+
+        mensagem.textContent =
+            "O lançamento foi alterado, mas ocorreu erro ao atualizar os próximos: " +
+            erroSerie.message;
+
+        return;
+    }
+}
 
 
-            transacaoEditandoId =
-                null;
 
 
-            await carregarDados();
+
+
+}
+
+
+                // ============================================
+                // NOVO LANÇAMENTO NORMAL
+                // ============================================
+
+                else if (
+                    !recorrente
+                ) {
+
+                    const {
+                        data: inserida,
+                        error
+                    } =
+                        await supabaseClient
+                            .from(
+                                "transacoes"
+                            )
+                            .insert([
+                                {
+                                    ...registro,
+
+                                    serie_id:
+                                        null,
+
+                                    recorrencia_numero:
+                                        null,
+
+                                    recorrencia_total:
+                                        null
+                                }
+                            ])
+                            .select("id")
+                            .single();
+
+
+                    if (error) {
+
+                        mostrarErroTransacao(
+                            error
+                        );
+
+                        return;
+                    }
+
+
+                    await salvarTagsDaTransacao(
+                        inserida.id,
+                        textoTags,
+                        usuario.id
+                    );
+
+                }
+
+
+                // ============================================
+                // NOVO LANÇAMENTO RECORRENTE
+                // ============================================
+
+                else {
+
+                    const serieId =
+                        crypto.randomUUID();
+
+
+                    const registros =
+                        [];
+
+
+                    for (
+                        let i = 0;
+                        i < quantidadeRecorrencia;
+                        i++
+                    ) {
+
+                        registros.push({
+
+                            ...registro,
+
+
+                            data:
+                                somarRecorrencia(
+                                    data,
+                                    recorrencia,
+                                    i
+                                ),
+
+
+                            data_vencimento:
+                                dataVencimento
+                                    ? somarRecorrencia(
+                                        dataVencimento,
+                                        recorrencia,
+                                        i
+                                    )
+                                    : null,
+
+
+                            data_pagamento:
+                                i === 0
+                                    ? dataPagamento
+                                    : null,
+
+
+                            status:
+                                i === 0
+                                    ? status
+                                    : "pendente",
+
+
+                            efetivada:
+                                i === 0
+                                    ? efetivada
+                                    : false,
+
+
+                            recorrente:
+                                true,
+
+
+                            frequencia:
+                                recorrencia,
+
+
+                            serie_id:
+                                serieId,
+
+
+                            recorrencia_numero:
+                                i + 1,
+
+
+                            recorrencia_total:
+                                quantidadeRecorrencia
+                        });
+                    }
+
+
+                    const {
+                        data: inseridas,
+                        error
+                    } =
+                        await supabaseClient
+                            .from(
+                                "transacoes"
+                            )
+                            .insert(
+                                registros
+                            )
+                            .select("id");
+
+
+                    if (error) {
+
+                        mostrarErroTransacao(
+                            error
+                        );
+
+                        return;
+                    }
+
+
+                    for (
+                        const itemCriado
+                        of inseridas
+                    ) {
+
+                        await salvarTagsDaTransacao(
+                            itemCriado.id,
+                            textoTags,
+                            usuario.id
+                        );
+                    }
+                }
+
+
+                mensagem.textContent =
+                    "";
+
+
+                areaFormularioTransacao
+                    .classList
+                    .add("oculto");
+
+
+                transacaoEditandoId =
+                    null;
+
+
+                await carregarDados();
+
+
+            } catch (erro) {
+
+                console.error(
+                    "Erro ao salvar transação:",
+                    erro
+                );
+
+
+                mensagem.textContent =
+                    "Erro ao salvar: " +
+                    (
+                        erro.message ||
+                        "erro desconhecido"
+                    );
+            }
         }
     );
 
+
+// ========================================================
+// MOSTRAR ERRO
+// ========================================================
 
 function mostrarErroTransacao(
     error
 ) {
 
     console.error(
+        "Erro Supabase:",
         error
     );
 
@@ -3063,7 +3714,6 @@ function mostrarErroTransacao(
         "Erro: " +
         error.message;
 }
-
 
 // ========================================================
 // TAGS

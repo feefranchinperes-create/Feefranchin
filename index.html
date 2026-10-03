@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Minhas Finanças</title>
+    <title>Fernando</title>
 
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -22,9 +22,9 @@
 
         <div class="auth-logo">MF</div>
 
-        <h1>Minhas Finanças</h1>
+        <h1>Fernando</h1>
 
-        <p>Controle financeiro pessoal</p>
+        <p>Controle Fernando</p>
 
         <form id="formLogin">
 
@@ -146,7 +146,7 @@
             </div>
 
             <div>
-                <strong>Usuário</strong>
+                <strong>Fernando</strong>
                 <small id="emailUsuario"></small>
             </div>
 
@@ -578,272 +578,151 @@
         </section>
 
 
-        <!-- ==================================================
-             TRANSAÇÕES
-        ================================================== -->
+       <section id="transacoes" class="pagina">
 
-        <section id="transacoes" class="pagina">
+    <!-- ==================================================
+         FORMULÁRIO DE TRANSAÇÃO
+    ================================================== -->
 
+    <div
+        id="areaFormularioTransacao"
+        class="tela-form-transacao oculto"
+    >
 
-            <!-- FORMULÁRIO COMPLETO -->
+        <div class="topo-form-transacao">
 
-            <div
-    id="areaFormularioTransacao"
-    class="tela-form-transacao oculto"
->
-
-    <div class="topo-form-transacao">
-
-        <button
-            type="button"
-            id="btnCancelarTransacao"
-            class="btn-fechar-transacao"
-        >
-            ×
-        </button>
-
-        <h2 id="tituloFormTransacao">
-            Nova Despesa
-        </h2>
-
-        <button
-            type="submit"
-            form="formTransacao"
-            class="btn-salvar-transacao"
-        >
-            Salvar
-        </button>
-
-    </div>
-
-
-    <form id="formTransacao">
-
-        <!-- DESCRIÇÃO -->
-        <div class="campo-destaque">
-
-            <span class="icone-campo">
-                ≡
-            </span>
-
-            <input
-                type="text"
-                id="descricao"
-                placeholder="Descrição"
-                required
+            <button
+                type="button"
+                id="btnCancelarTransacao"
+                class="btn-fechar-transacao"
             >
+                ×
+            </button>
 
-        </div>
+            <h2 id="tituloFormTransacao">
+                Nova Despesa
+            </h2>
 
-
-        <!-- VALOR -->
-        <div class="campo-destaque valor-destaque">
-
-            <span class="icone-campo">
-                $
-            </span>
-
-            <input
-                type="number"
-                id="valor"
-                step="0.01"
-                min="0"
-                placeholder="R$ 0,00"
-                required
+            <button
+                type="submit"
+                form="formTransacao"
+                class="btn-salvar-transacao"
             >
+                Salvar
+            </button>
 
         </div>
 
 
-        <!-- TIPO -->
-        <div class="linha-transacao">
+        <form id="formTransacao">
 
-            <div class="linha-transacao-texto">
+            <!-- DESCRIÇÃO -->
 
-                <small>
-                    Tipo
-                </small>
+            <div class="campo-destaque">
 
-                <select id="tipo">
-
-                    <option value="despesa">
-                        Despesa
-                    </option>
-
-                    <option value="receita">
-                        Receita
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- SITUAÇÃO -->
-        <div class="linha-transacao">
-
-            <span class="icone-linha">
-                ✓
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <small>
-                    Situação
-                </small>
-
-                <select id="status"></select>
-
-            </div>
-
-        </div>
-
-
-        <!-- VENCIMENTO -->
-        <div class="linha-transacao">
-
-            <span class="icone-linha">
-                ▣
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <label for="dataVencimento">
-                    Data vencimento
-                </label>
-
-                <input
-                    type="date"
-                    id="dataVencimento"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- DATA PAGAMENTO / RECEBIMENTO -->
-        <div
-            class="linha-transacao"
-            id="grupoDataPagamento"
-        >
-
-            <span class="icone-linha">
-                ✓
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <label
-                    for="dataPagamento"
-                    id="labelDataPagamento"
-                >
-                    Data do pagamento
-                </label>
-
-                <input
-                    type="date"
-                    id="dataPagamento"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- CATEGORIA -->
-        <div class="linha-transacao">
-
-            <span class="icone-linha">
-                ◉
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <small>
-                    Categoria
-                </small>
-
-                <select id="categoriaTransacao"></select>
-
-            </div>
-
-        </div>
-
-
-        <!-- CONTA -->
-        <div class="linha-transacao">
-
-            <span class="icone-linha">
-                $
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <small>
-                    Conta
-                </small>
-
-                <select
-                    id="contaTransacao"
-                    required
-                ></select>
-
-            </div>
-
-        </div>
-
-
-        <!-- TAGS -->
-        <div class="linha-transacao">
-
-            <span class="icone-linha">
-                ◇
-            </span>
-
-            <div class="linha-transacao-texto">
-
-                <small>
-                    Tags
-                </small>
+                <span class="icone-campo">
+                    ≡
+                </span>
 
                 <input
                     type="text"
-                    id="tagsTransacao"
-                    placeholder="Ex.: mercado, casa"
+                    id="descricao"
+                    placeholder="Descrição"
+                    required
                 >
 
             </div>
 
-        </div>
+
+            <!-- VALOR -->
+
+            <div class="campo-destaque valor-destaque">
+
+                <span class="icone-campo">
+                    $
+                </span>
+
+                <input
+                    type="number"
+                    id="valor"
+                    step="0.01"
+                    min="0"
+                    placeholder="R$ 0,00"
+                    required
+                >
+
+            </div>
 
 
-        <!-- MAIS INFORMAÇÕES -->
-        <details class="mais-informacoes-transacao">
-
-            <summary>
-                Mais informações
-            </summary>
-
+            <!-- TIPO -->
 
             <div class="linha-transacao">
 
                 <span class="icone-linha">
-                    ◷
+                    ↕
                 </span>
 
                 <div class="linha-transacao-texto">
 
-                    <label for="data">
-                        Data lançamento
+                    <small>
+                        Tipo
+                    </small>
+
+                    <select id="tipo">
+
+                        <option value="despesa">
+                            Despesa
+                        </option>
+
+                        <option value="receita">
+                            Receita
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- SITUAÇÃO -->
+
+            <div class="linha-transacao">
+
+                <span class="icone-linha">
+                    ✓
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <small>
+                        Situação
+                    </small>
+
+                    <select id="status"></select>
+
+                </div>
+
+            </div>
+
+
+            <!-- VENCIMENTO -->
+
+            <div class="linha-transacao">
+
+                <span class="icone-linha">
+                    ▣
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <label for="dataVencimento">
+                        Data vencimento
                     </label>
 
                     <input
                         type="date"
-                        id="data"
-                        required
+                        id="dataVencimento"
                     >
 
                 </div>
@@ -851,192 +730,394 @@
             </div>
 
 
-            <div class="linha-transacao">
+            <!-- DATA PAGAMENTO / RECEBIMENTO -->
+
+            <div
+                class="linha-transacao"
+                id="grupoDataPagamento"
+            >
 
                 <span class="icone-linha">
-                    ≡
+                    ✓
                 </span>
 
                 <div class="linha-transacao-texto">
 
-                    <label for="observacao">
-                        Observações
+                    <label
+                        for="dataPagamento"
+                        id="labelDataPagamento"
+                    >
+                        Data do pagamento
                     </label>
 
-                    <textarea
-                        id="observacao"
-                        rows="3"
-                        placeholder="Observações e informações adicionais"
-                    ></textarea>
+                    <input
+                        type="date"
+                        id="dataPagamento"
+                    >
 
                 </div>
 
             </div>
 
-        </details>
 
+            <!-- CATEGORIA -->
 
-        <p
-            id="mensagemTransacao"
-            class="mensagem-form"
-        ></p>
+            <div class="linha-transacao">
 
-    </form>
+                <span class="icone-linha">
+                    ◉
+                </span>
 
-</div>
+                <div class="linha-transacao-texto">
 
+                    <small>
+                        Categoria
+                    </small>
 
-            <!-- FILTROS -->
+                    <select
+                        id="categoriaTransacao"
+                    ></select>
 
-            <div class="filtros-mobile">
-
-                <input
-                    id="buscaTransacao"
-                    type="search"
-                    placeholder="Pesquisar..."
-                >
-
-
-                <select id="filtroTipo">
-
-                    <option value="todos">
-                        Todos
-                    </option>
-
-                    <option value="receita">
-                        Receitas
-                    </option>
-
-                    <option value="despesa">
-                        Despesas
-                    </option>
-
-                </select>
-
-
-                <select id="filtroStatus">
-
-                    <option value="todos">
-                        Todos os status
-                    </option>
-
-                    <option value="pendente">
-                        Pendentes
-                    </option>
-
-                    <option value="efetivada">
-                        Pagos / Recebidos
-                    </option>
-
-                </select>
+                </div>
 
             </div>
 
 
+            <!-- CONTA -->
+
+            <div class="linha-transacao">
+
+                <span class="icone-linha">
+                    $
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <small>
+                        Conta
+                    </small>
+
+                    <select
+                        id="contaTransacao"
+                        required
+                    ></select>
+
+                </div>
+
+            </div>
+
+
+            <!-- TAGS -->
+
+            <div class="linha-transacao">
+
+                <span class="icone-linha">
+                    ◇
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <small>
+                        Tags
+                    </small>
+
+                    <input
+                        type="text"
+                        id="tagsTransacao"
+                        placeholder="Ex.: mercado, casa"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RECORRÊNCIA -->
+
+            <div class="linha-transacao">
+
+                <span class="icone-linha">
+                    ↻
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <small>
+                        Recorrência
+                    </small>
+
+                    <select id="recorrenciaTransacao">
+
+                        <option value="nao">
+                            Não recorrente
+                        </option>
+
+                        <option value="mensal">
+                            Todo mês
+                        </option>
+
+                        <option value="semanal">
+                            Toda semana
+                        </option>
+
+                        <option value="anual">
+                            Todo ano
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUANTIDADE -->
+
             <div
-                id="listaTransacoes"
-                class="lista-lancamentos pagina-transacoes"
-            ></div>
-
-
-            <button
-                id="btnNovaTransacao"
-                class="botao-flutuante"
-                type="button"
+                class="linha-transacao oculto"
+                id="grupoQuantidadeRecorrencia"
             >
-                +
-            </button>
 
-        </section>
+                <span class="icone-linha">
+                    #
+                </span>
+
+                <div class="linha-transacao-texto">
+
+                    <small>
+                        Repetir por
+                    </small>
+
+                    <input
+                        type="number"
+                        id="quantidadeRecorrencia"
+                        min="2"
+                        max="120"
+                        value="12"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- MAIS INFORMAÇÕES -->
+
+            <details class="mais-informacoes-transacao">
+
+                <summary>
+                    Mais informações
+                </summary>
+
+
+                <div class="linha-transacao">
+
+                    <span class="icone-linha">
+                        ◷
+                    </span>
+
+                    <div class="linha-transacao-texto">
+
+                        <label for="data">
+                            Data lançamento
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="linha-transacao">
+
+                    <span class="icone-linha">
+                        ≡
+                    </span>
+
+                    <div class="linha-transacao-texto">
+
+                        <label for="observacao">
+                            Observações
+                        </label>
+
+                        <textarea
+                            id="observacao"
+                            rows="3"
+                            placeholder="Observações e informações adicionais"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </details>
+
+
+            <p
+                id="mensagemTransacao"
+                class="mensagem-form"
+            ></p>
+
+        </form>
+
+    </div>
+
+
+    <!-- ==================================================
+         FILTROS
+    ================================================== -->
+
+    <div class="filtros-mobile">
+
+        <input
+            id="buscaTransacao"
+            type="search"
+            placeholder="Pesquisar..."
+        >
+
+
+        <select id="filtroTipo">
+
+            <option value="todos">
+                Todos
+            </option>
+
+            <option value="receita">
+                Receitas
+            </option>
+
+            <option value="despesa">
+                Despesas
+            </option>
+
+        </select>
+
+
+        <select id="filtroStatus">
+
+            <option value="todos">
+                Todos os status
+            </option>
+
+            <option value="pendente">
+                Pendentes
+            </option>
+
+            <option value="efetivada">
+                Pagos / Recebidos
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="listaTransacoes"
+        class="lista-lancamentos pagina-transacoes"
+    ></div>
+
+
+    <button
+        id="btnNovaTransacao"
+        class="botao-flutuante"
+        type="button"
+    >
+        +
+    </button>
+
+</section>
 
 
         <!-- ==================================================
              CATEGORIAS / PLANO DE CONTAS
         ================================================== -->
+<section id="categorias" class="pagina">
 
-        <section id="categorias" class="pagina">
+    <section class="card-app">
 
-            <section class="card-app">
+        <div class="card-titulo">
 
-                <div class="card-titulo">
+            <h2>
+                Plano de contas
+            </h2>
 
-                    <h2>
-                        Plano de contas
-                    </h2>
-
-                </div>
-
-
-                <form id="formCategoria">
-
-                    <div class="campo-app">
-
-                        <label>
-                            Nome da categoria
-                        </label>
-
-                        <input
-                            id="nomeCategoria"
-                            type="text"
-                            required
-                        >
-
-                    </div>
+        </div>
 
 
-                    <div class="campo-app">
+        <form id="formCategoria">
 
-                        <label>
-                            Tipo
-                        </label>
+            <div class="campo-app">
 
-                        <select
-                            id="tipoCategoria"
-                            required
-                        >
+                <label for="nomeCategoria">
+                    Nome da categoria
+                </label>
 
-                            <option value="receita">
-                                Receita
-                            </option>
+                <input
+                    id="nomeCategoria"
+                    type="text"
+                    required
+                >
 
-                            <option value="despesa">
-                                Despesa
-                            </option>
-
-                        </select>
-
-                    </div>
+            </div>
 
 
-                    <button
-                        type="submit"
-                        class="btn-principal largura-total"
-                    >
-                        Adicionar categoria
-                    </button>
+            <div class="campo-app">
 
-                </form>
+                <label for="tipoCategoria">
+                    Tipo
+                </label>
 
-            </section>
+                <select
+                    id="tipoCategoria"
+                    required
+                >
+
+                    <option value="receita">
+                        Receita
+                    </option>
+
+                    <option value="despesa">
+                        Despesa
+                    </option>
+
+                </select>
+
+            </div>
 
 
-            <section class="card-app">
+            <button
+                type="submit"
+                class="btn-principal largura-total"
+            >
+                Adicionar categoria
+            </button>
 
-                <div class="card-titulo">
+        </form>
 
-                    <h2>
-                        Categorias cadastradas
-                    </h2>
+    </section>
 
-                </div>
 
-                <div id="listaCategorias"></div>
+    <section class="card-app">
 
-            </section>
+        <div class="card-titulo">
 
-        </section>
+            <h2>
+                Categorias cadastradas
+            </h2>
 
-    </main>
+        </div>
+
+        <div id="listaCategorias"></div>
+
+    </section>
+
+</section>
 
 
     <!-- MENU DO + -->
