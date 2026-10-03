@@ -24,7 +24,7 @@ let transacoesCache = [];
 let categoriasCache = [];
 let tagsCache = [];
 let relacoesTagsCache = [];
-
+let contasArquivadasCache = [];
 let contaEditandoId = null;
 let transacaoEditandoId = null;
 let contaExtratoId = null;
@@ -82,6 +82,124 @@ const areaFormularioTransacao =
 // ========================================================
 // UTILIDADES
 // ========================================================
+
+
+async function buscarContasArquivadas() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("Contas")
+            .select("*")
+            .eq(
+                "ativo",
+                false
+            )
+            .order(
+                "nome"
+            );
+
+
+    if (
+        error
+    ) {
+
+        console.error(
+            "Erro contas arquivadas:",
+            error
+        );
+
+        return [];
+    }
+
+
+    return data || [];
+}
+
+function mostrarContasArquivadas() {
+
+    const area =
+        document
+            .getElementById(
+                "listaContasArquivadas"
+            );
+
+
+    area.innerHTML =
+        "";
+
+
+    if (
+        contasArquivadasCache.length ===
+        0
+    ) {
+
+        area.innerHTML = `
+            <p>
+                Nenhuma conta arquivada.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    contasArquivadasCache.forEach(
+        function(conta) {
+
+            const inicial =
+                escaparHTML(
+                    (
+                        conta.nome ||
+                        "C"
+                    )
+                    .charAt(0)
+                    .toUpperCase()
+                );
+
+
+            area.insertAdjacentHTML(
+                "beforeend",
+                `
+
+                <article class="conta-pagina conta-arquivada">
+
+                    <div class="icone-conta">
+                        ${inicial}
+                    </div>
+
+                    <div class="conta-info">
+
+                        <strong>
+                            ${escaparHTML(
+                                conta.nome
+                            )}
+                        </strong>
+
+                        <small>
+                            Arquivada
+                        </small>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-reativar"
+                        data-reativar-conta="${conta.id}"
+                    >
+                        Reativar
+                    </button>
+
+                </article>
+
+                `
+            );
+
+        }
+    );
+}
 
 function formatarDinheiro(valor) {
 
@@ -285,6 +403,40 @@ function mostrarSistema() {
         .remove("oculto");
 }
 
+document
+    .getElementById(
+        "listaContasArquivadas"
+    )
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            const botao =
+                event.target.closest(
+                    "[data-reativar-conta]"
+                );
+
+
+            if (
+                !botao
+            ) {
+                return;
+            }
+
+
+            const contaId =
+                Number(
+                    botao.dataset
+                        .reativarConta
+                );
+
+
+            await reativarConta(
+                contaId
+            );
+
+        }
+    );
 
 document
     .getElementById(
@@ -1095,23 +1247,7 @@ document
 
             } else {
 
-                const { error } =
-                    await supabaseClient
-                        .from("Contas")
-                        .insert([
-                            dadosConta
-                        ]);
-
-
-                erro =
-                    error;
-            }
-
-
-            if (
-                erro
-            ) {
-
+ 
                 document
                     .getElementById(
                         "mensagemConta"
@@ -1379,6 +1515,87 @@ function mostrarContas() {
 // MENU DE CONTA
 // ========================================================
 
+async function reativarConta(
+    contaId
+) {
+
+    const conta =
+        contasArquivadasCache.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.id
+                    ) ===
+                    Number(
+                        contaId
+                    )
+                );
+
+            }
+        );
+
+
+    if (
+        !conta
+    ) {
+
+        alert(
+            "Conta arquivada não encontrada."
+        );
+
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            `Reativar a conta "${conta.nome}"?`
+        );
+
+
+    if (
+        !confirmar
+    ) {
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("Contas")
+            .update({
+                ativo:
+                    true
+            })
+            .eq(
+                "id",
+                contaId
+            );
+
+
+    if (
+        error
+    ) {
+
+        alert(
+            "Erro ao reativar conta: " +
+            error.message
+        );
+
+        return;
+    }
+
+
+    await carregarDados();
+
+
+    alert(
+        "Conta reativada."
+    );
+}
 document
     .getElementById(
         "listaContas"
@@ -3795,146 +4012,61 @@ function htmlLancamento(
 
 
     if (
-        comAcoes
-    ) {
+    comAcoes
+) {
 
-        acoes = `
+    acoes = `
 
-            <div class="acoes-lancamento">
+        <div class="menu-transacao">
+
+            <button
+                type="button"
+                class="btn-menu-transacao"
+                data-acao="abrir-menu"
+                data-id="${item.id}"
+            >
+                ⋮
+            </button>
+
+            <div
+                id="menu-transacao-${item.id}"
+                class="popup-transacao oculto"
+            >
 
                 <button
                     type="button"
-                    class="btn-editar"
                     data-acao="editar"
                     data-id="${item.id}"
                 >
                     Editar
                 </button>
 
-
                 ${
-                    estaPendente(
-                        item
-                    )
+                    estaPendente(item)
                         ? `
-
                         <button
                             type="button"
-                            class="btn-efetivar"
                             data-acao="efetivar"
                             data-id="${item.id}"
                         >
-
                             ${
-                                item.tipo ===
-                                "receita"
+                                item.tipo === "receita"
                                     ? "Receber"
                                     : "Pagar"
                             }
-
                         </button>
-
                         `
                         : ""
                 }
 
-
                 <button
                     type="button"
-                    class="btn-excluir"
                     data-acao="excluir"
                     data-id="${item.id}"
+                    class="acao-excluir"
                 >
                     Excluir
                 </button>
-
-            </div>
-
-        `;
-    }
-
-
-    return `
-
-        <div class="lancamento">
-
-            <div class="icone-lancamento ${
-                despesa
-                    ? "despesa"
-                    : "receita"
-            }">
-
-                ${
-                    despesa
-                        ? "−"
-                        : "+"
-                }
-
-            </div>
-
-
-            <div class="lancamento-info">
-
-                <strong>
-
-                    ${escaparHTML(
-                        item.descricao
-                    )}
-
-                </strong>
-
-                ${complemento}
-
-                <span
-                    class="badge-status ${
-                        status.classe
-                    }"
-                >
-                    ${status.texto}
-                </span>
-
-                ${acoes}
-
-            </div>
-
-
-            <div class="lancamento-valor">
-
-                <strong
-                    class="${
-                        despesa
-                            ? "saldo-negativo"
-                            : "saldo-positivo"
-                    }"
-                >
-
-                    ${
-                        despesa
-                            ? "− "
-                            : "+ "
-                    }
-
-                    ${formatarDinheiro(
-                        item.valor
-                    )}
-
-                </strong>
-
-
-                <small>
-
-                    ${
-                        item.data_vencimento
-                            ? "Venc. " +
-                              formatarData(
-                                  item.data_vencimento
-                              )
-                            : formatarData(
-                                  item.data
-                              )
-                    }
-
-                </small>
 
             </div>
 
@@ -3942,27 +4074,6 @@ function htmlLancamento(
 
     `;
 }
-
-
-function mostrarLancamentos(
-    lista
-) {
-
-    const area =
-        document
-            .getElementById(
-                "listaTransacoes"
-            );
-
-
-    const dados =
-        lista ||
-        transacoesDoMes();
-
-
-    area.innerHTML =
-        "";
-
 
     if (
         dados.length ===
@@ -4098,6 +4209,51 @@ document
 
             const acao =
                 botao.dataset.acao;
+
+                if (
+    acao ===
+    "abrir-menu"
+) {
+
+    document
+        .querySelectorAll(
+            ".popup-transacao"
+        )
+        .forEach(
+            function(menu) {
+
+                if (
+                    menu.id !==
+                    `menu-transacao-${id}`
+                ) {
+
+                    menu
+                        .classList
+                        .add("oculto");
+                }
+            }
+        );
+
+
+    const menu =
+        document
+            .getElementById(
+                `menu-transacao-${id}`
+            );
+
+
+    if (
+        menu
+    ) {
+
+        menu
+            .classList
+            .toggle("oculto");
+    }
+
+
+    return;
+}
 
 
             if (
@@ -4440,13 +4596,17 @@ document
 // ATUALIZAR INTERFACE
 // ========================================================
 
-function atualizarInterface() {
+
+
+    function atualizarInterface() {
 
     atualizarNomeMes();
 
     atualizarResumo();
 
     mostrarContas();
+
+    mostrarContasArquivadas();
 
     mostrarCategorias();
 
@@ -4465,29 +4625,33 @@ function atualizarInterface() {
 async function carregarDados() {
 
     const resultados =
-        await Promise.all([
-            buscarContas(),
-            buscarTransacoes(),
-            buscarCategorias(),
-            buscarTags(),
-            buscarRelacoesTags()
-        ]);
+    await Promise.all([
+        buscarContas(),
+        buscarContasArquivadas(),
+        buscarTransacoes(),
+        buscarCategorias(),
+        buscarTags(),
+        buscarRelacoesTags()
+    ]);
 
 
     contasCache =
-        resultados[0];
+    resultados[0];
 
-    transacoesCache =
-        resultados[1];
+contasArquivadasCache =
+    resultados[1];
 
-    categoriasCache =
-        resultados[2];
+transacoesCache =
+    resultados[2];
 
-    tagsCache =
-        resultados[3];
+categoriasCache =
+    resultados[3];
 
-    relacoesTagsCache =
-        resultados[4];
+tagsCache =
+    resultados[4];
+
+relacoesTagsCache =
+    resultados[5];
 
 
     atualizarInterface();
