@@ -1609,3 +1609,297 @@ button {
 .popup-transacao {
     z-index: 999;
 }
+/* =====================================================
+   NOVA RECEITA / NOVA DESPESA
+===================================================== */
+
+.tela-form-transacao {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+
+    background: #fff;
+
+    overflow-y: auto;
+
+    max-width: 620px;
+    margin: 0 auto;
+
+    box-shadow: 0 0 30px rgba(0,0,0,.12);
+}
+
+
+/* TOPO */
+
+.topo-form-transacao {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    align-items: center;
+
+    min-height: 72px;
+
+    padding: 8px 18px;
+
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+
+.topo-form-transacao h2 {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+
+.btn-fechar-transacao {
+    border: 0;
+    background: transparent;
+
+    font-size: 42px;
+    font-weight: 300;
+    line-height: 1;
+
+    color: #777;
+
+    cursor: pointer;
+}
+
+
+.btn-salvar-transacao {
+    border: 0;
+
+    padding: 13px 24px;
+
+    border-radius: 25px;
+
+    background: #e84c3d;
+    color: white;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* CAMPOS GRANDES */
+
+.campo-destaque {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    min-height: 105px;
+
+    padding: 0 30px;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.icone-campo {
+    width: 38px;
+
+    font-size: 29px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+.campo-destaque input {
+    flex: 1;
+
+    border: 0;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 27px;
+
+    color: #333;
+}
+
+
+.campo-destaque input::placeholder {
+    color: #c6c6c6;
+}
+
+
+.valor-destaque input {
+    font-size: 28px;
+}
+
+
+/* LINHAS */
+
+.linha-transacao {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    min-height: 90px;
+
+    padding: 12px 30px;
+
+    border-bottom: 1px solid #eee;
+
+    background: white;
+}
+
+
+.icone-linha {
+    width: 38px;
+
+    font-size: 25px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+.linha-transacao-texto {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.linha-transacao-texto small,
+.linha-transacao-texto label {
+    font-size: 14px;
+
+    color: #777;
+}
+
+
+.linha-transacao-texto select,
+.linha-transacao-texto input,
+.linha-transacao-texto textarea {
+    width: 100%;
+
+    border: 0;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 18px;
+
+    color: #222;
+}
+
+
+.linha-transacao-texto select {
+    cursor: pointer;
+}
+
+
+.linha-transacao-texto textarea {
+    min-height: 80px;
+
+    resize: vertical;
+}
+
+
+/* MAIS INFORMAÇÕES */
+
+.mais-informacoes-transacao {
+    background: white;
+}
+
+
+.mais-informacoes-transacao summary {
+    padding: 25px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    color: #e0a900;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    list-style: none;
+}
+
+
+.mais-informacoes-transacao summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.mais-informacoes-transacao summary::after {
+    content: "⌄";
+
+    margin-left: 10px;
+
+    font-size: 22px;
+}
+
+
+/* RECEITA */
+
+.tela-form-transacao.tipo-receita
+.btn-salvar-transacao {
+    background: #18a765;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .tela-form-transacao {
+        max-width: none;
+    }
+
+
+    .topo-form-transacao {
+        grid-template-columns: 42px 1fr auto;
+
+        padding: 7px 12px;
+    }
+
+
+    .topo-form-transacao h2 {
+        font-size: 22px;
+    }
+
+
+    .btn-salvar-transacao {
+        padding: 11px 18px;
+
+        font-size: 15px;
+    }
+
+
+    .campo-destaque {
+        min-height: 90px;
+
+        padding: 0 20px;
+    }
+
+
+    .linha-transacao {
+        min-height: 80px;
+
+        padding: 10px 20px;
+    }
+
+}

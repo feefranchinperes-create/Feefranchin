@@ -79,6 +79,8 @@ const areaFormularioTransacao =
     document.getElementById("areaFormularioTransacao");
 
 
+
+
 // ========================================================
 // UTILIDADES
 // ========================================================
@@ -2457,6 +2459,16 @@ document
 
 document
     .getElementById(
+        "areaFormularioTransacao"
+    )
+    .classList
+    .toggle(
+        "tipo-receita",
+        this.value === "receita"
+    );    
+
+document
+    .getElementById(
         "status"
     )
     .addEventListener(
@@ -2795,6 +2807,7 @@ document
                         "tipo"
                     )
                     .value;
+                    
 
 
             const status =
@@ -2803,6 +2816,18 @@ document
                         "status"
                     )
                     .value;
+
+                    const telaFormulario =
+    document.getElementById(
+        "areaFormularioTransacao"
+    );
+
+telaFormulario
+    .classList
+    .toggle(
+        "tipo-receita",
+        tipo === "receita"
+    );
 
 
             const data =
