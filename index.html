@@ -1297,6 +1297,1123 @@ body.principal-mode .ribbon-programacao{display:none!important}
 /* V50 - saldos negativos em vermelho */
 .valor-negativo{color:#d32f2f!important}
 
+
+/* ============================================================
+   V51 - MENU LATERAL MOBILE
+   ============================================================ */
+@media(max-width:980px){
+  .mobile-topbar-mobile{
+    display:grid!important;
+    grid-template-columns:44px 1fr 44px;
+    align-items:center;
+    min-height:58px;
+    padding:7px 10px;
+    background:#238ee2;
+    color:#fff;
+    border-bottom:0;
+    box-shadow:none;
+  }
+  .mobile-menu-button,
+  .mobile-topbar-mobile .mobile-topbar-menu{
+    width:42px;height:42px;min-height:42px;
+    border:0;border-radius:50%;
+    background:transparent;
+    color:#fff;
+    font-size:25px;
+    display:grid;place-items:center;
+  }
+  .mobile-topbar-center{
+    min-width:0;text-align:center;
+  }
+  .mobile-topbar-center strong{
+    display:block;
+    font-size:19px;
+    font-weight:500;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .mobile-drawer-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:1800;
+    background:rgba(0,0,0,.58);
+    display:block;
+  }
+  .mobile-drawer-backdrop.hidden{display:none!important}
+
+  .mobile-drawer{
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:min(82vw,390px);
+    background:#fff;
+    border-radius:0 22px 22px 0;
+    box-shadow:10px 0 32px rgba(0,0,0,.22);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    transform:translateX(0);
+  }
+
+  .mobile-drawer-profile{
+    display:grid;
+    grid-template-columns:72px minmax(0,1fr) 36px;
+    gap:12px;
+    align-items:center;
+    padding:22px 18px 18px;
+    min-height:126px;
+  }
+  .mobile-profile-avatar{
+    width:68px;height:68px;
+    border-radius:50%;
+    display:grid;place-items:center;
+    font-size:35px;
+    background:#dcecff;
+    border:4px solid #9db7c5;
+    box-shadow:inset 0 0 0 3px #eef6ff;
+  }
+  .mobile-profile-info{min-width:0}
+  .mobile-profile-info strong{
+    display:block;
+    font-size:18px;
+    color:#151515;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .mobile-profile-info span{
+    display:block;
+    margin-top:2px;
+    color:#707070;
+    font-size:13px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .mobile-profile-info small{
+    display:inline-block;
+    margin-top:9px;
+    padding:4px 10px;
+    border-radius:999px;
+    background:#f3f5f7;
+    border:1px solid #dde2e7;
+    color:#333;
+    font-size:10px;
+  }
+  .mobile-profile-arrow{
+    width:34px;height:34px;min-height:34px;
+    border:0;background:transparent;
+    font-size:34px;color:#666;
+  }
+
+  .mobile-drawer-nav{
+    padding:4px 0 calc(20px + env(safe-area-inset-bottom));
+  }
+  .mobile-drawer-item{
+    width:100%;
+    min-height:58px;
+    display:grid;
+    grid-template-columns:66px 1fr;
+    align-items:center;
+    border:0;
+    background:transparent;
+    text-align:left;
+    padding:0 16px;
+    color:#202833;
+  }
+  .mobile-drawer-item .mdi{
+    font-size:25px;
+    line-height:1;
+    text-align:center;
+    font-style:normal;
+  }
+  .mobile-drawer-item b{
+    font-size:15px;
+    font-weight:500;
+  }
+  .mobile-drawer-item.active{
+    color:#178fe0;
+    background:#eaf5ff;
+    border-radius:0 34px 34px 0;
+    width:calc(100% - 16px);
+  }
+  .mobile-drawer-item:hover,
+  .mobile-drawer-item:active{
+    background:#f1f6fb;
+  }
+  .mobile-drawer-item.active:hover{background:#eaf5ff}
+
+  .mobile-drawer-section{
+    padding:18px 28px 8px;
+    color:#777;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+  }
+  .mobile-drawer-divider{
+    height:1px;
+    background:#e6e9ed;
+    margin:10px 0;
+  }
+  .mobile-drawer-exit{color:#b53a35}
+
+  /* O menu lateral substitui o antigo "Mais" como acesso principal,
+     mas mantemos a navegação inferior para uso rápido. */
+  .mobile-item[data-page="mobileMais"]{display:none}
+  .mobile-nav{grid-template-columns:repeat(4,1fr)!important}
+}
+
+@media(min-width:981px){
+  .mobile-drawer-backdrop{display:none!important}
+}
+
+
+/* ============================================================
+   V52 - Categorias mobile em tela simples
+   ============================================================ */
+.mobile-categories-home{display:none}
+
+@media(max-width:980px){
+  /* No celular, a tela de categorias vira somente a lista de cadastros */
+  #categorias .mobile-categories-home{
+    display:block;
+  }
+
+  #categorias .mobile-categoria-actions,
+  #categorias .category-legacy-shell{
+    display:none!important;
+  }
+
+  body.categories-mode #categorias.page{
+    padding:12px 10px 22px!important;
+    background:#f4f7fb!important;
+  }
+
+  .mobile-categories-intro{
+    padding:4px 4px 10px;
+  }
+  .mobile-categories-intro h2{
+    margin:0;
+    font-size:21px;
+    font-weight:600;
+    color:#1e293b;
+  }
+  .mobile-categories-intro p{
+    margin:4px 0 0;
+    color:#758196;
+    font-size:12px;
+  }
+
+  .mobile-category-group{
+    margin:0 0 14px;
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    overflow:hidden;
+  }
+
+  .mobile-category-group-title{
+    padding:13px 16px 7px;
+    color:#7b8492;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    background:#fbfcfd;
+  }
+
+  .mobile-category-entry{
+    width:100%;
+    min-height:66px;
+    display:grid;
+    grid-template-columns:42px minmax(0,1fr) 20px;
+    gap:10px;
+    align-items:center;
+    border:0;
+    border-top:1px solid #eef1f4;
+    background:#fff;
+    padding:9px 14px;
+    text-align:left;
+    color:#202833;
+  }
+  .mobile-category-entry:first-of-type{
+    border-top:0;
+  }
+  .mobile-category-entry:active{
+    background:#eef6fd;
+  }
+
+  .mobile-category-icon{
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#edf5fd;
+    font-size:20px;
+  }
+
+  .mobile-category-entry>span:nth-child(2){
+    min-width:0;
+  }
+  .mobile-category-entry strong{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    line-height:1.25;
+  }
+  .mobile-category-entry small{
+    display:block;
+    margin-top:3px;
+    color:#8792a3;
+    font-size:10px;
+    line-height:1.25;
+  }
+  .mobile-category-entry i{
+    color:#9aa3af;
+    font-style:normal;
+    font-size:28px;
+    font-weight:300;
+  }
+}
+
+@media(min-width:981px){
+  .mobile-categories-home{display:none!important}
+}
+
+
+/* V53 - correção definitiva do menu lateral mobile */
+@media(max-width:980px){
+  .mobile-topbar-mobile{
+    display:grid!important;
+    position:sticky!important;
+    top:0;
+    z-index:1700!important;
+  }
+
+  #btnAbrirMenuMobile{
+    display:grid!important;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+  }
+
+  .mobile-drawer-backdrop{
+    visibility:visible;
+    opacity:1;
+    transition:opacity .2s ease;
+  }
+  .mobile-drawer-backdrop.hidden{
+    display:block!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+
+  .mobile-drawer{
+    transform:translateX(0);
+    transition:transform .22s ease;
+  }
+  .mobile-drawer-backdrop.hidden .mobile-drawer{
+    transform:translateX(-102%);
+  }
+}
+
+
+/* ============================================================
+   V54 - refinamento mobile + categorias com cadastros existentes
+   ============================================================ */
+@media(max-width:980px){
+  .mobile-topbar-mobile{
+    display:grid!important;
+    grid-template-columns:48px minmax(0,1fr) 48px!important;
+    align-items:center!important;
+    min-height:58px!important;
+    padding:7px 10px!important;
+    background:#238ee2!important;
+    color:#fff!important;
+    border:0!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.12)!important;
+  }
+  .mobile-topbar-center{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+  }
+  .mobile-topbar-center strong{
+    color:#fff!important;
+    font-size:18px!important;
+    font-weight:500!important;
+  }
+  .mobile-menu-button,
+  .mobile-topbar-mobile .mobile-topbar-menu{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+    color:#fff!important;
+  }
+  .mobile-menu-button{
+    flex-direction:column!important;
+    gap:5px!important;
+  }
+  .hamb-line{
+    display:block!important;
+    width:24px!important;
+    height:2.5px!important;
+    border-radius:4px!important;
+    background:#fff!important;
+  }
+  .mobile-topbar-mobile .mobile-topbar-menu{
+    font-size:26px!important;
+  }
+
+  /* Popup dos cadastros */
+  .mobile-category-manager{
+    width:100%;
+    min-height:100%;
+  }
+  .mobile-category-manager-head{
+    position:sticky;
+    top:-12px;
+    z-index:4;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 0 12px;
+    background:#fff;
+    border-bottom:1px solid #e8edf2;
+  }
+  .mobile-category-manager-head>div{
+    min-width:0;
+  }
+  .mobile-category-manager-head strong{
+    display:block;
+    font-size:16px;
+    color:#1f2937;
+  }
+  .mobile-category-manager-head small{
+    display:block;
+    margin-top:2px;
+    color:#7d8794;
+    font-size:10px;
+  }
+  .mobile-category-manager-head .btn{
+    min-width:88px;
+  }
+
+  .mobile-category-existing{
+    display:grid;
+    gap:0;
+    padding-top:5px;
+  }
+  .mobile-category-existing-row{
+    width:100%;
+    min-height:58px;
+    display:grid;
+    grid-template-columns:30px minmax(0,1fr) auto;
+    align-items:center;
+    gap:8px;
+    padding:8px 6px 8px calc(6px + (var(--cat-level,0) * 15px));
+    border:0;
+    border-bottom:1px solid #edf0f3;
+    background:#fff;
+    text-align:left;
+    color:#253040;
+  }
+  .mobile-category-existing-row:active{
+    background:#edf6fd;
+  }
+  .mobile-cat-row-icon{
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    color:#238ee2;
+    font-size:18px;
+  }
+  .mobile-cat-row-text{
+    min-width:0;
+  }
+  .mobile-cat-row-text strong{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:13px;
+    font-weight:600;
+  }
+  .mobile-cat-row-text small{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    margin-top:2px;
+    color:#8490a0;
+    font-size:10px;
+  }
+  .mobile-cat-row-edit{
+    color:#248bd1;
+    font-size:11px;
+    white-space:nowrap;
+  }
+  .mobile-category-empty{
+    min-height:240px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#8792a1;
+    padding:30px;
+  }
+  .mobile-category-empty>span{
+    width:54px;
+    height:54px;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:#eaf5fd;
+    color:#238ee2;
+    font-size:30px;
+    margin-bottom:10px;
+  }
+  .mobile-category-empty strong{
+    color:#465366;
+    font-size:14px;
+  }
+  .mobile-category-empty small{
+    margin-top:4px;
+    max-width:240px;
+    font-size:10px;
+  }
+}
+
+
+/* ============================================================
+   V55 - MENU MOBILE FIXO + CATEGORIAS COM SUB-TELA
+   ============================================================ */
+@media(max-width:980px){
+  /* Barra azul fica fixa o tempo inteiro */
+  .mobile-topbar-mobile{
+    position:fixed!important;
+    top:0!important;
+    left:0!important;
+    right:0!important;
+    width:100%!important;
+    z-index:1750!important;
+  }
+
+  /* Reserva espaço para o menu fixo */
+  .app-shell{
+    padding-top:58px!important;
+  }
+
+  /* Menu lateral também fica preso na tela inteira */
+  .mobile-drawer-backdrop{
+    position:fixed!important;
+    inset:0!important;
+    z-index:2000!important;
+  }
+  .mobile-drawer{
+    position:fixed!important;
+    left:0!important;
+    top:0!important;
+    bottom:0!important;
+    height:100dvh!important;
+    overflow-y:auto!important;
+  }
+
+  /* Tela detalhada de um cadastro */
+  .mobile-category-detail{
+    display:block;
+    min-height:calc(100dvh - 130px);
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid #e4e9ef;
+  }
+  .mobile-category-detail.hidden{display:none!important}
+
+  .mobile-category-detail-bar{
+    position:sticky;
+    top:0;
+    z-index:5;
+    display:grid;
+    grid-template-columns:44px minmax(0,1fr) 44px;
+    align-items:center;
+    min-height:54px;
+    background:#fff;
+    border-bottom:1px solid #e7ebef;
+    padding:0 5px;
+  }
+  .mobile-category-detail-bar strong{
+    text-align:center;
+    font-size:15px;
+    font-weight:600;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  }
+  .mobile-category-back,
+  .mobile-category-new{
+    width:40px;
+    height:40px;
+    min-height:40px;
+    border:0;
+    border-radius:50%;
+    background:transparent;
+    color:#238ee2;
+    font-size:30px;
+    display:grid;
+    place-items:center;
+  }
+  .mobile-category-new{
+    font-size:25px;
+  }
+
+  .mobile-category-detail-body{
+    padding:10px 12px 18px;
+  }
+  .mobile-category-detail-caption{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+    padding:2px 4px 9px;
+  }
+  .mobile-category-detail-caption span{
+    font-size:11px;
+    font-weight:700;
+    color:#536174;
+  }
+  .mobile-category-detail-caption small{
+    font-size:9px;
+    color:#8a95a4;
+  }
+
+  .mobile-category-detail-list{
+    display:grid;
+  }
+  .mobile-category-detail-row{
+    width:100%;
+    min-height:58px;
+    display:grid;
+    grid-template-columns:28px minmax(0,1fr) auto;
+    align-items:center;
+    gap:8px;
+    padding:8px 5px 8px calc(5px + (var(--cat-level,0) * 15px));
+    border:0;
+    border-bottom:1px solid #eef1f4;
+    background:#fff;
+    text-align:left;
+  }
+  .mobile-category-detail-row:active{
+    background:#eef7fe;
+  }
+  .mobile-category-detail-icon{
+    color:#238ee2;
+    text-align:center;
+    font-size:17px;
+  }
+  .mobile-category-detail-text{
+    min-width:0;
+  }
+  .mobile-category-detail-text strong{
+    display:block;
+    font-size:13px;
+    color:#253040;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .mobile-category-detail-text small{
+    display:block;
+    color:#8792a0;
+    font-size:9px;
+    margin-top:2px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .mobile-category-detail-edit{
+    color:#238ee2;
+    font-size:10px;
+    white-space:nowrap;
+  }
+  .mobile-category-detail-empty{
+    min-height:260px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#8792a0;
+  }
+  .mobile-category-detail-empty>span{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#eaf5fd;
+    color:#238ee2;
+    font-size:28px;
+    margin-bottom:10px;
+  }
+  .mobile-category-detail-empty strong{
+    color:#405066;
+    font-size:14px;
+  }
+  .mobile-category-detail-empty small{
+    margin-top:4px;
+    max-width:240px;
+    font-size:10px;
+  }
+}
+
+
+/* V56 - correção de cliques e camadas das Categorias mobile */
+@media(max-width:980px){
+  #categorias{
+    position:relative;
+  }
+  #mobileCategoriesHome{
+    position:relative;
+    z-index:1;
+  }
+  #mobileCategoryDetail{
+    position:relative;
+    z-index:2;
+  }
+  #mobileCategoryDetail.hidden,
+  #mobileCategoriesHome.hidden{
+    display:none!important;
+    pointer-events:none!important;
+  }
+  .mobile-category-entry,
+  .mobile-category-detail-row,
+  .mobile-category-back,
+  .mobile-category-new{
+    pointer-events:auto!important;
+    touch-action:manipulation;
+  }
+}
+
+
+/* V57 - evita camadas presas durante navegação mobile */
+@media(max-width:980px){
+  body:not(.modal-open) .modal.hidden{
+    pointer-events:none!important;
+  }
+  .modal.hidden{
+    display:none!important;
+  }
+}
+
+
+
+/* V58 - Plano de Contas mobile em 2 colunas + ocultar menu inferior na tela principal */
+@media(max-width:980px){
+  body.principal-mode .mobile-nav{display:none!important}
+  body.principal-mode .app-shell{padding-bottom:0!important}
+  body.principal-mode .mob-fab{bottom:calc(18px + env(safe-area-inset-bottom))!important}
+}
+
+.mobile-plan-split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  align-items:start;
+}
+.mobile-plan-card{
+  background:#fff;
+  border:1px solid #e4e9f0;
+  border-radius:16px;
+  overflow:hidden;
+  min-width:0;
+  box-shadow:0 1px 2px rgba(20,35,55,.04);
+}
+.mobile-plan-card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:10px 12px;
+  border-bottom:1px solid #edf1f5;
+}
+.mobile-plan-card-head strong{
+  font-size:13px;
+  font-weight:700;
+}
+.mobile-plan-card-head small{
+  font-size:10px;
+  font-weight:700;
+  opacity:.9;
+}
+.mobile-plan-card-head.receita{background:#effaf2;color:#1e9b50;border-bottom-color:#d8efdf}
+.mobile-plan-card-head.despesa{background:#fff1f1;color:#d64242;border-bottom-color:#f3d4d4}
+.mobile-plan-list{
+  display:grid;
+}
+.mobile-plan-row{
+  width:100%;
+  border:0;
+  border-bottom:1px solid #eef1f4;
+  background:#fff;
+  text-align:left;
+  display:grid;
+  grid-template-columns:18px minmax(0,1fr) auto;
+  gap:6px;
+  align-items:center;
+  min-height:48px;
+  padding:8px 8px 8px calc(8px + (var(--cat-level,0) * 10px));
+}
+.mobile-plan-row:last-child{border-bottom:0}
+.mobile-plan-row:active{background:#f7fafc}
+.mobile-plan-bullet{
+  font-size:13px;
+  font-weight:700;
+  text-align:center;
+}
+.mobile-plan-bullet.receita{color:#1e9b50}
+.mobile-plan-bullet.despesa{color:#d64242}
+.mobile-plan-text{min-width:0}
+.mobile-plan-text strong{
+  display:block;
+  font-size:12px;
+  color:#243042;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.mobile-plan-text small{
+  display:block;
+  margin-top:2px;
+  font-size:9px;
+  color:#8894a3;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.mobile-plan-edit{
+  font-size:9px;
+  white-space:nowrap;
+  color:#7b8898;
+}
+.mobile-plan-empty{
+  min-height:150px;
+  display:grid;
+  place-items:center;
+  padding:16px 10px;
+  text-align:center;
+  color:#93a0ae;
+  font-size:11px;
+}
+@media(max-width:420px){
+  .mobile-plan-split{gap:8px}
+  .mobile-plan-card-head{padding:9px 10px}
+  .mobile-plan-card-head strong{font-size:12px}
+  .mobile-plan-card-head small{font-size:9px}
+  .mobile-plan-row{grid-template-columns:16px minmax(0,1fr) auto;padding:7px 6px 7px calc(6px + (var(--cat-level,0) * 8px));min-height:46px}
+  .mobile-plan-text strong{font-size:11px}
+  .mobile-plan-text small{font-size:8px}
+  .mobile-plan-edit{font-size:8px}
+}
+
+
+
+/* V59 - remove o menu inferior em TODAS as telas mobile */
+@media(max-width:980px){
+  .mobile-nav{
+    display:none!important;
+  }
+
+  .app-shell{
+    padding-bottom:0!important;
+  }
+
+  .content,
+  .page{
+    padding-bottom:18px;
+  }
+
+  .mob-fab-global{
+    display:grid!important;
+    place-items:center;
+    position:fixed!important;
+    right:18px!important;
+    bottom:calc(18px + env(safe-area-inset-bottom))!important;
+    z-index:900!important;
+    width:58px!important;
+    height:58px!important;
+    border-radius:50%!important;
+  }
+
+  /* Evita que o botão + cubra os últimos itens roláveis. */
+  .page.active{
+    padding-bottom:88px!important;
+  }
+}
+
+@media(min-width:981px){
+  .mob-fab-global{display:none!important}
+}
+
+
+/* ============================================================
+   V61 - seletor hierárquico do Plano de Contas
+   ============================================================ */
+.pc-parent-picker{
+  position:relative;
+  width:100%;
+}
+.pc-parent-picker-button{
+  width:100%;
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid #cfd7e2;
+  border-radius:6px;
+  background:#fff;
+  color:#293548;
+  padding:8px 10px;
+  text-align:left;
+  font:inherit;
+}
+.pc-parent-picker-button.open{
+  border-color:#5c9ee6;
+  box-shadow:0 0 0 2px rgba(62,139,223,.12);
+}
+.pc-parent-picker-arrow{
+  color:#738195;
+  font-size:15px;
+  flex:0 0 auto;
+}
+.pc-parent-picker-menu{
+  position:absolute;
+  left:0;
+  right:0;
+  top:calc(100% + 4px);
+  z-index:2200;
+  max-height:300px;
+  overflow:auto;
+  padding:4px 0;
+  border:1px solid #cfd7e2;
+  border-radius:7px;
+  background:#fff;
+  box-shadow:0 12px 30px rgba(25,45,70,.16);
+}
+.pc-parent-picker-menu.hidden{
+  display:none!important;
+}
+.pc-parent-option{
+  --pc-level:0;
+  width:100%;
+  min-height:34px;
+  display:grid;
+  grid-template-columns:calc(var(--pc-level) * 18px) minmax(0,1fr);
+  align-items:center;
+  border:0;
+  background:#fff;
+  padding:5px 10px;
+  text-align:left;
+  color:#273244;
+}
+.pc-parent-option:hover,
+.pc-parent-option:active{
+  background:#eef6ff;
+}
+.pc-parent-option.selected{
+  background:#dceeff;
+}
+.pc-parent-option .pc-parent-indent{
+  display:block;
+  min-width:0;
+}
+.pc-parent-option .pc-parent-name{
+  display:block;
+  line-height:1.25;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Se o item possui filhos, ele é "principal" daquele nível */
+.pc-parent-option.parent-node .pc-parent-name{
+  font-size:13px;
+  font-weight:700;
+  color:#172235;
+}
+/* Folha/subitem sem filhos fica normal */
+.pc-parent-option.leaf-node .pc-parent-name{
+  font-size:12px;
+  font-weight:400;
+  color:#3f4b5c;
+}
+.pc-parent-option.placeholder-option{
+  grid-template-columns:1fr;
+  min-height:36px;
+  border-bottom:1px solid #edf0f4;
+}
+.pc-parent-option.placeholder-option .pc-parent-name{
+  font-size:11px;
+  font-weight:400;
+  color:#7b8797;
+}
+
+/* Também aplica a regra visual na tela mobile de Plano de Contas */
+.mobile-plan-row.has-children .mobile-plan-text strong{
+  font-size:12px;
+  font-weight:700;
+  color:#1c2738;
+}
+.mobile-plan-row.leaf-item .mobile-plan-text strong{
+  font-size:11px;
+  font-weight:400;
+  color:#485467;
+}
+.mobile-plan-row.has-children{
+  min-height:50px;
+}
+.mobile-plan-row.leaf-item{
+  min-height:44px;
+}
+
+@media(max-width:980px){
+  .pc-parent-picker-menu{
+    max-height:42dvh;
+  }
+  .pc-parent-option{
+    grid-template-columns:calc(var(--pc-level) * 16px) minmax(0,1fr);
+    min-height:38px;
+    padding:6px 9px;
+  }
+  .pc-parent-option.parent-node .pc-parent-name{
+    font-size:13px;
+  }
+  .pc-parent-option.leaf-node .pc-parent-name{
+    font-size:12px;
+  }
+}
+
+
+/* ============================================================
+   V62 - Favorecido com autocomplete + cadastro automático
+   ============================================================ */
+.favorecido-field{
+  position:relative;
+  overflow:visible!important;
+}
+.favorecido-autocomplete{
+  position:relative;
+  width:100%;
+}
+.favorecido-autocomplete>input{
+  width:100%;
+}
+.favorecido-ajuda{
+  color:#7c8897;
+  font-size:10px;
+  line-height:1.3;
+}
+.favorecido-sugestoes{
+  position:absolute;
+  z-index:2600;
+  left:0;
+  right:0;
+  top:calc(100% + 4px);
+  max-height:250px;
+  overflow:auto;
+  background:#fff;
+  border:1px solid #ccd5df;
+  border-radius:7px;
+  box-shadow:0 12px 30px rgba(25,45,70,.18);
+}
+.favorecido-sugestoes.hidden{
+  display:none!important;
+}
+.favorecido-sugestao{
+  width:100%;
+  min-height:50px;
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  gap:9px;
+  align-items:center;
+  border:0;
+  border-bottom:1px solid #edf0f3;
+  background:#fff;
+  padding:7px 10px;
+  text-align:left;
+  color:#243044;
+}
+.favorecido-sugestao:last-child{
+  border-bottom:0;
+}
+.favorecido-sugestao:hover,
+.favorecido-sugestao:active{
+  background:#eef6ff;
+}
+.favorecido-avatar{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#e5f1ff;
+  color:#277dc3;
+  font-size:13px;
+  font-weight:700;
+}
+.favorecido-sugestao-texto{
+  min-width:0;
+}
+.favorecido-sugestao-texto strong{
+  display:block;
+  font-size:12px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.favorecido-sugestao-texto small{
+  display:block;
+  margin-top:2px;
+  color:#8490a0;
+  font-size:9px;
+}
+.favorecido-novo-aviso{
+  padding:10px 12px;
+  background:#f7fbff;
+}
+.favorecido-novo-aviso strong{
+  display:block;
+  color:#243044;
+  font-size:12px;
+}
+.favorecido-novo-aviso small{
+  display:block;
+  margin-top:3px;
+  color:#267dc0;
+  font-size:10px;
+}
+
+@media(max-width:980px){
+  .favorecido-sugestoes{
+    max-height:36dvh;
+  }
+  .favorecido-sugestao{
+    min-height:54px;
+  }
+}
+
 </style>
 </head>
 <body class="principal-mode">
@@ -1346,12 +2463,12 @@ body.principal-mode .ribbon-programacao{display:none!important}
 
   <!-- APP -->
   <div id="app" class="app hidden">
-    <header class="mobile-topbar">
-      <div class="mobile-topbar-brand">
-        <strong>Minhas Finanças</strong>
-        <span id="mobileTituloPagina">Início</span>
+    <header class="mobile-topbar mobile-topbar-mobile">
+      <button type="button" class="mobile-menu-button" id="btnAbrirMenuMobile" aria-label="Abrir menu" onclick="abrirMenuMobile()"><span class="hamb-line"></span><span class="hamb-line"></span><span class="hamb-line"></span></button>
+      <div class="mobile-topbar-center">
+        <strong id="mobileTituloPagina">Resumo</strong>
       </div>
-      <button type="button" class="mobile-topbar-menu" id="btnMobileConta">⋮</button>
+      <button type="button" class="mobile-topbar-menu" id="btnMobileConta" aria-label="Mais opções">⋮</button>
     </header>
     <header class="desktop-header">
       <div class="window-title">
@@ -1627,7 +2744,7 @@ body.principal-mode .ribbon-programacao{display:none!important}
               </div>
             </section>
 
-            <button type="button" class="mob-fab" id="mobFabAdicionar">＋</button>
+
           </div>
           <div class="legacy-home-top">
             <article class="legacy-home-panel legacy-home-bars">
@@ -1997,6 +3114,107 @@ body.principal-mode .ribbon-programacao{display:none!important}
 
         <!-- CATEGORIAS -->
         <section id="categorias" class="page">
+          <div id="mobileCategoryDetail" class="mobile-category-detail hidden">
+            <div class="mobile-category-detail-bar">
+              <button type="button" id="mobileCategoryBack" class="mobile-category-back" aria-label="Voltar">‹</button>
+              <strong id="mobileCategoryDetailTitle">Cadastro</strong>
+              <button type="button" id="mobileCategoryDetailNew" class="mobile-category-new">＋</button>
+            </div>
+
+            <div class="mobile-category-detail-body">
+              <div class="mobile-category-detail-caption">
+                <span id="mobileCategoryDetailCount">0 cadastros</span>
+                <small>Toque em um item para editar.</small>
+              </div>
+              <div id="mobileCategoryDetailList" class="mobile-category-detail-list"></div>
+            </div>
+          </div>
+
+          <div id="mobileCategoriesHome" class="mobile-categories-home">
+            <div class="mobile-categories-intro">
+              <h2>Cadastros</h2>
+              <p>Selecione um cadastro para visualizar, editar ou adicionar itens.</p>
+            </div>
+
+            <div class="mobile-category-group">
+              <div class="mobile-category-group-title">GERAL</div>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="cargos">
+                <span class="mobile-category-icon">👔</span>
+                <span><strong>Cargos e Funções</strong><small>Cadastrar cargo ou função</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="categorias_pessoas">
+                <span class="mobile-category-icon">👥</span>
+                <span><strong>Categorias de Cliente / Fornecedor</strong><small>Cadastrar uma categoria</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="classificacao_pessoas">
+                <span class="mobile-category-icon">★</span>
+                <span><strong>Classificação de Cliente / Fornecedor</strong><small>Cadastrar classificação</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="estados">
+                <span class="mobile-category-icon">📍</span>
+                <span><strong>Estados / Municípios</strong><small>Cadastrar localização</small></span>
+                <i>›</i>
+              </button>
+            </div>
+
+            <div class="mobile-category-group">
+              <div class="mobile-category-group-title">FINANCEIRO</div>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="bancos">
+                <span class="mobile-category-icon">🏦</span>
+                <span><strong>Bancos</strong><small>Cadastrar banco</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="tipos_documento">
+                <span class="mobile-category-icon">📄</span>
+                <span><strong>Tipos de Documento</strong><small>Cadastrar tipo de documento</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="tipos_conta">
+                <span class="mobile-category-icon">💳</span>
+                <span><strong>Tipos de Contas</strong><small>Cadastrar tipo de conta</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="plano">
+                <span class="mobile-category-icon">🗂️</span>
+                <span><strong>Plano de Contas</strong><small>Cadastrar receita, despesa ou subcategoria</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="centro">
+                <span class="mobile-category-icon">🎯</span>
+                <span><strong>Centro de Custos</strong><small>Cadastrar centro ou subcategoria</small></span>
+                <i>›</i>
+              </button>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="moedas">
+                <span class="mobile-category-icon">💱</span>
+                <span><strong>Moedas</strong><small>Cadastrar moeda</small></span>
+                <i>›</i>
+              </button>
+            </div>
+
+            <div class="mobile-category-group">
+              <div class="mobile-category-group-title">COBRANÇA</div>
+
+              <button type="button" class="mobile-category-entry" data-mobile-cat-new="formas">
+                <span class="mobile-category-icon">💵</span>
+                <span><strong>Meios de Pagamento</strong><small>Cadastrar meio de pagamento</small></span>
+                <i>›</i>
+              </button>
+            </div>
+          </div>
+
           <div class="mobile-page-actions mobile-categoria-actions">
             <button type="button" class="mobile-action primary" id="mobCatNovo">＋ Novo</button>
             <button type="button" class="mobile-action" id="mobCatEditar" disabled>Editar</button>
@@ -2082,6 +3300,74 @@ body.principal-mode .ribbon-programacao{display:none!important}
         </section>
       </section>
     </main>
+
+    <!-- MENU LATERAL MOBILE -->
+    <div id="mobileDrawerBackdrop" class="mobile-drawer-backdrop hidden">
+      <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menu principal">
+        <div class="mobile-drawer-profile">
+          <div class="mobile-profile-avatar">👤</div>
+          <div class="mobile-profile-info">
+            <strong id="mobileProfileName">Minha conta</strong>
+            <span id="mobileProfileEmail">-</span>
+            <small>Minhas Finanças</small>
+          </div>
+          <button type="button" class="mobile-profile-arrow" id="btnFecharMenuMobile" aria-label="Fechar menu" onclick="fecharMenuMobile()">‹</button>
+        </div>
+
+        <nav class="mobile-drawer-nav">
+          <button type="button" class="mobile-drawer-item active" data-mobile-drawer-page="principal">
+            <span class="mdi">▦</span><b>Resumo</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-action="contas">
+            <span class="mdi">🏦</span><b>Contas</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="lancamentos">
+            <span class="mdi">▤</span><b>Transações</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="programacao">
+            <span class="mdi">▣</span><b>Programação</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="planejamento">
+            <span class="mdi">▥</span><b>Planejamento</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="pessoas">
+            <span class="mdi">👥</span><b>Clientes e Fornecedores</b>
+          </button>
+
+          <div class="mobile-drawer-section">ANALISAR</div>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="relatorios">
+            <span class="mdi">◔</span><b>Gráficos e Relatórios</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-page="categorias">
+            <span class="mdi">◬</span><b>Categorias</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-action="pesquisa">
+            <span class="mdi">⌕</span><b>Pesquisa</b>
+          </button>
+
+          <div class="mobile-drawer-divider"></div>
+
+          <button type="button" class="mobile-drawer-item" data-mobile-drawer-action="configuracoes">
+            <span class="mdi">⚙</span><b>Configurações</b>
+          </button>
+
+          <button type="button" class="mobile-drawer-item mobile-drawer-exit" data-mobile-drawer-action="sair">
+            <span class="mdi">⇥</span><b>Sair</b>
+          </button>
+        </nav>
+      </aside>
+    </div>
+
+    <!-- AÇÃO RÁPIDA MOBILE GLOBAL -->
+    <button type="button" class="mob-fab mob-fab-global" id="mobFabAdicionar" aria-label="Novo lançamento">＋</button>
 
     <!-- MOBILE -->
     <nav class="mobile-nav">
@@ -2321,8 +3607,8 @@ $("btnSair").addEventListener("click", async () => {
 
 function abrirPagina(nome) {
   const titulosMobile = {
-    principal:"Início",
-    lancamentos:"Lançamentos",
+    principal:"Resumo",
+    lancamentos:"Transações",
     programacao:"Programação",
     planejamento:"Planejamento",
     contas:"Contas",
@@ -2331,6 +3617,10 @@ function abrirPagina(nome) {
     categorias:"Categorias"
   };
   if ($("mobileTituloPagina") && titulosMobile[nome]) $("mobileTituloPagina").textContent = titulosMobile[nome];
+
+  document.querySelectorAll("[data-mobile-drawer-page]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.mobileDrawerPage === nome);
+  });
 
   document.body.classList.toggle("categories-mode", nome === "categorias");
   document.body.classList.toggle("lancamentos-mode", nome === "lancamentos");
@@ -2370,8 +3660,13 @@ function abrirPagina(nome) {
     mostrarProgramacao();
   }
   if (nome === "categorias") {
-    configurarAcoesCategoriaMobile();
-    setTimeout(sincronizarAcoesCategoriaMobile,0);
+    if (window.innerWidth > 980) {
+      configurarAcoesCategoriaMobile();
+      setTimeout(sincronizarAcoesCategoriaMobile,0);
+    } else {
+      $("mobileCategoryDetail")?.classList.add("hidden");
+      $("mobileCategoriesHome")?.classList.remove("hidden");
+    }
   }
 }
 
@@ -2714,6 +4009,16 @@ function atualizarInterface() {
   mostrarGerenciadorCategorias();
   mostrarOrcamentos();
   mostrarRelatorios();
+
+  // Mantém a tela mobile de cadastro funcionando após Novo/Editar.
+  if (
+    window.innerWidth <= 980 &&
+    $("mobileCategoryDetail") &&
+    !$("mobileCategoryDetail").classList.contains("hidden") &&
+    categoriaTelaAtual
+  ) {
+    abrirListaCategoriaMobile(categoriaTelaAtual);
+  }
 }
 
 // ============================================================
@@ -3783,6 +5088,222 @@ document.addEventListener("click", e => {
   if (!e.target.closest(".cat-context-menu")) fecharMenuContextoCategoria();
 });
 
+
+function nomeItemCategoriaMobile(item, modulo) {
+  if (!item) return "";
+  if (modulo === "estados") return [item.sigla, item.estado].filter(Boolean).join(" - ");
+  if (modulo === "bancos") return [item.numero, item.banco].filter(Boolean).join(" - ");
+  if (modulo === "tipos_documento") return [item.tipo_documento, item.codigo].filter(Boolean).join(" · ");
+  if (modulo === "tipos_conta") return [item.conta, item.tipo].filter(Boolean).join(" · ");
+  const cfg = CONFIG_CADASTROS[modulo];
+  const key = cfg?.nomeKey || "nome";
+  return item[key] || item.nome || item.banco || item.estado || item.conta || item.tipo_documento || "Item";
+}
+
+function subtituloItemCategoriaMobile(item, modulo) {
+  if (!item) return "";
+  if (modulo === "moedas") return [item.sigla, item.cotacao ? `Cotação ${item.cotacao}` : ""].filter(Boolean).join(" · ");
+  if (modulo === "formas") return item.ativo === false ? "Inativo" : "";
+  if (modulo === "plano") return item.tipo === "receita" ? "Receita" : item.tipo === "despesa" ? "Despesa" : "";
+  if (modulo === "centro") return item.codigo || "";
+  if (modulo === "bancos") return item.website || "";
+  return "";
+}
+
+function nivelItemCategoriaMobile(lista, item) {
+  let nivel = 0;
+  let atual = item;
+  let trava = 0;
+  while (atual?.parent_id && trava < 20) {
+    const pai = lista.find(x => Number(x.id) === Number(atual.parent_id));
+    if (!pai) break;
+    nivel++;
+    atual = pai;
+    trava++;
+  }
+  return nivel;
+}
+
+function listaCategoriaMobile(modulo) {
+  if (modulo === "plano") {
+    // Não mostra as raízes técnicas Receita/Despesa; mostra somente o que o usuário cadastrou.
+    const raizesTecnicas = planoContas.filter(x =>
+      !x.parent_id && ["receita","despesa"].includes(String(x.tipo || "").toLowerCase())
+    );
+    const idsRaizes = new Set(raizesTecnicas.map(x => Number(x.id)));
+    return planoContas.filter(x => !idsRaizes.has(Number(x.id)));
+  }
+  if (modulo === "centro") return centrosCusto;
+  if (modulo === "formas") return formasPagamento;
+  return cadastrosSimples[modulo] || [];
+}
+
+
+function ordenarItensCategoria(lista) {
+  return lista.slice().sort((a,b) => {
+    const oa = Number(a.ordem || 0), ob = Number(b.ordem || 0);
+    if (oa !== ob) return oa - ob;
+    return nomeItemCategoriaMobile(a, categoriaTelaAtual).localeCompare(nomeItemCategoriaMobile(b, categoriaTelaAtual), "pt-BR");
+  });
+}
+
+function montarPlanoMobileSubArvore(parentId, tipo, nivel = 0) {
+  const filhos = planoContas
+    .filter(x => Number(x.parent_id) === Number(parentId))
+    .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome || '').localeCompare(String(b.nome || ''), 'pt-BR'));
+
+  if (!filhos.length) return '';
+
+  return filhos.map(item => {
+    const nome = item.nome || 'Sem nome';
+    const temFilhos = categoriaTemFilhos(planoContas, item.id);
+    const subtitulo = item.descricao || item.codigo || (temFilhos ? 'Grupo' : 'Subitem');
+    return `
+      <button type="button"
+              class="mobile-plan-row ${temFilhos ? "has-children" : "leaf-item"}"
+              data-mobile-cat-edit="${item.id}"
+              style="--cat-level:${Math.min(nivel,4)}">
+        <span class="mobile-plan-bullet ${tipo}">${nivel ? '↳' : '•'}</span>
+        <span class="mobile-plan-text">
+          <strong>${escapeHTML(nome)}</strong>
+          ${subtitulo ? `<small>${escapeHTML(subtitulo)}</small>` : ''}
+        </span>
+        <span class="mobile-plan-edit">Editar ›</span>
+      </button>
+      ${montarPlanoMobileSubArvore(item.id, tipo, nivel + 1)}
+    `;
+  }).join('');
+}
+
+function montarPlanoMobileColuna(tipo) {
+  const raiz = raizTipoPlano(tipo);
+  let html = '';
+
+  if (raiz) {
+    html = montarPlanoMobileSubArvore(raiz.id, tipo, 0);
+  } else {
+    const roots = planoContas
+      .filter(x => x.parent_id === null && String(x.tipo || '').toLowerCase() === tipo)
+      .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome || '').localeCompare(String(b.nome || ''), 'pt-BR'));
+
+    html = roots.map(item => `
+      <button type="button"
+              class="mobile-plan-row has-children"
+              data-mobile-cat-edit="${item.id}"
+              style="--cat-level:0">
+        <span class="mobile-plan-bullet ${tipo}">•</span>
+        <span class="mobile-plan-text">
+          <strong>${escapeHTML(item.nome || 'Sem nome')}</strong>
+          <small>${escapeHTML(item.descricao || item.codigo || 'Conta principal')}</small>
+        </span>
+        <span class="mobile-plan-edit">Editar ›</span>
+      </button>
+      ${montarPlanoMobileSubArvore(item.id, tipo, 1)}
+    `).join('');
+  }
+
+  return html || `<div class="mobile-plan-empty">Nenhum cadastro encontrado.</div>`;
+}
+
+
+function abrirListaCategoriaMobile(modulo) {
+  categoriaTelaAtual = modulo;
+  categoriaSelecionadaId = null;
+
+  const titulo =
+    modulo === "plano" ? "Plano de Contas" :
+    modulo === "centro" ? "Centro de Custos" :
+    NOMES_CADASTROS[modulo] || "Cadastro";
+
+  const lista = listaCategoriaMobile(modulo)
+    .slice()
+    .sort((a,b) => {
+      const oa = Number(a.ordem || 0), ob = Number(b.ordem || 0);
+      if (oa !== ob) return oa - ob;
+      return nomeItemCategoriaMobile(a, modulo).localeCompare(nomeItemCategoriaMobile(b, modulo), "pt-BR");
+    });
+
+  const baseHierarquia = modulo === "plano" ? planoContas : modulo === "centro" ? centrosCusto : lista;
+
+  if ($("mobileCategoryDetailTitle")) $("mobileCategoryDetailTitle").textContent = titulo;
+
+  if ($("mobileCategoryDetailCount")) {
+    if (modulo === "plano") {
+      const qtdReceitas = lista.filter(x => String(x.tipo || '').toLowerCase() === 'receita').length;
+      const qtdDespesas = lista.filter(x => String(x.tipo || '').toLowerCase() === 'despesa').length;
+      $("mobileCategoryDetailCount").textContent = `${qtdReceitas} receitas • ${qtdDespesas} despesas`;
+    } else {
+      $("mobileCategoryDetailCount").textContent = `${lista.length} cadastro${lista.length === 1 ? "" : "s"}`;
+    }
+  }
+
+  if ($("mobileCategoryDetailList")) {
+    if (modulo === "plano") {
+      $("mobileCategoryDetailList").innerHTML = `
+        <div class="mobile-plan-split">
+          <section class="mobile-plan-card receita">
+            <div class="mobile-plan-card-head receita">
+              <strong>Receitas</strong>
+              <small>verde</small>
+            </div>
+            <div class="mobile-plan-list">${montarPlanoMobileColuna('receita')}</div>
+          </section>
+
+          <section class="mobile-plan-card despesa">
+            <div class="mobile-plan-card-head despesa">
+              <strong>Despesas</strong>
+              <small>vermelho</small>
+            </div>
+            <div class="mobile-plan-list">${montarPlanoMobileColuna('despesa')}</div>
+          </section>
+        </div>
+      `;
+    } else {
+      $("mobileCategoryDetailList").innerHTML = lista.length ? lista.map(item => {
+        const nivel = ["plano","centro"].includes(modulo) ? nivelItemCategoriaMobile(baseHierarquia, item) : 0;
+        const nome = nomeItemCategoriaMobile(item, modulo);
+        const sub = subtituloItemCategoriaMobile(item, modulo);
+
+        return `
+          <button type="button"
+                  class="mobile-category-detail-row"
+                  data-mobile-cat-edit="${item.id}"
+                  style="--cat-level:${Math.min(nivel,5)}">
+            <span class="mobile-category-detail-icon">${nivel ? "↳" : "•"}</span>
+            <span class="mobile-category-detail-text">
+              <strong>${escapeHTML(nome)}</strong>
+              ${sub ? `<small>${escapeHTML(sub)}</small>` : ""}
+            </span>
+            <span class="mobile-category-detail-edit">Editar ›</span>
+          </button>
+        `;
+      }).join("") : `
+        <div class="mobile-category-detail-empty">
+          <span>＋</span>
+          <strong>Nenhum cadastro ainda</strong>
+          <small>Toque no botão + para adicionar o primeiro.</small>
+        </div>
+      `;
+    }
+  }
+
+  $("mobileCategoriesHome")?.classList.add("hidden");
+  $("mobileCategoryDetail")?.classList.remove("hidden");
+  if ($("mobileTituloPagina")) $("mobileTituloPagina").textContent = titulo;
+}
+
+function fecharListaCategoriaMobile() {
+  categoriaSelecionadaId = null;
+  $("mobileCategoryDetail")?.classList.add("hidden");
+  $("mobileCategoriesHome")?.classList.remove("hidden");
+  if ($("mobileTituloPagina")) $("mobileTituloPagina").textContent = "Categorias";
+}
+
+function abrirNovaCategoriaMobile() {
+  categoriaSelecionadaId = null;
+  abrirNovaCategoriaRaiz();
+}
+
 function abrirNovaCategoriaRaiz() {
   if (categoriaTelaAtual === "plano") {
     abrirFormularioPlano(null, null, null);
@@ -4620,9 +6141,18 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
 
       <div class="launch-section-title">Dados do lançamento</div>
 
-      <div class="form-field span-2">
+      <div class="form-field span-2 favorecido-field">
         <label>${tipo === "receita" ? "Receber de" : "Pagar para"}</label>
-        <select id="trPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select>
+        <input id="trPessoa" type="hidden" value="${item?.pessoa_id || ""}">
+        <div class="favorecido-autocomplete">
+          <input id="trPessoaNome"
+                 type="text"
+                 autocomplete="off"
+                 value="${escapeHTML(item?.favorecido || idNome(pessoas,item?.pessoa_id,""))}"
+                 placeholder="${tipo === "receita" ? "Digite quem está pagando" : "Digite para quem você está pagando"}">
+          <div id="trPessoaSugestoes" class="favorecido-sugestoes hidden"></div>
+        </div>
+        <small class="favorecido-ajuda">Digite o nome. Se já existir, selecione na lista. Se não existir, será cadastrado automaticamente ao salvar.</small>
       </div>
 
       <div class="form-field">
@@ -4966,7 +6496,154 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
     }
   }
 
-  $("trPessoa").addEventListener("change", aplicarUltimaClassificacaoPessoa);
+  const normalizarTextoPessoa = (valor) =>
+    String(valor || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
+  const fecharSugestoesPessoa = () => {
+    $("trPessoaSugestoes")?.classList.add("hidden");
+  };
+
+  const selecionarPessoaLancamento = (pessoa) => {
+    if (!pessoa) return;
+    $("trPessoa").value = String(pessoa.id);
+    $("trPessoaNome").value = pessoa.nome || "";
+    fecharSugestoesPessoa();
+    aplicarUltimaClassificacaoPessoa();
+  };
+
+  const renderSugestoesPessoa = () => {
+    const termo = normalizarTextoPessoa($("trPessoaNome").value);
+    const box = $("trPessoaSugestoes");
+
+    // Qualquer edição manual invalida o ID anterior até reencontrarmos
+    // uma pessoa exatamente igual ou o usuário escolher uma sugestão.
+    $("trPessoa").value = "";
+
+    if (!termo) {
+      fecharSugestoesPessoa();
+      return;
+    }
+
+    const correspondencias = pessoas
+      .filter(p => p.ativo !== false && normalizarTextoPessoa(p.nome).includes(termo))
+      .sort((a,b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"))
+      .slice(0, 10);
+
+    // Se o nome digitado for exatamente igual a um já cadastrado,
+    // mantém automaticamente o vínculo, mesmo sem clicar na sugestão.
+    const exata = correspondencias.find(p => normalizarTextoPessoa(p.nome) === termo);
+    if (exata) $("trPessoa").value = String(exata.id);
+
+    if (!correspondencias.length) {
+      box.innerHTML = `
+        <div class="favorecido-novo-aviso">
+          <strong>${escapeHTML($("trPessoaNome").value.trim())}</strong>
+          <small>Novo cadastro — será criado automaticamente ao salvar.</small>
+        </div>
+      `;
+      box.classList.remove("hidden");
+      return;
+    }
+
+    box.innerHTML = correspondencias.map(p => `
+      <button type="button" class="favorecido-sugestao" data-pessoa-id="${p.id}">
+        <span class="favorecido-avatar">${escapeHTML(String(p.nome || "?").trim().charAt(0).toUpperCase() || "?")}</span>
+        <span class="favorecido-sugestao-texto">
+          <strong>${escapeHTML(p.nome || "")}</strong>
+          <small>${p.papel === "cliente" ? "Cliente" : p.papel === "fornecedor" ? "Fornecedor" : p.papel === "ambos" ? "Cliente / Fornecedor" : "Cadastrado"}</small>
+        </span>
+      </button>
+    `).join("");
+
+    box.querySelectorAll("[data-pessoa-id]").forEach(btn => {
+      btn.onclick = () => {
+        const pessoa = pessoas.find(p => Number(p.id) === Number(btn.dataset.pessoaId));
+        selecionarPessoaLancamento(pessoa);
+      };
+    });
+
+    box.classList.remove("hidden");
+  };
+
+  $("trPessoaNome").addEventListener("input", renderSugestoesPessoa);
+  $("trPessoaNome").addEventListener("focus", () => {
+    if ($("trPessoaNome").value.trim()) renderSugestoesPessoa();
+  });
+  $("trPessoaNome").addEventListener("keydown", e => {
+    if (e.key === "Escape") fecharSugestoesPessoa();
+  });
+
+  // Fecha ao clicar fora.
+  setTimeout(() => {
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".favorecido-autocomplete")) fecharSugestoesPessoa();
+    }, { once:false });
+  }, 0);
+
+  // Na edição, garante que o ID atual continue válido.
+  if (item?.pessoa_id) {
+    $("trPessoa").value = String(item.pessoa_id);
+  }
+
+  async function resolverPessoaLancamento() {
+    const nomeDigitado = $("trPessoaNome").value.trim();
+    if (!nomeDigitado) {
+      return { pessoa_id: null, favorecido: null };
+    }
+
+    // Primeiro tenta pelo ID escolhido.
+    const idEscolhido = Number($("trPessoa").value || 0);
+    if (idEscolhido) {
+      const existente = pessoas.find(p => Number(p.id) === idEscolhido);
+      if (existente) return { pessoa_id: existente.id, favorecido: existente.nome };
+    }
+
+    // Depois procura por nome exato ignorando maiúsculas/minúsculas e acentos.
+    const nomeNormalizado = normalizarTextoPessoa(nomeDigitado);
+    const existentePorNome = pessoas.find(p =>
+      p.ativo !== false && normalizarTextoPessoa(p.nome) === nomeNormalizado
+    );
+    if (existentePorNome) {
+      $("trPessoa").value = String(existentePorNome.id);
+      return { pessoa_id: existentePorNome.id, favorecido: existentePorNome.nome };
+    }
+
+    // Não existe: cadastra automaticamente.
+    const novoRegistro = {
+      user_id: usuarioAtual.id,
+      nome: nomeDigitado,
+      papel: tipo === "receita" ? "cliente" : "fornecedor",
+      tipo_pessoa: "fisica",
+      telefone: null,
+      email: null,
+      cidade: null,
+      estado: null,
+      ativo: true
+    };
+
+    const respPessoa = await supabaseClient
+      .from("fin_pessoas")
+      .insert([novoRegistro])
+      .select("*")
+      .single();
+
+    if (respPessoa.error) {
+      throw new Error("Não foi possível cadastrar automaticamente a pessoa: " + respPessoa.error.message);
+    }
+
+    // Mantém a lista local atualizada sem esperar o recarregamento geral.
+    pessoas.push(respPessoa.data);
+    $("trPessoa").value = String(respPessoa.data.id);
+
+    return {
+      pessoa_id: respPessoa.data.id,
+      favorecido: respPessoa.data.nome
+    };
+  }
 
   async function salvarLancamento(abrirNovoDepois = false) {
     const status = $("trStatus").value;
@@ -5007,17 +6684,24 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
       }
     }
 
+    let pessoaResolvida;
+    try {
+      pessoaResolvida = await resolverPessoaLancamento();
+    } catch (erroPessoa) {
+      return alert(erroPessoa.message || String(erroPessoa));
+    }
+
     const registro = {
       user_id: usuarioAtual.id,
       conta_id: $("trConta")?.value ? Number($("trConta").value) : (item?.conta_id || null),
-      pessoa_id: $("trPessoa").value ? Number($("trPessoa").value) : null,
+      pessoa_id: pessoaResolvida.pessoa_id,
       plano_conta_id: dividirAtivo ? null : ($("trPlano").value ? Number($("trPlano").value) : null),
       centro_custo_id: dividirAtivo ? null : ($("trCentro").value ? Number($("trCentro").value) : null),
       forma_pagamento_id: $("trForma").value ? Number($("trForma").value) : null,
       tipo,
       descricao: $("trDescricao").value.trim(),
       numero: $("trNumero").value.trim() || null,
-      favorecido: null,
+      favorecido: pessoaResolvida.favorecido,
       valor: valorTotal,
       data_lancamento: $("trData").value,
       data_vencimento: $("trVencimento").value || null,
@@ -5243,10 +6927,12 @@ function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPres
   const raizDespesa = raizTipoPlano("despesa");
   const idsRaizes = [raizReceita?.id, raizDespesa?.id].filter(Boolean).map(Number);
 
-  // Para Subcategoria, usamos apenas categorias principais.
-  // A lista também será filtrada pelo grupo escolhido: Receita OU Despesa.
-  const paisPrincipais = planoContas.filter(x =>
-    idsRaizes.includes(Number(x.parent_id)) &&
+  // Para Subcategoria, permitimos escolher QUALQUER nível já cadastrado:
+  // principal, subcategoria, subcategoria de subcategoria, etc.
+  // Excluímos apenas as raízes técnicas, o próprio item e seus descendentes,
+  // evitando ciclos na hierarquia.
+  const paisPossiveis = planoContas.filter(x =>
+    !idsRaizes.includes(Number(x.id)) &&
     (!item || (Number(x.id)!==Number(item.id) && !todosDesc.includes(Number(x.id))))
   );
 
@@ -5278,8 +6964,16 @@ function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPres
       </div>
 
       <div id="pcSubBox" class="form-field full-span structure-dependent ${estruturaInicial==="sub"?"":"hidden"}">
-        <label>Subcategoria de</label>
-        <select id="pcPai"></select>
+        <label>Dentro de</label>
+        <input id="pcPai" type="hidden" value="">
+        <div class="pc-parent-picker">
+          <button type="button" id="pcPaiButton" class="pc-parent-picker-button">
+            <span id="pcPaiButtonText">Selecione onde esta subcategoria ficará</span>
+            <span class="pc-parent-picker-arrow">⌄</span>
+          </button>
+          <div id="pcPaiMenu" class="pc-parent-picker-menu hidden"></div>
+        </div>
+        <small style="color:#7b8794;font-size:10px">Pode escolher uma categoria principal ou qualquer subcategoria já existente.</small>
       </div>
 
       <div class="form-field"><label>Ordem</label><input id="pcOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}"></div>
@@ -5287,30 +6981,142 @@ function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPres
       <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
     </form>`);
 
-  const atualizarPaisPlano = () => {
-    const tipoSelecionado = $("pcTipo").value;
+  const montarPaisHierarquicosPlano = (tipoSelecionado) => {
     const raizSelecionada = tipoSelecionado === "receita" ? raizReceita : raizDespesa;
 
-    const lista = paisPrincipais.filter(x => {
-      // Preferimos a relação com a raiz, e mantemos o tipo como segurança.
-      if (raizSelecionada) return Number(x.parent_id) === Number(raizSelecionada.id);
-      return x.tipo === tipoSelecionado;
+    // Monta os itens em ordem hierárquica para ficar fácil visualizar
+    // principal > subcategoria > subitem > próximo nível...
+    const resultado = [];
+
+    const visitar = (parentId, nivel = 0) => {
+      const filhos = paisPossiveis
+        .filter(x => Number(x.parent_id) === Number(parentId) && String(x.tipo || "").toLowerCase() === tipoSelecionado)
+        .sort((a,b) =>
+          Number(a.ordem || 0) - Number(b.ordem || 0) ||
+          String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR")
+        );
+
+      filhos.forEach(filho => {
+        resultado.push({ ...filho, _nivel: nivel });
+        visitar(filho.id, nivel + 1);
+      });
+    };
+
+    if (raizSelecionada) {
+      visitar(raizSelecionada.id, 0);
+    } else {
+      // Compatibilidade caso a raiz técnica ainda não exista.
+      paisPossiveis
+        .filter(x => x.parent_id == null && String(x.tipo || "").toLowerCase() === tipoSelecionado)
+        .sort((a,b) =>
+          Number(a.ordem || 0) - Number(b.ordem || 0) ||
+          String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR")
+        )
+        .forEach(root => {
+          resultado.push({ ...root, _nivel: 0 });
+          visitar(root.id, 1);
+        });
+    }
+
+    return resultado;
+  };
+
+  const itemTemFilhosNoPlano = (id) =>
+    paisPossiveis.some(x => Number(x.parent_id) === Number(id));
+
+  const textoCaminhoPlano = (id) => {
+    const itemAlvo = paisPossiveis.find(x => Number(x.id) === Number(id));
+    if (!itemAlvo) return "";
+    const nomes = [itemAlvo.nome];
+    let atual = itemAlvo;
+    let trava = 0;
+
+    while (atual?.parent_id && trava < 30) {
+      const pai = planoContas.find(x => Number(x.id) === Number(atual.parent_id));
+      if (!pai || idsRaizes.includes(Number(pai.id))) break;
+      nomes.unshift(pai.nome);
+      atual = pai;
+      trava++;
+    }
+    return nomes.join(" › ");
+  };
+
+  const fecharMenuPaiPlano = () => {
+    $("pcPaiMenu")?.classList.add("hidden");
+    $("pcPaiButton")?.classList.remove("open");
+  };
+
+  const selecionarPaiPlano = (id) => {
+    const valor = id ? String(id) : "";
+    $("pcPai").value = valor;
+
+    if (!valor) {
+      $("pcPaiButtonText").textContent = $("pcPaiButton").dataset.placeholder || "Selecione";
+    } else {
+      $("pcPaiButtonText").textContent = textoCaminhoPlano(Number(valor)) || "Selecione";
+    }
+
+    $("pcPaiMenu")?.querySelectorAll("[data-pc-parent]").forEach(el => {
+      el.classList.toggle("selected", String(el.dataset.pcParent) === valor);
     });
 
-    const valorAtual = $("pcPai").value || String(paiSubInicial || "");
-    $("pcPai").innerHTML = optionLista(
-      lista,
-      valorAtual,
-      tipoSelecionado === "receita"
-        ? "Selecione uma categoria principal de Receitas"
-        : "Selecione uma categoria principal de Despesas"
-    );
+    fecharMenuPaiPlano();
+  };
 
-    // Se o valor anterior pertencia ao outro grupo, limpa a seleção.
-    if (valorAtual && !lista.some(x => Number(x.id) === Number(valorAtual))) {
-      $("pcPai").value = "";
+  const atualizarPaisPlano = () => {
+    const tipoSelecionado = $("pcTipo").value;
+    const lista = montarPaisHierarquicosPlano(tipoSelecionado);
+    const valorAtual = $("pcPai").value || String(paiSubInicial || "");
+
+    const placeholder = tipoSelecionado === "receita"
+      ? "Selecione onde esta subcategoria ficará em Receitas"
+      : "Selecione onde esta subcategoria ficará em Despesas";
+
+    $("pcPaiButton").dataset.placeholder = placeholder;
+
+    const menu = $("pcPaiMenu");
+    menu.innerHTML = `
+      <button type="button" class="pc-parent-option placeholder-option" data-pc-parent="">
+        <span class="pc-parent-name">${escapeHTML(placeholder)}</span>
+      </button>
+      ${lista.map(x => {
+        const nivel = Math.min(Number(x._nivel || 0), 12);
+        const temFilhos = itemTemFilhosNoPlano(x.id);
+        const classe = temFilhos ? "parent-node" : "leaf-node";
+        return `
+          <button type="button"
+                  class="pc-parent-option ${classe}"
+                  data-pc-parent="${x.id}"
+                  style="--pc-level:${nivel}">
+            <span class="pc-parent-indent"></span>
+            <span class="pc-parent-name">${escapeHTML(x.nome || "")}</span>
+          </button>
+        `;
+      }).join("")}
+    `;
+
+    menu.querySelectorAll("[data-pc-parent]").forEach(op => {
+      op.addEventListener("click", () => selecionarPaiPlano(op.dataset.pcParent));
+    });
+
+    if (valorAtual && lista.some(x => Number(x.id) === Number(valorAtual))) {
+      selecionarPaiPlano(valorAtual);
+    } else {
+      selecionarPaiPlano("");
     }
   };
+
+  $("pcPaiButton").addEventListener("click", e => {
+    e.stopPropagation();
+    const menu = $("pcPaiMenu");
+    const vaiAbrir = menu.classList.contains("hidden");
+    menu.classList.toggle("hidden", !vaiAbrir);
+    $("pcPaiButton").classList.toggle("open", vaiAbrir);
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".pc-parent-picker")) fecharMenuPaiPlano();
+  }, { once:false });
 
   const atualizarEstrutura = () => {
     const sub = document.querySelector('input[name="pcEstrutura"]:checked')?.value === "sub";
@@ -5887,6 +7693,40 @@ $("btnExportarCSV")?.addEventListener("click", exportarRelatorioCSV);
 document.querySelectorAll("[data-cat-screen]").forEach(btn => {
   btn.addEventListener("click", () => selecionarModuloCategorias(btn.dataset.catScreen));
 });
+
+
+
+// Eventos mobile de Categorias usando delegação.
+// Assim continuam funcionando mesmo depois de salvar, editar ou recarregar os dados.
+document.addEventListener("click", (e) => {
+  const abrirTipo = e.target.closest("[data-mobile-cat-new]");
+  if (abrirTipo) {
+    e.preventDefault();
+    abrirListaCategoriaMobile(abrirTipo.dataset.mobileCatNew);
+    return;
+  }
+
+  const editarItem = e.target.closest("[data-mobile-cat-edit]");
+  if (editarItem) {
+    e.preventDefault();
+    categoriaSelecionadaId = Number(editarItem.dataset.mobileCatEdit);
+    abrirEdicaoCategoriaAtual();
+    return;
+  }
+
+  if (e.target.closest("#mobileCategoryBack")) {
+    e.preventDefault();
+    fecharListaCategoriaMobile();
+    return;
+  }
+
+  if (e.target.closest("#mobileCategoryDetailNew")) {
+    e.preventDefault();
+    abrirNovaCategoriaMobile();
+    return;
+  }
+});
+
 $("catBtnNovoRaiz")?.addEventListener("click", abrirNovaCategoriaRaiz);
 $("catBtnNovoFilho")?.addEventListener("click", abrirNovoFilhoCategoria);
 $("catBtnEditar")?.addEventListener("click", abrirEdicaoCategoriaAtual);
@@ -5965,18 +7805,150 @@ if ($("mobFabAdicionar")) $("mobFabAdicionar").addEventListener("click", () => {
   if ($("mobNovaTransferenciaFab")) $("mobNovaTransferenciaFab").onclick=()=>{fecharModal();tratarAbertura("novaTransferencia")};
 });
 
+function atualizarPerfilMenuMobile() {
+  const email = usuarioAtual?.email || "";
+  if ($("mobileProfileEmail")) $("mobileProfileEmail").textContent = email || "Minha conta";
+
+  if ($("mobileProfileName")) {
+    let nome = "Minha conta";
+    if (email) {
+      const base = email.split("@")[0]
+        .replace(/[._-]+/g," ")
+        .trim();
+      if (base) nome = base.replace(/\b\w/g,c=>c.toUpperCase());
+    }
+    $("mobileProfileName").textContent = nome;
+  }
+}
+
+
+function limparCamadasMobileAntesDeNavegar() {
+  try { fecharMenuMobile(); } catch(e) {}
+
+  // Fecha modal genérico (Lista de Contas, formulários etc.) se estiver aberto.
+  try {
+    if ($("modal") && !$("modal").classList.contains("hidden")) {
+      fecharModal();
+    }
+  } catch(e) {}
+
+  // Fecha detalhamento do saldo, se estiver aberto.
+  try {
+    if ($("mobileBalanceSheetBackdrop") &&
+        !$("mobileBalanceSheetBackdrop").classList.contains("hidden")) {
+      fecharDetalhamentoSaldoMobile();
+    }
+  } catch(e) {}
+
+  // Garante desbloqueio da rolagem.
+  document.body.style.overflow = "";
+}
+
+function navegarMobilePara(pagina) {
+  limparCamadasMobileAntesDeNavegar();
+  abrirPagina(pagina);
+}
+
+function abrirMenuMobile() {
+  atualizarPerfilMenuMobile();
+  const drawer = $("mobileDrawerBackdrop");
+  if (!drawer) return;
+  drawer.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function fecharMenuMobile() {
+  const drawer = $("mobileDrawerBackdrop");
+  if (drawer) drawer.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+window.abrirMenuMobile = abrirMenuMobile;
+window.fecharMenuMobile = fecharMenuMobile;
+
+if ($("btnAbrirMenuMobile")) {
+  $("btnAbrirMenuMobile").addEventListener("click", abrirMenuMobile);
+}
+if ($("btnFecharMenuMobile")) {
+  $("btnFecharMenuMobile").addEventListener("click", fecharMenuMobile);
+}
+if ($("mobileDrawerBackdrop")) {
+  $("mobileDrawerBackdrop").addEventListener("click", e => {
+    if (e.target === $("mobileDrawerBackdrop")) fecharMenuMobile();
+  });
+}
+
+document.querySelectorAll("[data-mobile-drawer-page]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    navegarMobilePara(btn.dataset.mobileDrawerPage);
+  });
+});
+
+document.querySelectorAll("[data-mobile-drawer-action]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const acao = btn.dataset.mobileDrawerAction;
+    fecharMenuMobile();
+
+    if (acao === "contas") {
+      limparCamadasMobileAntesDeNavegar();
+      tratarAbertura("listaContas");
+      return;
+    }
+
+    if (acao === "pesquisa") {
+      limparCamadasMobileAntesDeNavegar();
+      abrirPagina("lancamentos");
+      setTimeout(() => {
+        const campo = $("buscaTransacao");
+        if (campo) {
+          campo.focus();
+          campo.scrollIntoView({behavior:"smooth",block:"center"});
+        }
+      }, 80);
+      return;
+    }
+
+    if (acao === "configuracoes") {
+      abrirModal("Configurações", `
+        <div class="mobile-more" style="display:grid;gap:10px">
+          <button class="btn" id="mobCfgContas">Lista de Contas</button>
+          <button class="btn" id="mobCfgCategorias">Categorias</button>
+          <button class="btn" id="mobCfgPessoas">Clientes e Fornecedores</button>
+          <button class="btn" id="mobCfgSair">Sair</button>
+        </div>
+      `);
+      if ($("mobCfgContas")) $("mobCfgContas").onclick=()=>{fecharModal();tratarAbertura("listaContas")};
+      if ($("mobCfgCategorias")) $("mobCfgCategorias").onclick=()=>{fecharModal();abrirPagina("categorias")};
+      if ($("mobCfgPessoas")) $("mobCfgPessoas").onclick=()=>{fecharModal();abrirPagina("pessoas")};
+      if ($("mobCfgSair")) $("mobCfgSair").onclick=()=>{fecharModal();$("btnSair")?.click()};
+      return;
+    }
+
+    if (acao === "sair") {
+      $("btnSair")?.click();
+    }
+  });
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !$("mobileDrawerBackdrop")?.classList.contains("hidden")) {
+    fecharMenuMobile();
+  }
+});
+
 if ($("btnMobileConta")) {
   $("btnMobileConta").addEventListener("click", () => {
-    abrirModal("Menu", `
-      <div class="mobile-more">
+    abrirModal("Mais opções", `
+      <div class="mobile-more" style="display:grid;gap:10px">
         <button class="btn" data-go-mobile="contas">Lista de Contas</button>
         <button class="btn" data-go-mobile="categorias">Categorias</button>
-        <button class="btn" data-go-mobile="relatorios">Relatórios</button>
+        <button class="btn" data-go-mobile="relatorios">Gráficos e Relatórios</button>
+        <button class="btn" data-go-mobile="planejamento">Planejamento</button>
         <button class="btn danger" id="mobileSairConta">Sair</button>
       </div>
     `);
     document.querySelectorAll("[data-go-mobile]").forEach(btn=>{
-      btn.onclick=()=>{ fecharModal(); abrirPagina(btn.dataset.goMobile); };
+      btn.onclick=()=>{ fecharModal(); navegarMobilePara(btn.dataset.goMobile); };
     });
     if ($("mobileSairConta")) $("mobileSairConta").onclick=()=>$("btnSair")?.click();
   });
