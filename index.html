@@ -225,7 +225,6 @@ tr:last-child td{border-bottom:0}
 .legacy-plan-head.despesa{color:#e11}
 .legacy-tree{padding:4px 6px 20px;font-size:12px;min-height:448px}
 .legacy-single-view{min-height:488px}
-.legacy-flat-empty{padding:18px;color:#7c8794}
 .legacy-placeholder{min-height:488px;display:grid;place-items:center;color:#7c8794}
 .legacy-node{user-select:none}
 .legacy-node-row{display:flex;align-items:center;gap:3px;min-height:22px;padding:1px 2px;cursor:pointer;border:1px solid transparent}
@@ -311,6 +310,54 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
   .legacy-plan-column{border-right:0;border-bottom:1px solid #d9dde1}
 }
 
+
+/* V13 - faixa de ações exclusiva para Categorias */
+.ribbon-categorias{display:none}
+.ribbon-categorias .category-ribbon-action{min-width:86px}
+.ribbon-categorias .category-ribbon-action small{font-size:10px;line-height:1.1;max-width:105px;white-space:normal}
+.ribbon-categorias .category-ribbon-action:disabled{opacity:.35;cursor:default}
+body.categories-mode .ribbon-default{display:none !important}
+body.categories-mode .ribbon-categorias{display:flex !important}
+body:not(.categories-mode) .ribbon-categorias{display:none !important}
+body.categories-mode #legacyToolbar{display:none !important}
+
+
+/* V14 - ícones Novo / Editar / Excluir no estilo do programa antigo */
+.ribbon-categorias .category-ribbon-action{min-width:90px;padding-top:3px}
+.cat-ribbon-icon{position:relative;display:block!important;width:34px!important;height:34px!important;margin:0 auto 3px!important;border:0!important;background:transparent!important;border-radius:0!important}
+.cat-ribbon-icon:before{content:"";position:absolute;left:5px;top:2px;width:20px;height:27px;background:linear-gradient(#fff,#e9edf1);border:1px solid #aeb7c0;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.cat-ribbon-icon:after{content:"";position:absolute;left:9px;top:8px;width:12px;height:1px;background:#b7bec7;box-shadow:0 5px 0 #b7bec7,0 10px 0 #b7bec7}
+.cat-ribbon-new i,.cat-ribbon-delete i{position:absolute;z-index:2;right:1px;bottom:1px;width:15px;height:15px;border-radius:50%;display:block}
+.cat-ribbon-new i{background:#44ad36;border:1px solid #2c8722}
+.cat-ribbon-new i:before,.cat-ribbon-new i:after{content:"";position:absolute;background:#fff;left:3px;right:3px;top:6px;height:2px}
+.cat-ribbon-new i:after{top:3px;bottom:3px;left:6px;width:2px;height:auto}
+.cat-ribbon-delete i{background:#ef3e2f;border:1px solid #be2419}
+.cat-ribbon-delete i:before{content:"";position:absolute;background:#fff;left:3px;right:3px;top:6px;height:2px}
+.cat-ribbon-edit i{position:absolute;z-index:2;right:0;bottom:2px;width:20px;height:5px;background:#d9a11b;border:1px solid #8b6817;transform:rotate(-42deg);transform-origin:center;border-radius:1px}
+.cat-ribbon-edit i:before{content:"";position:absolute;left:-5px;top:-1px;border-top:3px solid transparent;border-bottom:3px solid transparent;border-right:5px solid #737b85}
+.structure-choice{grid-column:1/-1;border:1px solid #d8dde4;border-radius:6px;padding:10px;background:#f9fafb}
+.structure-choice-title{font-size:12px;color:#596574;margin-bottom:8px}
+.structure-radios{display:flex;gap:22px;flex-wrap:wrap}
+.structure-radios label{display:flex;align-items:center;gap:6px;font-size:13px}
+.structure-radios input{width:auto}
+.structure-dependent.hidden{display:none!important}
+
+
+.legacy-data-wrap{width:100%;overflow:auto;background:#fff}
+.legacy-data-table{width:100%;border-collapse:collapse;min-width:540px}
+.legacy-data-table th,.legacy-data-table td{padding:5px 7px;border-bottom:1px solid #ededed;font-size:12px;text-align:left;white-space:nowrap}
+.legacy-data-table th{background:#f3f3f3;border-bottom:1px solid #cfd5db;font-weight:500;color:#333}
+.legacy-data-table tbody tr{cursor:pointer}
+.legacy-data-table tbody tr:hover{background:#eef5ff}
+.legacy-data-table tbody tr.selected{background:#5b9bd5;color:#fff}
+.legacy-data-empty{padding:18px;color:#788391;font-size:12px}
+.centro-history{grid-column:1/-1;border:1px solid #d8dde4;border-radius:6px;overflow:hidden}
+.centro-history-title{padding:8px 10px;background:#f7f8fa;border-bottom:1px solid #d8dde4;font-size:12px;font-weight:600}
+.centro-history-body{max-height:180px;overflow:auto}
+.centro-history-table{width:100%;border-collapse:collapse}
+.centro-history-table th,.centro-history-table td{padding:6px 8px;border-bottom:1px solid #eceff2;font-size:11px;text-align:left}
+.centro-history-empty{padding:22px;text-align:center;color:#818b97;font-size:11px}
+
 </style>
 </head>
 <body>
@@ -362,7 +409,7 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
   <div id="app" class="app hidden">
     <header class="desktop-header">
       <div class="window-title">
-        <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v11 Categorias</span></strong>
+        <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v22 Categorias</span></strong>
         <span id="emailUsuario"></span>
         <button id="btnSair" type="button" class="link-button">Sair</button>
       </div>
@@ -377,7 +424,7 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
         <button class="top-tab" data-page="categorias">CATEGORIAS</button>
       </nav>
 
-      <div class="ribbon">
+      <div class="ribbon ribbon-default">
         <button class="ribbon-action" data-page="lancamentos">
           <span>＋</span>
           Novo lançamento
@@ -407,6 +454,21 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
           Categorias
         </button>
       </div>
+
+      <div class="ribbon ribbon-categorias">
+        <button id="catRibbonNovo" class="ribbon-action category-ribbon-action" type="button">
+          <span class="cat-ribbon-icon cat-ribbon-new"><i></i></span>
+          <small id="catRibbonNovoLabel">Novo Plano de Conta</small>
+        </button>
+        <button id="catRibbonEditar" class="ribbon-action category-ribbon-action" type="button" disabled>
+          <span class="cat-ribbon-icon cat-ribbon-edit"><i></i></span>
+          <small>Editar</small>
+        </button>
+        <button id="catRibbonExcluir" class="ribbon-action category-ribbon-action" type="button" disabled>
+          <span class="cat-ribbon-icon cat-ribbon-delete"><i></i></span>
+          <small>Excluir</small>
+        </button>
+      </div>
     </header>
 
     <main class="app-shell">
@@ -431,18 +493,11 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
               <button class="legacy-nav-item active" data-cat-screen="plano">▦ Plano de Contas</button>
               <button class="legacy-nav-item" data-cat-screen="centro">▦ Centro de Custos</button>
               <button class="legacy-nav-item" data-cat-screen="moedas">▦ Moedas</button>
-              <button class="legacy-nav-item" data-cat-screen="categorias_extrato">▦ Categorias de Extratos</button>
             </div>
 
             <div class="legacy-nav-group">
               <div class="legacy-nav-group-title">⌄ 📁 Cobrança</div>
               <button class="legacy-nav-item" data-cat-screen="formas">▦ Meios de Pagamento</button>
-            </div>
-
-            <div class="legacy-nav-group">
-              <div class="legacy-nav-group-title">⌄ 📁 Segurança</div>
-              <button class="legacy-nav-item" data-cat-screen="grupos">▦ Grupos</button>
-              <button class="legacy-nav-item" data-cat-screen="usuarios">▦ Usuários</button>
             </div>
           </div>
         </div>
@@ -812,18 +867,11 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
                     <button class="legacy-nav-item active" data-cat-screen="plano">▦ Plano de Contas</button>
                     <button class="legacy-nav-item" data-cat-screen="centro">▦ Centro de Custos</button>
                     <button class="legacy-nav-item" data-cat-screen="moedas">▦ Moedas</button>
-                    <button class="legacy-nav-item" data-cat-screen="categorias_extrato">▦ Categorias de Extratos</button>
                   </div>
 
                   <div class="legacy-nav-group">
                     <div class="legacy-nav-group-title">⌄ 📁 Cobrança</div>
                     <button class="legacy-nav-item" data-cat-screen="formas">▦ Meios de Pagamento</button>
-                  </div>
-
-                  <div class="legacy-nav-group">
-                    <div class="legacy-nav-group-title">⌄ 📁 Segurança</div>
-                    <button class="legacy-nav-item" data-cat-screen="grupos">▦ Grupos</button>
-                    <button class="legacy-nav-item" data-cat-screen="usuarios">▦ Usuários</button>
                   </div>
                 </div>
               </aside>
@@ -834,9 +882,6 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
                 <div id="legacyToolbar" class="legacy-toolbar">
                   <button id="catBtnNovoRaiz" class="legacy-toolbar-btn" type="button">
                     <span>🆕</span><small>Novo</small>
-                  </button>
-                  <button id="catBtnNovoFilho" class="legacy-toolbar-btn" type="button" disabled>
-                    <span>➕</span><small>Nova dentro</small>
                   </button>
                   <button id="catBtnEditar" class="legacy-toolbar-btn" type="button" disabled>
                     <span>✏️</span><small>Editar</small>
@@ -863,7 +908,7 @@ body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
                 </div>
 
                 <div id="legacyFlatView" class="legacy-single-view hidden">
-                  <div id="arvoreCadastroUnico" class="legacy-tree"></div>
+                  <div id="arvoreCadastroSimples" class="legacy-tree"></div>
                 </div>
 
                 <div id="legacyPlaceholderView" class="legacy-placeholder hidden">
@@ -927,7 +972,7 @@ let relatorioAtual = [];
 let categoriaModuloAtual = "plano";
 let categoriaSelecionadaId = null;
 const categoriaExpandidos = new Set();
-let cadastrosExtras = {};
+let cadastrosSimples = {};
 
 
 const agora = new Date();
@@ -1172,7 +1217,15 @@ async function carregarDados() {
     progResp,
     parcelasResp,
     orcResp,
-    orcItensResp
+    orcItensResp,
+    cargosResp,
+    categoriasPessoasResp,
+    classificacoesResp,
+    estadosResp,
+    bancosResp,
+    tiposDocumentoResp,
+    tiposContaResp,
+    moedasResp
   ] = await Promise.all([
     supabaseClient.from("fin_contas").select("*").eq("user_id", uid).order("ordem").order("nome"),
     supabaseClient.from("fin_transacoes").select("*").eq("user_id", uid).order("data_lancamento", { ascending: false }).order("id", { ascending: false }),
@@ -1183,11 +1236,22 @@ async function carregarDados() {
     supabaseClient.from("fin_programacoes").select("*").eq("user_id", uid).order("created_at", { ascending: false }),
     supabaseClient.from("fin_programacao_parcelas").select("*").eq("user_id", uid).order("data_vencimento"),
     supabaseClient.from("fin_orcamentos").select("*").eq("user_id", uid).order("ano", { ascending: false }),
-    supabaseClient.from("fin_orcamento_itens").select("*").eq("user_id", uid)
+    supabaseClient.from("fin_orcamento_itens").select("*").eq("user_id", uid),
+    supabaseClient.from("fin_cargos_funcoes").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_categorias_pessoas").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_classificacoes_pessoas").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_estados_municipios").select("*").eq("user_id", uid).order("ordem").order("estado"),
+    supabaseClient.from("fin_bancos").select("*").eq("user_id", uid).order("ordem").order("banco"),
+    supabaseClient.from("fin_tipos_documento").select("*").eq("user_id", uid).order("ordem").order("tipo_documento"),
+    supabaseClient.from("fin_tipos_conta").select("*").eq("user_id", uid).order("ordem").order("conta"),
+    supabaseClient.from("fin_moedas").select("*").eq("user_id", uid).order("ordem").order("nome")
   ]);
 
-  const erros = [contasResp,transResp,pessoasResp,planoResp,centrosResp,formasResp,progResp,parcelasResp,orcResp,orcItensResp]
-    .map(x => x.error).filter(Boolean);
+  const erros = [
+    contasResp,transResp,pessoasResp,planoResp,centrosResp,formasResp,
+    progResp,parcelasResp,orcResp,orcItensResp,cargosResp,categoriasPessoasResp,
+    classificacoesResp,estadosResp,bancosResp,tiposDocumentoResp,tiposContaResp,moedasResp
+  ].map(x => x.error).filter(Boolean);
 
   if (erros.length) {
     console.error("Erros ao carregar:", erros);
@@ -1200,7 +1264,19 @@ async function carregarDados() {
   planoContas = planoResp.data || [];
   centrosCusto = centrosResp.data || [];
   formasPagamento = formasResp.data || [];
-  carregarCadastrosExtrasLocal();
+
+  // Cadastros simples da tela Categorias
+  cadastrosSimples = {
+    cargos: cargosResp.data || [],
+    categorias_pessoas: categoriasPessoasResp.data || [],
+    classificacao_pessoas: classificacoesResp.data || [],
+    estados: estadosResp.data || [],
+    bancos: bancosResp.data || [],
+    tipos_documento: tiposDocumentoResp.data || [],
+    tipos_conta: tiposContaResp.data || [],
+    moedas: moedasResp.data || []
+  };
+
   programacoes = progResp.data || [];
   parcelas = parcelasResp.data || [];
   orcamentos = orcResp.data || [];
@@ -1480,7 +1556,7 @@ function mostrarPessoas() {
 
 let categoriaTelaAtual = "plano";
 
-const CATEGORIAS_LABELS = {
+const NOMES_CADASTROS = {
   cargos:"Cargos e Funções",
   categorias_pessoas:"Categorias de Cliente / Fornecedor",
   classificacao_pessoas:"Classificação de Cliente / Fornecedor",
@@ -1488,87 +1564,107 @@ const CATEGORIAS_LABELS = {
   bancos:"Bancos",
   tipos_documento:"Tipos de Documento",
   tipos_conta:"Tipos de Contas",
-  plano:"Plano de Contas",
-  centro:"Centro de Custos",
   moedas:"Moedas",
-  categorias_extrato:"Categorias de Extratos",
-  formas:"Meios de Pagamento",
-  grupos:"Grupos",
-  usuarios:"Usuários"
+  formas:"Meios de Pagamento"
 };
 
-function telaHierarquicaCategoria() {
-  return categoriaTelaAtual === "plano" || categoriaTelaAtual === "centro";
-}
+const TABELAS_CADASTROS = {
+  cargos:"fin_cargos_funcoes",
+  categorias_pessoas:"fin_categorias_pessoas",
+  classificacao_pessoas:"fin_classificacoes_pessoas",
+  estados:"fin_estados_municipios",
+  bancos:"fin_bancos",
+  tipos_documento:"fin_tipos_documento",
+  tipos_conta:"fin_tipos_conta",
+  moedas:"fin_moedas",
+  formas:"fin_formas_pagamento"
+};
 
-function categoriaNomeTela(chave = categoriaTelaAtual) {
-  return CATEGORIAS_LABELS[chave] || "Categorias";
-}
-
-function storageCadastrosKey() {
-  return `mf_cadastros_extras_${usuarioAtual?.id || "anon"}`;
-}
-
-function cadastrosExtrasPadrao() {
-  return {
-    cargos: [],
-    categorias_pessoas: [],
-    classificacao_pessoas: [],
-    estados: [],
-    bancos: [],
-    tipos_documento: [],
-    tipos_conta: [],
-    moedas: [],
-    categorias_extrato: [],
-    grupos: [],
-    usuarios: []
-  };
-}
-
-function carregarCadastrosExtrasLocal() {
-  const base = cadastrosExtrasPadrao();
-  let salvos = {};
-  try {
-    salvos = JSON.parse(localStorage.getItem(storageCadastrosKey()) || "{}");
-  } catch (e) {
-    salvos = {};
+const CONFIG_CADASTROS = {
+  cargos: {
+    colunas:[{key:"nome",label:"Cargo"}],
+    campos:[{key:"nome",label:"Cargo",required:true}]
+  },
+  categorias_pessoas: {
+    colunas:[{key:"nome",label:"Categoria"}],
+    campos:[{key:"nome",label:"Categoria",required:true}]
+  },
+  classificacao_pessoas: {
+    colunas:[{key:"nome",label:"Potencial"}],
+    campos:[{key:"nome",label:"Potencial",required:true}]
+  },
+  estados: {
+    colunas:[{key:"sigla",label:"Sigla"},{key:"estado",label:"Estado"},{key:"cod_ibge",label:"Cod. IBGE"}],
+    campos:[
+      {key:"sigla",label:"Sigla",required:true,maxlength:2},
+      {key:"estado",label:"Estado",required:true},
+      {key:"cod_ibge",label:"Cod. IBGE",required:true,inputmode:"numeric"}
+    ],
+    nomeKey:"estado"
+  },
+  bancos: {
+    colunas:[{key:"banco",label:"Banco"},{key:"numero",label:"Número"},{key:"website",label:"Website do banco"}],
+    campos:[
+      {key:"banco",label:"Banco",required:true},
+      {key:"numero",label:"Número"},
+      {key:"website",label:"Website do banco",type:"url"}
+    ],
+    nomeKey:"banco"
+  },
+  tipos_documento: {
+    colunas:[{key:"tipo_documento",label:"Tipo de Documento"},{key:"codigo",label:"Código"}],
+    campos:[
+      {key:"tipo_documento",label:"Tipo de Documento",required:true},
+      {key:"codigo",label:"Código"}
+    ],
+    nomeKey:"tipo_documento"
+  },
+  tipos_conta: {
+    colunas:[{key:"conta",label:"Conta"},{key:"tipo",label:"Tipo"}],
+    campos:[
+      {key:"conta",label:"Conta",required:true},
+      {key:"tipo",label:"Tipo",required:true}
+    ],
+    nomeKey:"conta"
+  },
+  moedas: {
+    colunas:[
+      {key:"nome",label:"Nome"},{key:"sigla",label:"Sigla"},
+      {key:"descricao_extensa",label:"Desc. Extensa"},{key:"descricao_plural",label:"Desc. Extensa Plural"},
+      {key:"cotacao",label:"Cotação"},{key:"data_cotacao",label:"Data Cotação"}
+    ],
+    campos:[
+      {key:"nome",label:"Nome",required:true},
+      {key:"sigla",label:"Sigla",required:true},
+      {key:"descricao_extensa",label:"Descrição Extensa"},
+      {key:"descricao_plural",label:"Descrição Extensa Plural"},
+      {key:"cotacao",label:"Cotação",type:"number",step:"0.000001"},
+      {key:"data_cotacao",label:"Data Cotação",type:"date"}
+    ]
+  },
+  formas: {
+    colunas:[{key:"nome",label:"Nome"}],
+    campos:[{key:"nome",label:"Nome",required:true}]
   }
-  cadastrosExtras = { ...base, ...salvos };
-  for (const chave of Object.keys(base)) {
-    if (!Array.isArray(cadastrosExtras[chave])) cadastrosExtras[chave] = [];
-  }
-}
+};
 
-function salvarCadastrosExtrasLocal() {
-  localStorage.setItem(storageCadastrosKey(), JSON.stringify(cadastrosExtras));
+function carregarCadastrosSimples() {
+  // Os cadastros simples agora são carregados do Supabase.
 }
+function salvarCadastrosSimples() {
+  // Mantido apenas por compatibilidade com versões anteriores.
+}
+function cadastroEhSimples(){ return !["plano","centro","formas"].includes(categoriaTelaAtual); }
 
 function categoriaListaAtual() {
-  if (categoriaTelaAtual === "plano") return planoContas;
   if (categoriaTelaAtual === "centro") return centrosCusto;
+  if (categoriaTelaAtual === "plano") return planoContas;
   if (categoriaTelaAtual === "formas") return formasPagamento;
-  return cadastrosExtras[categoriaTelaAtual] || [];
+  return cadastrosSimples[categoriaTelaAtual] || [];
 }
 
 function categoriaItemAtual() {
   return categoriaListaAtual().find(x => Number(x.id) === Number(categoriaSelecionadaId)) || null;
-}
-
-function montarListaCadastroSimples(lista) {
-  const itens = [...lista].sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
-  if (!itens.length) return `<div class="legacy-flat-empty">Nenhum item cadastrado.</div>`;
-
-  return itens.map(item => {
-    const selecionado = Number(item.id) === Number(categoriaSelecionadaId);
-    return `
-      <div class="legacy-node">
-        <div class="legacy-node-row ${selecionado ? "selected" : ""}" data-cat-select="${item.id}" data-cat-context="${item.id}">
-          <button class="legacy-toggle empty" type="button">•</button>
-          <span class="legacy-icon">▦</span>
-          <span class="legacy-node-name">${escapeHTML(item.nome)}</span>
-        </div>
-      </div>`;
-  }).join("");
 }
 
 function categoriaTemFilhos(lista, id) {
@@ -1694,11 +1790,78 @@ function vincularLegacyTree(container) {
   });
 }
 
+function cadastroSimplesHierarquico() { return false;
+}
+
+function montarCadastroSimplesHierarquico(lista, parentId = null) {
+  const filhos = lista
+    .filter(x => parentId === null ? x.parent_id == null : Number(x.parent_id) === Number(parentId))
+    .sort((a,b)=>Number(a.ordem||0)-Number(b.ordem||0) || String(a.nome).localeCompare(String(b.nome),"pt-BR"));
+
+  if (!filhos.length) return "";
+
+  return filhos.map(item => {
+    const temFilhos = lista.some(x => Number(x.parent_id) === Number(item.id));
+    const chave = `${categoriaTelaAtual}:${item.id}`;
+    const aberto = categoriaExpandidos.has(chave);
+    const selecionado = Number(item.id) === Number(categoriaSelecionadaId);
+    return `
+      <div class="legacy-node">
+        <div class="legacy-node-row ${selecionado?"selected":""}" data-cat-select="${item.id}" data-cat-context="${item.id}">
+          <button class="legacy-toggle ${temFilhos?"":"empty"}" type="button" data-cat-toggle="${item.id}">${temFilhos?(aberto?"⌄":"›"):""}</button>
+          <span class="legacy-icon">${temFilhos?"📁":"📄"}</span>
+          <span class="legacy-node-name">${escapeHTML(item.nome)}</span>
+        </div>
+        ${temFilhos?`<div class="legacy-children ${aberto?"":"collapsed"}">${montarCadastroSimplesHierarquico(lista,item.id)}</div>`:""}
+      </div>`;
+  }).join("");
+}
+
+function montarCadastroSimples(lista){
+  const cfg = CONFIG_CADASTROS[categoriaTelaAtual] || {colunas:[{key:"nome",label:"Nome"}]};
+  const chaveOrdenacao = cfg.nomeKey || "nome";
+  const itens = [...lista].sort((a,b)=>String(a[chaveOrdenacao] || "").localeCompare(String(b[chaveOrdenacao] || ""),"pt-BR"));
+  if (!itens.length) return `<div class="legacy-data-empty">Nenhum item cadastrado.</div>`;
+
+  return `<div class="legacy-data-wrap"><table class="legacy-data-table">
+    <thead><tr>${cfg.colunas.map(c=>`<th>${escapeHTML(c.label)}</th>`).join("")}</tr></thead>
+    <tbody>${itens.map(item=>`
+      <tr class="${Number(item.id)===Number(categoriaSelecionadaId)?"selected":""}" data-cat-select="${item.id}" data-cat-context="${item.id}">
+        ${cfg.colunas.map(c=>{
+          let valor = item[c.key] ?? "";
+          if (c.key === "data_cotacao" && valor) valor = dataBR(valor);
+          if (c.key === "cotacao" && valor !== "") valor = Number(valor).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:6});
+          return `<td>${escapeHTML(valor)}</td>`;
+        }).join("")}
+      </tr>`).join("")}</tbody>
+  </table></div>`;
+}
+
+function rotuloNovoCadastroAtual() {
+  const rotulos = {
+    plano: "Novo Plano de Conta",
+    centro: "Novo Centro de Custo",
+    cargos: "Novo Cargo / Função",
+    categorias_pessoas: "Nova Categoria",
+    classificacao_pessoas: "Nova Classificação",
+    estados: "Novo Estado / Município",
+    bancos: "Novo Banco",
+    tipos_documento: "Novo Tipo de Documento",
+    tipos_conta: "Novo Tipo de Conta",
+    moedas: "Nova Moeda",
+    formas: "Novo Meio de Pagamento"
+  };
+  return rotulos[categoriaTelaAtual] || "Novo";
+}
+
 function atualizarBotoesCategorias() {
   const item = categoriaItemAtual();
-  $("catBtnNovoFilho").disabled = !(item && telaHierarquicaCategoria());
-  $("catBtnEditar").disabled = !item;
-  $("catBtnExcluir").disabled = !item;
+  if ($("catBtnEditar")) $("catBtnEditar").disabled = !item;
+  if ($("catBtnExcluir")) $("catBtnExcluir").disabled = !item;
+
+  if ($("catRibbonNovoLabel")) $("catRibbonNovoLabel").textContent = rotuloNovoCadastroAtual();
+  if ($("catRibbonEditar")) $("catRibbonEditar").disabled = !item;
+  if ($("catRibbonExcluir")) $("catRibbonExcluir").disabled = !item;
 }
 
 function mostrarGerenciadorCategorias() {
@@ -1751,11 +1914,11 @@ function mostrarGerenciadorCategorias() {
 
     vincularLegacyTree($("arvoreCentroUnico"));
   } else {
-    $("legacyRightTitle").textContent = categoriaNomeTela();
+    $("legacyRightTitle").textContent = NOMES_CADASTROS[categoriaTelaAtual] || "Categorias";
     $("legacyFlatView").classList.remove("hidden");
     $("legacyToolbar").classList.remove("hidden");
-    $("arvoreCadastroUnico").innerHTML = montarListaCadastroSimples(categoriaListaAtual());
-    vincularLegacyTree($("arvoreCadastroUnico"));
+    $("arvoreCadastroSimples").innerHTML = montarCadastroSimples(categoriaListaAtual());
+    vincularLegacyTree($("arvoreCadastroSimples"));
   }
 
   atualizarBotoesCategorias();
@@ -1779,14 +1942,11 @@ function abrirMenuContextoCategoria(x, y) {
   menu.style.top = `${Math.min(y, window.innerHeight - 140)}px`;
   menu.innerHTML = `
     <button type="button" data-cat-menu="editar">✏️ Editar</button>
-    ${telaHierarquicaCategoria() ? '<button type="button" data-cat-menu="filho">➕ Novo dentro</button>' : ''}
     <button type="button" class="danger" data-cat-menu="excluir">🗑 Excluir</button>
   `;
   document.body.appendChild(menu);
 
   menu.querySelector('[data-cat-menu="editar"]').onclick = () => { fecharMenuContextoCategoria(); abrirEdicaoCategoriaAtual(); };
-  const btnFilho = menu.querySelector('[data-cat-menu="filho"]');
-  if (btnFilho) btnFilho.onclick = () => { fecharMenuContextoCategoria(); abrirNovoFilhoCategoria(); };
   menu.querySelector('[data-cat-menu="excluir"]').onclick = () => { fecharMenuContextoCategoria(); excluirCategoriaAtual(); };
 }
 
@@ -1800,26 +1960,11 @@ document.addEventListener("click", e => {
 
 function abrirNovaCategoriaRaiz() {
   if (categoriaTelaAtual === "plano") {
-    abrirModal("Novo Plano de Conta", `
-      <div class="mobile-more">
-        <button class="btn success" id="novoTipoReceita">Receita</button>
-        <button class="btn danger" id="novoTipoDespesa">Despesa</button>
-      </div>
-    `);
-    $("novoTipoReceita").onclick = () => {
-      fecharModal();
-      const raiz = raizTipoPlano("receita");
-      abrirFormularioPlano(null, raiz?.id || null, "receita");
-    };
-    $("novoTipoDespesa").onclick = () => {
-      fecharModal();
-      const raiz = raizTipoPlano("despesa");
-      abrirFormularioPlano(null, raiz?.id || null, "despesa");
-    };
+    abrirFormularioPlano(null, null, null);
   } else if (categoriaTelaAtual === "centro") {
     abrirFormularioCentro(null, null);
   } else {
-    abrirFormularioCadastroSimples(null);
+    abrirFormularioCadastroSimples();
   }
 }
 
@@ -1843,306 +1988,876 @@ async function excluirCategoriaAtual() {
   const item = categoriaItemAtual();
   if (!item) return;
 
-  if (telaHierarquicaCategoria()) {
+  if (categoriaTelaAtual === "plano" || categoriaTelaAtual === "centro") {
     const lista = categoriaListaAtual();
     const descendentes = categoriaDescendentes(lista, item.id);
-    const aviso = descendentes.length ? `
-
-Este item possui ${descendentes.length} item(ns) dentro dele.` : "";
+    const aviso = descendentes.length ? `\n\nEste item possui ${descendentes.length} item(ns) dentro dele.` : "";
     if (!confirm(`Excluir "${item.nome}"?${aviso}`)) return;
-
     const tabela = categoriaTelaAtual === "plano" ? "fin_plano_contas" : "fin_centros_custo";
-    const { error } = await supabaseClient.from(tabela)
-      .delete()
-      .eq("id", item.id)
-      .eq("user_id", usuarioAtual.id);
-
+    const { error } = await supabaseClient.from(tabela).delete().eq("id", item.id).eq("user_id", usuarioAtual.id);
     if (error) return alert("Erro ao excluir: " + error.message);
     categoriaSelecionadaId = null;
     await carregarDados();
     return;
   }
 
-  if (!confirm(`Excluir "${item.nome}"?`)) return;
-
+  const cfgAtual = CONFIG_CADASTROS[categoriaTelaAtual] || {};
+  const chaveNomeAtual = cfgAtual.nomeKey || "nome";
+  const nomeAtual = item[chaveNomeAtual] || item.nome || item.estado || item.banco || item.conta || item.tipo_documento || "";
+  if (!confirm(`Excluir "${nomeAtual}"?`)) return;
   if (categoriaTelaAtual === "formas") {
-    const { error } = await supabaseClient.from("fin_formas_pagamento")
-      .delete()
-      .eq("id", item.id)
-      .eq("user_id", usuarioAtual.id);
-
+    const { error } = await supabaseClient.from("fin_formas_pagamento").delete().eq("id", item.id).eq("user_id", usuarioAtual.id);
     if (error) return alert("Erro ao excluir: " + error.message);
     categoriaSelecionadaId = null;
     await carregarDados();
     return;
   }
 
-  cadastrosExtras[categoriaTelaAtual] = (cadastrosExtras[categoriaTelaAtual] || []).filter(x => Number(x.id) !== Number(item.id));
-  salvarCadastrosExtrasLocal();
+  const tabelaSimples = TABELAS_CADASTROS[categoriaTelaAtual];
+  if (!tabelaSimples) return alert("Cadastro sem tabela configurada.");
+
+  const { error } = await supabaseClient
+    .from(tabelaSimples)
+    .delete()
+    .eq("id", item.id)
+    .eq("user_id", usuarioAtual.id);
+
+  if (error) return alert("Erro ao excluir: " + error.message);
+
   categoriaSelecionadaId = null;
-  mostrarGerenciadorCategorias();
+  await carregarDados();
+}
+
+// ============================================================
+// ORÇAMENTOS / RELATÓRIOS
+// ============================================================
+
+function categoriasFolha() {
+  return planoContas.filter(p => !planoContas.some(x => Number(x.parent_id) === Number(p.id)) && p.ativo !== false);
+}
+
+function valorOrcado(orcamentoId, planoId, mes) {
+  const item = orcamentoItens.find(x =>
+    Number(x.orcamento_id) === Number(orcamentoId) &&
+    Number(x.plano_conta_id) === Number(planoId) &&
+    Number(x.mes) === Number(mes)
+  );
+  return Number(item?.valor_previsto || 0);
+}
+
+function nomeHierarquicoPlano(item) {
+  const nomes = [item.nome];
+  let atual = item;
+  let trava = 0;
+  while (atual?.parent_id && trava < 20) {
+    atual = planoContas.find(x => Number(x.id) === Number(atual.parent_id));
+    if (atual) nomes.unshift(atual.nome);
+    trava++;
+  }
+  return nomes.join(" › ");
+}
+
+function mostrarOrcamentos() {
+  const select = $("orcamentoSelecionado");
+  const mesSelect = $("mesPlanejamento");
+
+  if (mesSelect && !mesSelect.dataset.pronto) {
+    mesSelect.innerHTML = meses.map((m,i) => `<option value="${i+1}">${m}</option>`).join("");
+    mesSelect.value = String(mesAtual + 1);
+    mesSelect.dataset.pronto = "1";
+    mesSelect.addEventListener("change", renderComparativoOrcamento);
+  }
+
+  if (select) {
+    select.innerHTML = orcamentos.length
+      ? orcamentos.map(o => `<option value="${o.id}" ${Number(o.id)===Number(orcamentoSelecionadoId)?"selected":""}>${escapeHTML(o.nome)} (${o.ano})</option>`).join("")
+      : `<option value="">Nenhum orçamento</option>`;
+
+    if (!select.dataset.pronto) {
+      select.dataset.pronto = "1";
+      select.addEventListener("change", () => {
+        orcamentoSelecionadoId = select.value ? Number(select.value) : null;
+        mostrarOrcamentos();
+      });
+    }
+  }
+
+  $("listaOrcamentos").innerHTML = orcamentos.length ? orcamentos.map(o => {
+    const total = orcamentoItens
+      .filter(i => Number(i.orcamento_id) === Number(o.id))
+      .reduce((s,i) => s + Number(i.valor_previsto || 0), 0);
+    return `
+      <article class="simple-card" style="${Number(o.id)===Number(orcamentoSelecionadoId)?"border-color:var(--blue)":""}">
+        <h3>${escapeHTML(o.nome)}</h3>
+        <p>Ano: ${o.ano}</p>
+        <strong>${dinheiro(total)}</strong>
+        <small style="display:block;margin-top:7px">${escapeHTML(o.observacao || "")}</small>
+        <button class="mini-btn" style="margin-top:10px" data-usar-orcamento="${o.id}">Abrir</button>
+      </article>`;
+  }).join("") : `<div class="empty">Nenhum orçamento cadastrado. Clique em "Novo orçamento".</div>`;
+
+  document.querySelectorAll("[data-usar-orcamento]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      orcamentoSelecionadoId = Number(btn.dataset.usarOrcamento);
+      mostrarOrcamentos();
+    });
+  });
+
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  const folhas = categoriasFolha();
+
+  if (!orc) {
+    $("matrizOrcamento").innerHTML = `<tr><td colspan="14"><div class="empty">Crie ou selecione um orçamento.</div></td></tr>`;
+    $("comparativoOrcamento").innerHTML = `<div class="empty">Sem orçamento selecionado.</div>`;
+    $("resumoOrcamento").innerHTML = `<div class="empty">Sem orçamento selecionado.</div>`;
+    return;
+  }
+
+  $("matrizOrcamento").innerHTML = folhas.length ? folhas.map(p => `
+    <tr>
+      <td title="${escapeHTML(nomeHierarquicoPlano(p))}"><strong>${escapeHTML(nomeHierarquicoPlano(p))}</strong></td>
+      <td>${escapeHTML(p.tipo)}</td>
+      ${Array.from({length:12},(_,i) => `
+        <td><input class="budget-input" type="number" step="0.01" min="0"
+          data-budget-plan="${p.id}" data-budget-month="${i+1}"
+          value="${valorOrcado(orc.id,p.id,i+1) || ""}" placeholder="0,00"></td>
+      `).join("")}
+    </tr>
+  `).join("") : `<tr><td colspan="14"><div class="empty">Cadastre categorias finais no Plano de Contas.</div></td></tr>`;
+
+  document.querySelectorAll(".budget-input").forEach(input => {
+    input.addEventListener("change", () => salvarValorOrcamento(input));
+  });
+
+  renderComparativoOrcamento();
+
+  const itens = orcamentoItens.filter(i => Number(i.orcamento_id) === Number(orc.id));
+  const totalReceitas = itens.filter(i => idNome(planoContas,i.plano_conta_id,"") && planoContas.find(p=>Number(p.id)===Number(i.plano_conta_id))?.tipo==="receita")
+    .reduce((s,i)=>s+Number(i.valor_previsto||0),0);
+  const totalDespesas = itens.filter(i => planoContas.find(p=>Number(p.id)===Number(i.plano_conta_id))?.tipo==="despesa")
+    .reduce((s,i)=>s+Number(i.valor_previsto||0),0);
+
+  $("resumoOrcamento").innerHTML = `
+    <div class="compact-row"><span>Receitas previstas no ano</span><strong class="money-income">${dinheiro(totalReceitas)}</strong></div>
+    <div class="compact-row"><span>Despesas previstas no ano</span><strong class="money-expense">${dinheiro(totalDespesas)}</strong></div>
+    <div class="compact-row"><span>Resultado previsto</span><strong>${dinheiro(totalReceitas-totalDespesas)}</strong></div>
+  `;
+}
+
+async function salvarValorOrcamento(input) {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc) return;
+
+  const planoId = Number(input.dataset.budgetPlan);
+  const mes = Number(input.dataset.budgetMonth);
+  const valor = Number(input.value || 0);
+  const existente = orcamentoItens.find(x =>
+    Number(x.orcamento_id) === Number(orc.id) &&
+    Number(x.plano_conta_id) === planoId &&
+    Number(x.mes) === mes
+  );
+
+  let resp;
+  if (existente) {
+    resp = await supabaseClient.from("fin_orcamento_itens")
+      .update({valor_previsto: valor})
+      .eq("id", existente.id)
+      .eq("user_id", usuarioAtual.id);
+  } else {
+    resp = await supabaseClient.from("fin_orcamento_itens").insert([{
+      user_id: usuarioAtual.id,
+      orcamento_id: orc.id,
+      plano_conta_id: planoId,
+      centro_custo_id: null,
+      mes,
+      valor_previsto: valor
+    }]);
+  }
+
+  input.classList.remove("saved","error");
+  if (resp.error) {
+    input.classList.add("error");
+    alert("Erro ao salvar orçamento: " + resp.error.message);
+    return;
+  }
+  input.classList.add("saved");
+  setTimeout(() => input.classList.remove("saved"), 900);
+  await carregarDados();
+}
+
+function renderComparativoOrcamento() {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc || !$("comparativoOrcamento")) return;
+
+  const mes = Number($("mesPlanejamento")?.value || (mesAtual+1));
+  const folhas = categoriasFolha();
+
+  const linhas = folhas.map(p => {
+    const previsto = valorOrcado(orc.id,p.id,mes);
+    const realizado = transacoes.filter(t => {
+      const d = referenciaData(t);
+      if (!d || t.status !== "efetivada") return false;
+      const [a,m] = d.split("-").map(Number);
+      return a === Number(orc.ano) && m === mes && Number(t.plano_conta_id) === Number(p.id);
+    }).reduce((s,t)=>s+Number(t.valor||0),0);
+    return {p,previsto,realizado,diferenca: previsto-realizado};
+  }).filter(x => x.previsto || x.realizado)
+    .sort((a,b)=>Math.max(b.previsto,b.realizado)-Math.max(a.previsto,a.realizado))
+    .slice(0,12);
+
+  $("comparativoOrcamento").innerHTML = linhas.length ? linhas.map(x => `
+    <div class="compact-row">
+      <div><strong>${escapeHTML(x.p.nome)}</strong><small>Previsto ${dinheiro(x.previsto)} · Realizado ${dinheiro(x.realizado)}</small></div>
+      <strong>${dinheiro(x.diferenca)}</strong>
+    </div>
+  `).join("") : `<div class="empty">Sem valores previstos ou realizados neste mês.</div>`;
+}
+
+async function excluirOrcamentoAtual() {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc) return alert("Nenhum orçamento selecionado.");
+  if (!confirm(`Excluir o orçamento "${orc.nome}" e todos os valores dele?`)) return;
+
+  const { error } = await supabaseClient.from("fin_orcamentos")
+    .delete().eq("id",orc.id).eq("user_id",usuarioAtual.id);
+  if (error) return alert("Erro: " + error.message);
+  orcamentoSelecionadoId = null;
+  await carregarDados();
+}
+
+function datasRelatorioPadrao() {
+  const ini = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-01`;
+  const ultimo = new Date(anoAtual,mesAtual+1,0).getDate();
+  const fim = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-${String(ultimo).padStart(2,"0")}`;
+  return {ini,fim};
+}
+
+function prepararFiltrosRelatorio() {
+  const contaSel = $("relConta");
+  if (!contaSel) return;
+
+  contaSel.innerHTML = `<option value="">Todas as contas</option>` +
+    contas.map(c => `<option value="${c.id}">${escapeHTML(c.nome)}</option>`).join("");
+
+  const pad = datasRelatorioPadrao();
+  if (!$("relDataIni").value) $("relDataIni").value = pad.ini;
+  if (!$("relDataFim").value) $("relDataFim").value = pad.fim;
+}
+
+function filtrarRelatorio() {
+  prepararFiltrosRelatorio();
+  const ini = $("relDataIni").value || "0000-01-01";
+  const fim = $("relDataFim").value || "9999-12-31";
+  const conta = $("relConta").value;
+  const tipo = $("relTipo").value;
+  const status = $("relStatus").value;
+
+  relatorioAtual = transacoes.filter(t => {
+    const d = referenciaData(t) || "";
+    if (d < ini || d > fim) return false;
+    if (conta && Number(t.conta_id) !== Number(conta)) return false;
+    if (tipo !== "todos" && t.tipo !== tipo) return false;
+    if (status !== "todos" && t.status !== status) return false;
+    return true;
+  });
+
+  return relatorioAtual;
+}
+
+function mostrarRelatorios() {
+  if (!$("relConta")) return;
+  const lista = filtrarRelatorio();
+  const receita = lista.filter(t => t.tipo === "receita").reduce((s,t)=>s+Number(t.valor||0),0);
+  const despesa = lista.filter(t => t.tipo === "despesa").reduce((s,t)=>s+Number(t.valor||0),0);
+
+  $("relReceitas").textContent = dinheiro(receita);
+  $("relDespesas").textContent = dinheiro(despesa);
+  $("resultadoMes").textContent = dinheiro(receita - despesa);
+
+  const grupos = {};
+  lista.forEach(t => {
+    const nome = idNome(planoContas,t.plano_conta_id,"Sem categoria");
+    const sinal = t.tipo === "receita" ? 1 : -1;
+    grupos[nome] = (grupos[nome] || 0) + sinal * Number(t.valor || 0);
+  });
+
+  const agrupado = Object.entries(grupos).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+  $("relatorioCategorias").innerHTML = agrupado.length ? agrupado.slice(0,15).map(([nome,valor]) => `
+    <div class="compact-row"><span>${escapeHTML(nome)}</span><strong class="${valor>=0?"money-income":"money-expense"}">${dinheiro(valor)}</strong></div>
+  `).join("") : `<div class="empty">Sem dados no período.</div>`;
+
+  $("relatorioMovimentacao").innerHTML = `
+    <div class="compact-row"><span>Quantidade de lançamentos</span><strong>${lista.length}</strong></div>
+    <div class="compact-row"><span>Receitas</span><strong class="money-income">${dinheiro(receita)}</strong></div>
+    <div class="compact-row"><span>Despesas</span><strong class="money-expense">${dinheiro(despesa)}</strong></div>
+    <div class="compact-row"><span>Resultado</span><strong>${dinheiro(receita-despesa)}</strong></div>
+  `;
+
+  $("tabelaRelatorio").innerHTML = lista.length ? lista.map(t => `
+    <tr>
+      <td>${dataBR(referenciaData(t))}</td>
+      <td>${escapeHTML(t.descricao)}</td>
+      <td>${escapeHTML(idNome(contas,t.conta_id,""))}</td>
+      <td>${escapeHTML(idNome(planoContas,t.plano_conta_id,"Sem categoria"))}</td>
+      <td><span class="status-pill ${escapeHTML(t.status)}">${escapeHTML(t.status)}</span></td>
+      <td class="right ${t.tipo==="receita"?"money-income":"money-expense"}">${t.tipo==="receita"?"+":"-"} ${dinheiro(t.valor)}</td>
+    </tr>
+  `).join("") : `<tr><td colspan="6"><div class="empty">Nenhum lançamento no período.</div></td></tr>`;
+}
+
+function exportarRelatorioCSV() {
+  const lista = filtrarRelatorio();
+  if (!lista.length) return alert("Não há dados para exportar.");
+
+  const linhas = [["Data","Descrição","Conta","Plano de conta","Tipo","Status","Valor"]];
+  lista.forEach(t => linhas.push([
+    referenciaData(t) || "",
+    t.descricao || "",
+    idNome(contas,t.conta_id,""),
+    idNome(planoContas,t.plano_conta_id,""),
+    t.tipo || "",
+    t.status || "",
+    Number(t.valor || 0).toFixed(2).replace(".",",")
+  ]));
+
+  const csv = linhas.map(l => l.map(v => `"${String(v).replaceAll('"','""')}"`).join(";")).join("\r\n");
+  const blob = new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `relatorio-financeiro-${hojeISO()}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// FORMULÁRIOS
+// ============================================================
+
+function tratarAbertura(tipo) {
+  if (tipo === "novaConta") return abrirFormularioConta();
+  if (tipo === "novaTransferencia") return abrirFormularioTransferencia();
+  if (tipo === "novaReceita") return abrirFormularioTransacao(null,"receita");
+  if (tipo === "novaDespesa") return abrirFormularioTransacao(null,"despesa");
+  if (tipo === "novaPessoa") return abrirFormularioPessoa();
+  if (tipo === "novoPlano") return abrirFormularioPlano();
+  if (tipo === "novoCentro") return abrirFormularioCentro();
+  if (tipo === "novaProgramacao") return abrirFormularioProgramacao();
+  if (tipo === "novoOrcamento") return abrirFormularioOrcamento();
+
+  if (tipo === "mobileNovo") {
+    abrirModal("Novo", `
+      <div class="mobile-more">
+        <button class="btn success" data-mobile-open="novaReceita">Receita</button>
+        <button class="btn danger" data-mobile-open="novaDespesa">Despesa</button>
+        <button class="btn" data-mobile-open="novaProgramacao">Programação</button>
+        <button class="btn" data-mobile-open="novaConta">Conta</button>
+        <button class="btn" data-mobile-open="novaTransferencia">Transferência</button>
+      </div>
+    `);
+    document.querySelectorAll("[data-mobile-open]").forEach(btn => {
+      btn.addEventListener("click", () => tratarAbertura(btn.dataset.mobileOpen));
+    });
+  }
+}
+
+function abrirFormularioConta(item = null) {
+  abrirModal(item ? "Editar conta" : "Nova conta", `
+    <form id="formConta" class="form-grid">
+      <div class="form-field full-span"><label>Nome</label><input id="contaNome" value="${escapeHTML(item?.nome || "")}" required></div>
+      <div class="form-field"><label>Tipo</label><select id="contaTipo">
+        ${["corrente","poupanca","dinheiro","cartao","investimento","carteira_digital","outro"].map(v => `<option value="${v}" ${item?.tipo===v?"selected":""}>${v}</option>`).join("")}
+      </select></div>
+      <div class="form-field"><label>Saldo inicial</label><input id="contaSaldo" type="number" step="0.01" value="${item?.saldo_inicial ?? 0}"></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="contaObs">${escapeHTML(item?.observacao || "")}</textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formConta").addEventListener("submit", async e => {
+    e.preventDefault();
+    const registro = {
+      user_id: usuarioAtual.id,
+      nome: $("contaNome").value.trim(),
+      tipo: $("contaTipo").value,
+      saldo_inicial: Number($("contaSaldo").value || 0),
+      observacao: $("contaObs").value.trim() || null,
+      ativo: true
+    };
+
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_contas").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_contas").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
+  const tipo = item?.tipo || tipoInicial;
+  abrirModal(item ? "Editar lançamento" : (tipo === "receita" ? "Nova receita" : "Nova despesa"), `
+    <form id="formTransacao" class="form-grid">
+      <div class="form-field full-span"><label>Descrição</label><input id="trDescricao" value="${escapeHTML(item?.descricao || "")}" required></div>
+      <div class="form-field"><label>Tipo</label><select id="trTipo">
+        <option value="receita" ${tipo==="receita"?"selected":""}>Receita</option>
+        <option value="despesa" ${tipo==="despesa"?"selected":""}>Despesa</option>
+      </select></div>
+      <div class="form-field"><label>Valor</label><input id="trValor" type="number" min="0" step="0.01" value="${item?.valor ?? ""}" required></div>
+      <div class="form-field"><label>Conta</label><select id="trConta" required>${optionLista(contas.filter(c=>c.ativo!==false),item?.conta_id)}</select></div>
+      <div class="form-field"><label>Situação</label><select id="trStatus">
+        <option value="efetivada" ${item?.status==="efetivada"?"selected":""}>Efetivada</option>
+        <option value="pendente" ${item?.status==="pendente"?"selected":""}>Pendente</option>
+        <option value="prevista" ${item?.status==="prevista"?"selected":""}>Prevista</option>
+      </select></div>
+      <div class="form-field"><label>Data lançamento</label><input id="trData" type="date" value="${item?.data_lancamento || hojeISO()}"></div>
+      <div class="form-field"><label>Data vencimento</label><input id="trVencimento" type="date" value="${item?.data_vencimento || hojeISO()}"></div>
+      <div class="form-field"><label>Plano de conta</label><select id="trPlano">${optionLista(planoContas,item?.plano_conta_id,"Sem categoria")}</select></div>
+      <div class="form-field"><label>Centro de custo</label><select id="trCentro">${optionLista(centrosCusto,item?.centro_custo_id,"Sem centro")}</select></div>
+      <div class="form-field"><label>Cliente / Fornecedor</label><select id="trPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select></div>
+      <div class="form-field"><label>Forma de pagamento</label><select id="trForma">${optionLista(formasPagamento,item?.forma_pagamento_id,"Nenhuma")}</select></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="trObs">${escapeHTML(item?.observacao || "")}</textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formTransacao").addEventListener("submit", async e => {
+    e.preventDefault();
+    const status = $("trStatus").value;
+    const registro = {
+      user_id: usuarioAtual.id,
+      conta_id: Number($("trConta").value),
+      pessoa_id: $("trPessoa").value ? Number($("trPessoa").value) : null,
+      plano_conta_id: $("trPlano").value ? Number($("trPlano").value) : null,
+      centro_custo_id: $("trCentro").value ? Number($("trCentro").value) : null,
+      forma_pagamento_id: $("trForma").value ? Number($("trForma").value) : null,
+      tipo: $("trTipo").value,
+      descricao: $("trDescricao").value.trim(),
+      valor: Number($("trValor").value || 0),
+      data_lancamento: $("trData").value,
+      data_vencimento: $("trVencimento").value || null,
+      data_efetivacao: status === "efetivada" ? $("trData").value : null,
+      status,
+      compensado: status === "efetivada",
+      observacao: $("trObs").value.trim() || null,
+      origem: item?.origem || "manual"
+    };
+
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_transacoes").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_transacoes").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioPessoa(item = null) {
+  abrirModal(item ? "Editar pessoa" : "Nova pessoa", `
+    <form id="formPessoa" class="form-grid">
+      <div class="form-field full-span"><label>Nome</label><input id="pNome" value="${escapeHTML(item?.nome || "")}" required></div>
+      <div class="form-field"><label>Papel</label><select id="pPapel">
+        <option value="cliente" ${item?.papel==="cliente"?"selected":""}>Cliente</option>
+        <option value="fornecedor" ${item?.papel==="fornecedor"?"selected":""}>Fornecedor</option>
+        <option value="ambos" ${item?.papel==="ambos"?"selected":""}>Ambos</option>
+      </select></div>
+      <div class="form-field"><label>Tipo</label><select id="pTipo">
+        <option value="fisica" ${item?.tipo_pessoa==="fisica"?"selected":""}>Pessoa Física</option>
+        <option value="juridica" ${item?.tipo_pessoa==="juridica"?"selected":""}>Pessoa Jurídica</option>
+      </select></div>
+      <div class="form-field"><label>Telefone</label><input id="pTelefone" value="${escapeHTML(item?.telefone || "")}"></div>
+      <div class="form-field"><label>E-mail</label><input id="pEmail" type="email" value="${escapeHTML(item?.email || "")}"></div>
+      <div class="form-field"><label>Cidade</label><input id="pCidade" value="${escapeHTML(item?.cidade || "")}"></div>
+      <div class="form-field"><label>Estado</label><input id="pEstado" maxlength="2" value="${escapeHTML(item?.estado || "")}"></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formPessoa").addEventListener("submit", async e => {
+    e.preventDefault();
+    const registro = {
+      user_id: usuarioAtual.id,
+      nome: $("pNome").value.trim(),
+      papel: $("pPapel").value,
+      tipo_pessoa: $("pTipo").value,
+      telefone: $("pTelefone").value.trim() || null,
+      email: $("pEmail").value.trim() || null,
+      cidade: $("pCidade").value.trim() || null,
+      estado: $("pEstado").value.trim().toUpperCase() || null,
+      ativo: true
+    };
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_pessoas").update(registro).eq("id", item.id).eq("user_id", usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_pessoas").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+async function excluirPessoa(id) {
+  if (!confirm("Excluir esta pessoa?")) return;
+  const { error } = await supabaseClient.from("fin_pessoas").delete().eq("id", id).eq("user_id", usuarioAtual.id);
+  if (error) return alert("Não foi possível excluir. Esta pessoa pode estar vinculada a lançamentos.\\n\\n" + error.message);
+  await carregarDados();
+}
+
+function abrirFormularioCadastroSimples(item = null) {
+  const nomeCadastro = NOMES_CADASTROS[categoriaTelaAtual] || "Cadastro";
+  const cfg = CONFIG_CADASTROS[categoriaTelaAtual] || CONFIG_CADASTROS.formas;
+  const titulos = {
+    cargos: ["Novo Cargo / Função", "Editar Cargo / Função"],
+    categorias_pessoas: ["Nova Categoria de Cliente / Fornecedor", "Editar Categoria de Cliente / Fornecedor"],
+    classificacao_pessoas: ["Nova Classificação de Cliente / Fornecedor", "Editar Classificação de Cliente / Fornecedor"],
+    estados: ["Novo Estado / Município", "Editar Estado / Município"],
+    bancos: ["Novo Banco", "Editar Banco"],
+    tipos_documento: ["Novo Tipo de Documento", "Editar Tipo de Documento"],
+    tipos_conta: ["Novo Tipo de Conta", "Editar Tipo de Conta"],
+    moedas: ["Nova Moeda", "Editar Moeda"],
+    formas: ["Novo Meio de Pagamento", "Editar Meio de Pagamento"]
+  };
+  const parTitulo = titulos[categoriaTelaAtual];
+  const titulo = parTitulo ? parTitulo[item ? 1 : 0] : (item ? `Editar ${nomeCadastro}` : `Novo ${nomeCadastro}`);
+
+  const camposHtml = cfg.campos.map((campo,idx) => {
+    const valor = item?.[campo.key] ?? "";
+    const type = campo.type || "text";
+    const attrs = [
+      campo.required ? "required" : "",
+      campo.maxlength ? `maxlength="${campo.maxlength}"` : "",
+      campo.step ? `step="${campo.step}"` : "",
+      campo.inputmode ? `inputmode="${campo.inputmode}"` : "",
+      idx === 0 ? "autofocus" : ""
+    ].filter(Boolean).join(" ");
+    return `<div class="form-field ${cfg.campos.length===1 ? "full-span" : ""}">
+      <label>${escapeHTML(campo.label)}</label>
+      <input id="cad_${campo.key}" type="${type}" value="${escapeHTML(valor)}" ${attrs}>
+    </div>`;
+  }).join("");
+
+  abrirModal(titulo, `
+    <form id="formCadastroSimples" class="form-grid">
+      ${camposHtml}
+      <div class="form-actions">
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">OK</button>
+      </div>
+    </form>`);
+
+  $("formCadastroSimples").addEventListener("submit", async e => {
+    e.preventDefault();
+    const registro = {};
+    for (const campo of cfg.campos) {
+      let valor = $(`cad_${campo.key}`).value.trim();
+      if (campo.type === "number" && valor !== "") valor = Number(valor);
+      if (campo.key === "sigla") valor = String(valor).toUpperCase();
+      registro[campo.key] = valor || (campo.type === "number" ? null : "");
+    }
+    const nomeKey = cfg.nomeKey || "nome";
+    registro.nome = String(registro[nomeKey] || registro.nome || "").trim();
+    if (!registro.nome) {
+      const mensagens = {
+        cargos: "Informe o Cargo.",
+        categorias_pessoas: "Informe a Categoria.",
+        classificacao_pessoas: "Informe o Potencial.",
+        estados: "Informe o Estado.",
+        bancos: "Informe o Banco.",
+        tipos_documento: "Informe o Tipo de Documento.",
+        tipos_conta: "Informe a Conta.",
+        moedas: "Informe o Nome da moeda.",
+        formas: "Informe o Nome do meio de pagamento."
+      };
+      return alert(mensagens[categoriaTelaAtual] || "Preencha o campo principal do cadastro.");
+    }
+
+    const tabelaCadastro = TABELAS_CADASTROS[categoriaTelaAtual];
+    if (!tabelaCadastro) return alert("Cadastro sem tabela configurada.");
+
+    const payload = {
+      ...registro,
+      user_id: usuarioAtual.id,
+      ordem: Number(item?.ordem || 0),
+      ativo: item?.ativo === false ? false : true
+    };
+
+    // Evita enviar a coluna auxiliar "nome" quando a tabela usa outro campo principal.
+    if (categoriaTelaAtual === "estados") delete payload.nome;
+    if (categoriaTelaAtual === "bancos") delete payload.nome;
+    if (categoriaTelaAtual === "tipos_documento") delete payload.nome;
+    if (categoriaTelaAtual === "tipos_conta") delete payload.nome;
+
+    let resp;
+    if (item) {
+      resp = await supabaseClient
+        .from(tabelaCadastro)
+        .update(payload)
+        .eq("id", item.id)
+        .eq("user_id", usuarioAtual.id);
+    } else {
+      resp = await supabaseClient
+        .from(tabelaCadastro)
+        .insert([payload])
+        .select("*")
+        .single();
+    }
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+
+    if (!item && resp.data?.id) categoriaSelecionadaId = resp.data.id;
+
+    fecharModal();
+    await carregarDados();
+  });
 }
 
 function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPreselecionado = null) {
   const todosDesc = item ? categoriaDescendentes(planoContas, item.id).map(x => Number(x.id)) : [];
-  const possiveisPais = planoContas.filter(x =>
-    !item ||
-    (Number(x.id) !== Number(item.id) && !todosDesc.includes(Number(x.id)))
+  const raizReceita = raizTipoPlano("receita");
+  const raizDespesa = raizTipoPlano("despesa");
+  const idsRaizes = [raizReceita?.id, raizDespesa?.id].filter(Boolean).map(Number);
+
+  // Para Subcategoria, usamos apenas categorias principais.
+  // A lista também será filtrada pelo grupo escolhido: Receita OU Despesa.
+  const paisPrincipais = planoContas.filter(x =>
+    idsRaizes.includes(Number(x.parent_id)) &&
+    (!item || (Number(x.id)!==Number(item.id) && !todosDesc.includes(Number(x.id))))
   );
 
-  const parentInicial = item ? item.parent_id : parentPreselecionado;
-  const tipoInicial = item?.tipo || tipoPreselecionado || "despesa";
-  const titulo = item ? "Editar Plano de Conta" : (parentPreselecionado ? "Nova Subcategoria" : "Novo Plano de Conta");
+  const paiAtual = item?.parent_id ? planoContas.find(x=>Number(x.id)===Number(item.parent_id)) : null;
+  const itemEhPrincipal = !!item && idsRaizes.includes(Number(item.parent_id));
+  const estruturaInicial = item ? (itemEhPrincipal ? "principal" : "sub") : (parentPreselecionado && !idsRaizes.includes(Number(parentPreselecionado)) ? "sub" : "principal");
+  const tipoInicial = item?.tipo || tipoPreselecionado || (paiAtual?.tipo) || "despesa";
+  const paiSubInicial = estruturaInicial === "sub" ? (item?.parent_id || parentPreselecionado || "") : "";
+  const titulo = item ? "Editar Plano de Conta" : "Novo Plano de Conta";
 
   abrirModal(titulo, `
     <form id="formPlano" class="form-grid">
-      ${parentPreselecionado ? `
-        <div class="form-field full-span">
-          <div class="cat-breadcrumb">Será criado dentro de: <strong>${escapeHTML(categoriaCaminho(planoContas, planoContas.find(x=>Number(x.id)===Number(parentPreselecionado))))}</strong></div>
-        </div>` : ""}
+      <div class="form-field full-span"><label>Nome</label><input id="pcNome" value="${escapeHTML(item?.nome || "")}" required autofocus></div>
 
-      <div class="form-field full-span">
-        <label>Nome</label>
-        <input id="pcNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
+      <div class="structure-choice">
+        <div class="structure-choice-title">Onde este plano de conta ficará?</div>
+        <div class="structure-radios">
+          <label><input type="radio" name="pcEstrutura" value="principal" ${estruturaInicial==="principal"?"checked":""}> Principal</label>
+          <label><input type="radio" name="pcEstrutura" value="sub" ${estruturaInicial==="sub"?"checked":""}> Subcategoria</label>
+        </div>
       </div>
 
-      <div class="form-field">
-        <label>Tipo</label>
+      <div id="pcPrincipalBox" class="form-field structure-dependent ${estruturaInicial==="principal"?"":"hidden"}">
+        <label>Grupo principal</label>
         <select id="pcTipo">
-          <option value="receita" ${tipoInicial==="receita"?"selected":""}>Receita</option>
-          <option value="despesa" ${tipoInicial==="despesa"?"selected":""}>Despesa</option>
+          <option value="receita" ${tipoInicial==="receita"?"selected":""}>Receitas</option>
+          <option value="despesa" ${tipoInicial==="despesa"?"selected":""}>Despesas</option>
         </select>
       </div>
 
-      <div class="form-field">
-        <label>Categoria superior</label>
-        <select id="pcPai">${optionLista(possiveisPais,parentInicial || "","Nenhuma - nível principal")}</select>
+      <div id="pcSubBox" class="form-field full-span structure-dependent ${estruturaInicial==="sub"?"":"hidden"}">
+        <label>Subcategoria de</label>
+        <select id="pcPai"></select>
       </div>
 
-      <div class="form-field">
-        <label>Ordem</label>
-        <input id="pcOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}">
-      </div>
+      <div class="form-field"><label>Ordem</label><input id="pcOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}"></div>
+      <div class="form-field"><label class="inline-check"><input id="pcAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}> Ativo</label></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>`);
 
-      <div class="form-field">
-        <label class="inline-check">
-          <input id="pcAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}>
-          Ativo
-        </label>
-      </div>
+  const atualizarPaisPlano = () => {
+    const tipoSelecionado = $("pcTipo").value;
+    const raizSelecionada = tipoSelecionado === "receita" ? raizReceita : raizDespesa;
 
-      <div class="form-actions">
-        <button type="button" class="btn" data-close-modal>Cancelar</button>
-        <button class="btn primary" type="submit">Salvar</button>
-      </div>
-    </form>
-  `);
+    const lista = paisPrincipais.filter(x => {
+      // Preferimos a relação com a raiz, e mantemos o tipo como segurança.
+      if (raizSelecionada) return Number(x.parent_id) === Number(raizSelecionada.id);
+      return x.tipo === tipoSelecionado;
+    });
+
+    const valorAtual = $("pcPai").value || String(paiSubInicial || "");
+    $("pcPai").innerHTML = optionLista(
+      lista,
+      valorAtual,
+      tipoSelecionado === "receita"
+        ? "Selecione uma categoria principal de Receitas"
+        : "Selecione uma categoria principal de Despesas"
+    );
+
+    // Se o valor anterior pertencia ao outro grupo, limpa a seleção.
+    if (valorAtual && !lista.some(x => Number(x.id) === Number(valorAtual))) {
+      $("pcPai").value = "";
+    }
+  };
+
+  const atualizarEstrutura = () => {
+    const sub = document.querySelector('input[name="pcEstrutura"]:checked')?.value === "sub";
+    $("pcPrincipalBox").classList.toggle("hidden", sub);
+    $("pcSubBox").classList.toggle("hidden", !sub);
+    if (sub) atualizarPaisPlano();
+  };
+
+  document.querySelectorAll('input[name="pcEstrutura"]').forEach(r=>r.addEventListener("change",atualizarEstrutura));
+  $("pcTipo").addEventListener("change", atualizarPaisPlano);
+
+  atualizarPaisPlano();
+  atualizarEstrutura();
 
   $("formPlano").addEventListener("submit", async e => {
     e.preventDefault();
+    const estrutura = document.querySelector('input[name="pcEstrutura"]:checked')?.value || "principal";
+    let parent_id = null;
+    let tipo = $("pcTipo").value;
 
-    const novoPai = $("pcPai").value ? Number($("pcPai").value) : null;
+    if (estrutura === "principal") {
+      let raiz = tipo === "receita" ? raizReceita : raizDespesa;
 
-    if (item && novoPai && (Number(novoPai) === Number(item.id) || todosDesc.includes(Number(novoPai)))) {
-      return alert("Uma categoria não pode ficar dentro dela mesma nem dentro de uma subcategoria dela.");
-    }
+      // As raízes Receitas/Despesas são estruturais e podem não existir
+      // quando o Plano de Contas foi deixado vazio. Nesse caso criamos
+      // automaticamente a raiz necessária, sem exibi-la como um cadastro comum.
+      if (!raiz) {
+        const nomeRaiz = tipo === "receita" ? "Receitas" : "Despesas";
+        const ordemRaiz = tipo === "receita" ? 1 : 2;
 
-    const registro = {
-      user_id: usuarioAtual.id,
-      parent_id: novoPai,
-      nome: $("pcNome").value.trim(),
-      tipo: $("pcTipo").value,
-      ordem: Number($("pcOrdem").value || 0),
-      ativo: $("pcAtivo").checked
-    };
+        const { data: raizCriada, error: erroRaiz } = await supabaseClient
+          .from("fin_plano_contas")
+          .insert([{
+            user_id: usuarioAtual.id,
+            parent_id: null,
+            nome: nomeRaiz,
+            tipo,
+            ordem: ordemRaiz,
+            ativo: true
+          }])
+          .select("*")
+          .single();
 
-    let resp;
-    if (item) {
-      resp = await supabaseClient.from("fin_plano_contas")
-        .update(registro)
-        .eq("id", item.id)
-        .eq("user_id", usuarioAtual.id);
+        if (erroRaiz) return alert("Erro ao preparar o grupo " + nomeRaiz + ": " + erroRaiz.message);
+
+        raiz = raizCriada;
+        planoContas.push(raizCriada);
+      }
+
+      parent_id = raiz.id;
     } else {
-      resp = await supabaseClient.from("fin_plano_contas").insert([registro]).select("*").single();
+      parent_id = $("pcPai").value ? Number($("pcPai").value) : null;
+      if (!parent_id) return alert("Selecione de qual plano de conta este item será subcategoria.");
+      if (item && (Number(parent_id)===Number(item.id) || todosDesc.includes(Number(parent_id)))) return alert("Não é possível colocar uma categoria dentro dela mesma ou de uma subcategoria dela.");
+      const pai = planoContas.find(x=>Number(x.id)===Number(parent_id));
+      if (!pai) return alert("Plano de conta principal não encontrado.");
+      tipo = pai.tipo;
     }
 
+    const registro = {user_id:usuarioAtual.id,parent_id,nome:$("pcNome").value.trim(),tipo,ordem:Number($("pcOrdem").value||0),ativo:$("pcAtivo").checked};
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_plano_contas").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_plano_contas").insert([registro]).select("*").single();
     if (resp.error) return alert("Erro: " + resp.error.message);
-
-    if (!item && resp.data?.id) {
-      categoriaSelecionadaId = resp.data.id;
-      if (registro.parent_id) categoriaExpandidos.add(`plano:${registro.parent_id}`);
-    }
-
+    if (!item && resp.data?.id) categoriaSelecionadaId = resp.data.id;
+    categoriaExpandidos.add(`plano:${parent_id}`);
     fecharModal();
     await carregarDados();
   });
+}
+
+function lerMetaCentro(item) {
+  if (!item?.observacao) return {responsavel:"",telefone:"",ramal:""};
+  try {
+    const j = JSON.parse(item.observacao);
+    return {responsavel:j.responsavel||"",telefone:j.telefone||"",ramal:j.ramal||""};
+  } catch(e) {
+    return {responsavel:"",telefone:"",ramal:""};
+  }
 }
 
 function abrirFormularioCentro(item = null, parentPreselecionado = null) {
   const todosDesc = item ? categoriaDescendentes(centrosCusto, item.id).map(x => Number(x.id)) : [];
-  const possiveisPais = centrosCusto.filter(x =>
-    !item ||
-    (Number(x.id) !== Number(item.id) && !todosDesc.includes(Number(x.id)))
-  );
 
-  const parentInicial = item ? item.parent_id : parentPreselecionado;
-  const titulo = item ? "Editar Centro de Custo" : (parentPreselecionado ? "Novo Subcentro" : "Novo Centro de Custo");
+  // Ao criar uma Subcategoria, permitir como pai SOMENTE centros principais.
+  // Centros principais são os que não possuem parent_id.
+  const paisPossiveis = centrosCusto.filter(x =>
+    x.parent_id == null &&
+    (!item || (Number(x.id)!==Number(item.id) && !todosDesc.includes(Number(x.id))))
+  );
+  const estruturaInicial = item ? (item.parent_id ? "sub" : "principal") : (parentPreselecionado ? "sub" : "principal");
+  const paiInicial = item?.parent_id || parentPreselecionado || "";
+  const titulo = item ? "Editar Centro de Custo" : "Novo Centro de Custo";
+  const meta = lerMetaCentro(item);
 
   abrirModal(titulo, `
     <form id="formCentro" class="form-grid">
-      ${parentPreselecionado ? `
-        <div class="form-field full-span">
-          <div class="cat-breadcrumb">Será criado dentro de: <strong>${escapeHTML(categoriaCaminho(centrosCusto, centrosCusto.find(x=>Number(x.id)===Number(parentPreselecionado))))}</strong></div>
-        </div>` : ""}
+      <div class="form-field full-span"><label>Nome</label><input id="ccNome" value="${escapeHTML(item?.nome || "")}" required autofocus></div>
 
-      <div class="form-field full-span">
-        <label>Nome</label>
-        <input id="ccNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
+      <div class="structure-choice">
+        <div class="structure-choice-title">Onde este centro de custo ficará?</div>
+        <div class="structure-radios">
+          <label><input type="radio" name="ccEstrutura" value="principal" ${estruturaInicial==="principal"?"checked":""}> Principal</label>
+          <label><input type="radio" name="ccEstrutura" value="sub" ${estruturaInicial==="sub"?"checked":""}> Subcategoria</label>
+        </div>
       </div>
 
-      <div class="form-field">
-        <label>Centro superior</label>
-        <select id="ccPai">${optionLista(possiveisPais,parentInicial || "","Nenhum - nível principal")}</select>
+      <div id="ccSubBox" class="form-field full-span structure-dependent ${estruturaInicial==="sub"?"":"hidden"}">
+        <label>Subcategoria de</label>
+        <select id="ccPai">${optionLista(paisPossiveis,paiInicial,"Selecione um centro de custo principal")}</select>
       </div>
 
-      <div class="form-field">
-        <label>Ordem</label>
-        <input id="ccOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}">
+      <div class="form-field"><label>Responsável</label><input id="ccResponsavel" value="${escapeHTML(meta.responsavel)}"></div>
+      <div class="form-field"><label>Telefone</label><input id="ccTelefone" value="${escapeHTML(meta.telefone)}"></div>
+      <div class="form-field"><label>Ramal</label><input id="ccRamal" value="${escapeHTML(meta.ramal)}"></div>
+      <div class="form-field"><label>Ordem</label><input id="ccOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}"></div>
+      <div class="form-field"><label class="inline-check"><input id="ccAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}> Ativo</label></div>
+
+      <div class="centro-history">
+        <div class="centro-history-title">Histórico de Lançamentos</div>
+        <div class="centro-history-body">
+          ${item ? (()=>{
+            const movs = transacoes.filter(t=>Number(t.centro_custo_id)===Number(item.id)).slice(0,20);
+            if (!movs.length) return `<div class="centro-history-empty">Nenhum item para ser exibido.</div>`;
+            return `<table class="centro-history-table"><thead><tr><th>Data</th><th>Histórico</th><th>Valor</th></tr></thead><tbody>${movs.map(t=>`<tr><td>${dataBR(referenciaData(t))}</td><td>${escapeHTML(t.descricao||"")}</td><td>${dinheiro(t.valor)}</td></tr>`).join("")}</tbody></table>`;
+          })() : `<div class="centro-history-empty">Nenhum item para ser exibido.</div>`}
+        </div>
       </div>
 
-      <div class="form-field">
-        <label class="inline-check">
-          <input id="ccAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}>
-          Ativo
-        </label>
-      </div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">OK</button></div>
+    </form>`);
 
-      <div class="form-actions">
-        <button type="button" class="btn" data-close-modal>Cancelar</button>
-        <button class="btn primary" type="submit">Salvar</button>
-      </div>
-    </form>
-  `);
+  const atualizarEstrutura = () => {
+    const sub = document.querySelector('input[name="ccEstrutura"]:checked')?.value === "sub";
+    $("ccSubBox").classList.toggle("hidden", !sub);
+  };
+  document.querySelectorAll('input[name="ccEstrutura"]').forEach(r=>r.addEventListener("change",atualizarEstrutura));
+  atualizarEstrutura();
 
   $("formCentro").addEventListener("submit", async e => {
     e.preventDefault();
-
-    const novoPai = $("ccPai").value ? Number($("ccPai").value) : null;
-
-    if (item && novoPai && (Number(novoPai) === Number(item.id) || todosDesc.includes(Number(novoPai)))) {
-      return alert("Um centro de custo não pode ficar dentro dele mesmo nem dentro de um subcentro dele.");
+    const estrutura = document.querySelector('input[name="ccEstrutura"]:checked')?.value || "principal";
+    let parent_id = null;
+    if (estrutura === "sub") {
+      parent_id = $("ccPai").value ? Number($("ccPai").value) : null;
+      if (!parent_id) return alert("Selecione de qual centro de custo este item será subcategoria.");
+      if (item && (Number(parent_id)===Number(item.id) || todosDesc.includes(Number(parent_id)))) return alert("Não é possível colocar um centro dentro dele mesmo ou de um subcentro dele.");
     }
 
     const registro = {
-      user_id: usuarioAtual.id,
-      parent_id: novoPai,
-      nome: $("ccNome").value.trim(),
-      ordem: Number($("ccOrdem").value || 0),
-      ativo: $("ccAtivo").checked
+      user_id:usuarioAtual.id,
+      parent_id,
+      nome:$("ccNome").value.trim(),
+      ordem:Number($("ccOrdem").value||0),
+      ativo:$("ccAtivo").checked,
+      observacao:JSON.stringify({
+        responsavel:$("ccResponsavel").value.trim(),
+        telefone:$("ccTelefone").value.trim(),
+        ramal:$("ccRamal").value.trim()
+      })
     };
-
     let resp;
-    if (item) {
-      resp = await supabaseClient.from("fin_centros_custo")
-        .update(registro)
-        .eq("id", item.id)
-        .eq("user_id", usuarioAtual.id);
-    } else {
-      resp = await supabaseClient.from("fin_centros_custo").insert([registro]).select("*").single();
-    }
-
+    if (item) resp = await supabaseClient.from("fin_centros_custo").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_centros_custo").insert([registro]).select("*").single();
     if (resp.error) return alert("Erro: " + resp.error.message);
-
-    if (!item && resp.data?.id) {
-      categoriaSelecionadaId = resp.data.id;
-      if (registro.parent_id) categoriaExpandidos.add(`centro:${registro.parent_id}`);
-    }
-
+    if (!item && resp.data?.id) categoriaSelecionadaId = resp.data.id;
+    if (parent_id) categoriaExpandidos.add(`centro:${parent_id}`);
     fecharModal();
     await carregarDados();
-  });
-}
-
-function abrirFormularioCadastroSimples(item = null) {
-  const titulo = item ? `Editar ${categoriaNomeTela()}` : `Novo em ${categoriaNomeTela()}`;
-
-  abrirModal(titulo, `
-    <form id="formCadastroSimples" class="form-grid">
-      <div class="form-field full-span">
-        <label>Nome</label>
-        <input id="cadNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
-      </div>
-
-      <div class="form-field">
-        <label>Ordem</label>
-        <input id="cadOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}">
-      </div>
-
-      <div class="form-field">
-        <label class="inline-check">
-          <input id="cadAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}>
-          Ativo
-        </label>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn" data-close-modal>Cancelar</button>
-        <button class="btn primary" type="submit">Salvar</button>
-      </div>
-    </form>
-  `);
-
-  $("formCadastroSimples").addEventListener("submit", async e => {
-    e.preventDefault();
-
-    const registro = {
-      nome: $("cadNome").value.trim(),
-      ordem: Number($("cadOrdem").value || 0),
-      ativo: $("cadAtivo").checked
-    };
-
-    if (!registro.nome) return alert("Informe o nome.");
-
-    if (categoriaTelaAtual === "formas") {
-      const payload = {
-        user_id: usuarioAtual.id,
-        nome: registro.nome,
-        ordem: registro.ordem,
-        ativo: registro.ativo
-      };
-
-      let resp;
-      if (item) {
-        resp = await supabaseClient.from("fin_formas_pagamento")
-          .update(payload)
-          .eq("id", item.id)
-          .eq("user_id", usuarioAtual.id);
-      } else {
-        resp = await supabaseClient.from("fin_formas_pagamento").insert([payload]).select("*").single();
-      }
-
-      if (resp.error) return alert("Erro: " + resp.error.message);
-      if (!item && resp.data?.id) categoriaSelecionadaId = resp.data.id;
-      fecharModal();
-      await carregarDados();
-      return;
-    }
-
-    const lista = [...(cadastrosExtras[categoriaTelaAtual] || [])];
-    if (item) {
-      const idx = lista.findIndex(x => Number(x.id) === Number(item.id));
-      if (idx >= 0) lista[idx] = { ...lista[idx], ...registro };
-      categoriaSelecionadaId = item.id;
-    } else {
-      const novo = { id: Date.now(), ...registro };
-      lista.push(novo);
-      categoriaSelecionadaId = novo.id;
-    }
-
-    cadastrosExtras[categoriaTelaAtual] = lista;
-    salvarCadastrosExtrasLocal();
-    fecharModal();
-    mostrarGerenciadorCategorias();
   });
 }
 
@@ -2409,6 +3124,9 @@ $("catBtnNovoRaiz")?.addEventListener("click", abrirNovaCategoriaRaiz);
 $("catBtnNovoFilho")?.addEventListener("click", abrirNovoFilhoCategoria);
 $("catBtnEditar")?.addEventListener("click", abrirEdicaoCategoriaAtual);
 $("catBtnExcluir")?.addEventListener("click", excluirCategoriaAtual);
+$("catRibbonNovo")?.addEventListener("click", abrirNovaCategoriaRaiz);
+$("catRibbonEditar")?.addEventListener("click", abrirEdicaoCategoriaAtual);
+$("catRibbonExcluir")?.addEventListener("click", excluirCategoriaAtual);
 
 // ============================================================
 // INÍCIO
