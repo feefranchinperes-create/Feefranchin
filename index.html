@@ -865,6 +865,434 @@ body.principal-mode .ribbon-programacao{display:none!important}
   border-color:#97b9d9;
 }
 
+
+/* V46 - MOBILE RESPONSIVO */
+.mobile-topbar,.mobile-page-actions,.mobile-account-selector,.mobile-home-summary{display:none}
+
+@media(max-width:980px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .app{min-height:100dvh}
+  .mobile-topbar{
+    position:sticky;top:0;z-index:650;min-height:54px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:7px 12px;background:#fff;border-bottom:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(31,48,70,.06)
+  }
+  .mobile-topbar-brand{min-width:0}
+  .mobile-topbar-brand strong{display:block;font-size:15px;line-height:1.15}
+  .mobile-topbar-brand span{display:block;margin-top:2px;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mobile-topbar-menu{width:38px;height:38px;border:0;border-radius:50%;background:#f0f4f8;color:#415168;font-size:22px}
+
+  .app-shell{padding-bottom:calc(70px + env(safe-area-inset-bottom));min-height:0}
+  .content{width:100%;max-width:100%;overflow-x:hidden}
+  .page{width:100%;max-width:100%;padding:10px 10px 16px;overflow-x:hidden}
+
+  .mobile-nav{
+    height:calc(64px + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -3px 14px rgba(23,42,66,.08)
+  }
+  .mobile-item{min-width:0;padding:3px 2px;-webkit-tap-highlight-color:transparent}
+  .mobile-item span{font-size:9px;max-width:70px;overflow:hidden;text-overflow:ellipsis}
+
+  .mobile-page-actions{
+    display:flex;gap:7px;overflow-x:auto;padding:2px 0 9px;margin-bottom:5px;scrollbar-width:none
+  }
+  .mobile-page-actions::-webkit-scrollbar{display:none}
+  .mobile-action{
+    flex:0 0 auto;min-height:38px;border:1px solid #c7d0da;border-radius:8px;
+    padding:7px 11px;background:#fff;color:#334155;font-size:11px;white-space:nowrap
+  }
+  .mobile-action.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  .mobile-action.success{background:var(--green);border-color:var(--green);color:#fff}
+  .mobile-action.danger{background:var(--red);border-color:var(--red);color:#fff}
+  .mobile-action.danger-outline{color:var(--red);border-color:#e2aaaa}
+  .mobile-action:disabled{opacity:.38}
+
+  /* Principal */
+  .legacy-home-page{padding:10px!important;background:#f3f6f9!important}
+  .mobile-home-summary{display:block;margin-bottom:10px}
+  .mobile-home-balance{
+    background:linear-gradient(135deg,#2d5f9f,#467dbb);color:#fff;border-radius:14px;
+    padding:15px 16px;margin-bottom:9px;box-shadow:0 5px 16px rgba(45,95,159,.2)
+  }
+  .mobile-home-balance span{font-size:11px;opacity:.82}
+  .mobile-home-balance strong{display:block;margin-top:3px;font-size:27px}
+  .mobile-account-strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .mobile-account-strip::-webkit-scrollbar{display:none}
+  .mobile-account-chip{
+    flex:0 0 145px;background:#fff;border:1px solid var(--line);border-radius:11px;
+    padding:10px;text-align:left
+  }
+  .mobile-account-chip strong{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mobile-account-chip small{display:block;color:var(--muted);font-size:10px;margin:2px 0 7px}
+  .mobile-account-chip b{font-size:13px;color:var(--blue)}
+  .legacy-home-top{grid-template-columns:1fr!important;min-height:auto}
+  .legacy-home-panel{border:1px solid var(--line)!important;border-radius:12px;margin-bottom:10px;overflow:hidden}
+  .legacy-home-forecast{border:1px solid var(--line)!important;border-radius:12px;margin-bottom:10px;min-height:auto}
+  .legacy-chart-bars{height:170px;padding-top:10px}
+  .legacy-donut-wrap{min-height:170px;padding:14px 8px}
+  .legacy-home-bottom{grid-template-columns:1fr!important}
+  .legacy-balance-box{display:none}
+  .legacy-programacao-box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+  .legacy-programacao-cols{justify-content:space-around;gap:20px;padding:0 4px 8px}
+  .forecast-chart{height:180px;margin:4px 9px 8px}
+
+  /* Lançamentos */
+  #lancamentos .page-heading{margin-bottom:7px}
+  .mobile-account-selector{
+    display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 8px;align-items:center;
+    padding:9px;margin:0 0 9px;background:#fff;border:1px solid var(--line);border-radius:10px
+  }
+  .mobile-account-selector label{font-size:10px;color:var(--muted);grid-column:1/-1}
+  .mobile-account-selector select{height:36px;padding:5px 8px}
+  .mobile-account-selector strong{text-align:right;font-size:13px;color:var(--blue)}
+  #lancamentos .launch-account-header{display:none}
+  .launch-filter-search input{height:36px}
+  .launch-filter-controls{justify-content:flex-start!important;flex-wrap:wrap;border:1px solid var(--line);border-radius:9px;background:#fff;padding:7px;gap:7px 10px}
+  .launch-filter-controls label{flex:1 1 145px}
+  .launch-filter-controls select{width:100%;min-width:0!important;height:34px}
+  .launch-filter-check{flex:1 1 100%!important}
+
+  /* Tables */
+  .table-wrap,.legacy-data-wrap{width:100%;max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+  .table-wrap table{min-width:720px}
+  .table-wrap th{position:sticky;top:0;z-index:1}
+
+  /* Programação */
+  .programacao-page{padding:8px 8px 15px!important;background:#f3f6f9!important}
+  .programacao-layout{min-height:auto!important;display:flex!important;flex-direction:column!important;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .programacao-main{order:2;overflow:auto}
+  .programacao-side{order:1;border-left:0!important;border-bottom:1px solid var(--line);padding:7px;background:#fff}
+  .programacao-side-search{padding:0 0 6px}
+  .programacao-side-search input{height:36px;font-size:12px}
+  .programacao-filter-title{display:none}
+  .programacao-side .programacao-filter-item{display:inline-flex;width:auto;border:1px solid var(--line);border-radius:999px;padding:6px 10px;margin:2px 3px 2px 0;background:#fff}
+  .programacao-filter-new{display:none!important}
+  .programacao-table{min-width:720px}
+
+  /* Categorias */
+  body.categories-mode #categorias.page{padding:8px!important}
+  .category-legacy-shell{min-height:0;border-radius:10px;overflow:hidden}
+  .category-legacy-grid{min-height:0!important}
+  .legacy-category-left{max-height:235px;overflow:auto;border-right:0!important;border-bottom:1px solid var(--line)}
+  .legacy-category-right{min-height:320px}
+  .legacy-plan-view{grid-template-columns:1fr!important}
+  .legacy-plan-column{min-height:220px}
+  .legacy-data-table{min-width:520px}
+
+  /* Outras telas */
+  .cards-grid{grid-template-columns:1fr!important}
+  .summary-grid{grid-template-columns:1fr 1fr!important}
+  .report-filters{grid-template-columns:1fr!important}
+  .account-card,.simple-card,.summary-card,.panel{border-radius:11px}
+  #pessoas .table-wrap table,#relatorios .table-wrap table{min-width:680px}
+
+  /* Modais mobile fullscreen */
+  .modal{padding:0!important;align-items:stretch!important;place-items:stretch!important}
+  .modal-card{
+    width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;
+    border-radius:0!important;display:flex;flex-direction:column;overflow:hidden!important
+  }
+  .modal-head{flex:0 0 auto;min-height:52px;padding:10px 12px}
+  .modal-head h2{font-size:16px}
+  .modal-body{flex:1 1 auto;min-height:0;overflow:auto!important;overflow-x:hidden!important;padding:12px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+  .form-actions,.prog-actions,.account-form-actions{
+    position:sticky!important;bottom:0!important;z-index:5;background:#fff;border-top:1px solid var(--line);
+    padding:10px 0 calc(6px + env(safe-area-inset-bottom))!important;margin-top:12px!important
+  }
+
+  .launch-form{grid-template-columns:1fr!important}
+  .launch-form .span-2,.launch-form .span-3,.launch-form .span-4{grid-column:1/-1!important}
+  .launch-check{padding-top:3px}
+  .split-box{padding:8px}
+  .split-table{min-width:640px}
+
+  .account-config-form{width:100%!important;min-width:0!important}
+  .account-config-grid{grid-template-columns:1fr!important}
+  .account-balance-box{width:100%!important}
+  .account-row{grid-template-columns:1fr!important;gap:3px!important}
+  .account-row label{text-align:left!important}
+  .account-options label{font-size:11px}
+
+  .prog-form{min-width:0!important;width:100%!important}
+  .prog-grid{grid-template-columns:1fr!important;gap:8px}
+  .prog-section-title{grid-column:1/-1}
+  .prog-field,.prog-field.full{grid-column:1/-1!important;grid-template-columns:1fr!important;gap:3px!important}
+  .prog-field label{text-align:left!important}
+  .prog-tabs{overflow-x:auto}
+  .prog-tab{white-space:nowrap}
+
+  button,.btn,.mini-btn{min-height:38px}
+  .mini-btn{padding:7px 9px}
+  input,select,textarea{font-size:16px}
+}
+
+@media(max-width:560px){
+  .page{padding:8px 8px 14px}
+  .page-heading h1{font-size:18px}
+  .page-heading p{font-size:11px}
+  .summary-grid{grid-template-columns:1fr 1fr!important}
+  .summary-card{padding:10px}
+  .summary-card strong{font-size:17px}
+  .legacy-donut-wrap{flex-direction:column}
+  .legacy-programacao-cols{gap:10px}
+  .mobile-action{padding:7px 10px}
+}
+@media(max-width:390px){
+  .summary-grid{grid-template-columns:1fr!important}
+  .mobile-item span{font-size:8px}
+  .mobile-account-chip{flex-basis:132px}
+}
+
+
+/* V47 - Home mobile inspirada no modelo enviado */
+.mobile-home-dashboard{display:none}
+
+@media(max-width:980px){
+  .mobile-home-summary{display:none!important}
+  .mobile-home-dashboard{display:block}
+
+  .legacy-home-top,
+  .legacy-home-forecast,
+  .legacy-home-bottom{display:none!important}
+
+  .legacy-home-page{
+    padding:0 0 calc(86px + env(safe-area-inset-bottom))!important;
+    background:#f4f7fb!important;
+  }
+
+  .mob-blue-hero{
+    margin:-10px -10px 12px;
+    padding:11px 18px 22px;
+    background:#238ee2;
+    color:#fff;
+    border-radius:0 0 18px 18px;
+  }
+  .mob-month-nav{
+    display:grid;grid-template-columns:44px 1fr 44px;align-items:center;
+    text-align:center;margin-bottom:17px;
+  }
+  .mob-month-nav button{
+    border:0;background:transparent;color:#fff;font-size:36px;line-height:1;min-height:40px;
+  }
+  .mob-month-nav strong{font-size:20px;font-weight:500}
+  .mob-balance-row{
+    display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:6px;align-items:end;text-align:center
+  }
+  .mob-balance-row div{opacity:.7}
+  .mob-balance-row div.principal{opacity:1}
+  .mob-balance-row span,.mob-balance-row small{display:block;font-size:11px}
+  .mob-balance-row strong{display:block;font-size:28px;font-weight:500;white-space:nowrap}
+  .mob-balance-line{
+    display:grid;grid-template-columns:repeat(7,1fr);align-items:center;margin:34px 12px 4px;
+    position:relative
+  }
+  .mob-balance-line:before{
+    content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:#ffd178
+  }
+  .mob-balance-line span{
+    width:10px;height:10px;background:#ffd178;border-radius:50%;margin:auto;position:relative;z-index:1
+  }
+  .mob-balance-dates{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;opacity:.65}
+  .mob-balance-dates small{font-size:9px}
+
+  .mob-search-card{
+    width:calc(100% - 24px);margin:0 12px 12px;padding:13px 14px;
+    border:1px solid #e2e7ee;border-radius:26px;background:#fff;
+    display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;
+    text-align:left;color:#6f7780;font-size:13px
+  }
+
+  .mob-card{
+    margin:0 12px 12px;padding:14px 14px 16px;background:#fff;
+    border:1px solid #e1e7ee;border-radius:22px;
+  }
+  .mob-card-title{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin-bottom:12px;font-size:18px
+  }
+  .mob-card-title strong{font-weight:500}
+  .mob-card-title span{color:#777}
+
+  .mob-overview-row,
+  .mob-status-row{
+    display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:8px;
+    min-height:54px
+  }
+  .mob-overview-row span,.mob-status-row span{font-size:15px}
+  .mob-overview-row b,.mob-status-row b{font-size:14px;font-weight:500}
+  .mob-icon{
+    width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+    color:#fff;font-style:normal;font-size:20px
+  }
+  .mob-icon.blue{background:#258fe4}.mob-icon.green{background:#1aaa67}
+  .mob-icon.red{background:#e44b3d}.mob-icon.amber{background:#f4b400}
+
+  .mob-account-list{display:grid;gap:4px}
+  .mob-account-chip{
+    flex:none!important;width:100%!important;border:0!important;border-radius:0!important;
+    display:grid!important;grid-template-columns:42px 1fr auto;gap:8px;align-items:center;
+    padding:7px 0!important;background:transparent!important
+  }
+  .mob-account-chip:before{
+    content:"🏦";width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;background:#258fe4;color:#fff;font-size:18px
+  }
+  .mob-account-chip strong{font-size:15px!important}
+  .mob-account-chip small{margin:0!important}
+  .mob-account-chip b{font-size:14px!important;color:#222!important}
+  .mob-total-row{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:9px;padding:12px 12px;background:#f8fafc;border-radius:14px
+  }
+  .mob-total-row strong,.mob-total-row b{font-size:14px}
+
+  .mob-economy-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+  .mob-gauge-wrap{text-align:center}
+  .mob-gauge{
+    width:116px;height:72px;margin:0 auto 10px;
+    border-radius:116px 116px 0 0;
+    border:16px solid #ddd;border-bottom:0;
+    display:flex;align-items:flex-end;justify-content:center
+  }
+  .mob-gauge strong{font-size:28px;font-weight:500;transform:translateY(11px)}
+  .mob-gauge-wrap>b{display:block;font-size:22px;color:#777;margin-top:12px}
+  .mob-gauge-wrap small{color:#777}
+  .mob-economy-values{display:grid;gap:3px}
+  .mob-economy-values span{color:#777;font-size:12px;margin-top:7px}
+  .mob-economy-values b{font-size:17px}
+  .green-text{color:#12a05b}.red-text{color:#d94a41}
+
+  .mob-expense-list{display:grid}
+  .mob-expense-row{
+    display:grid;grid-template-columns:12px 38px 1fr auto;gap:8px;align-items:center;
+    padding:7px 0;border-bottom:1px solid #f0f1f3
+  }
+  .mob-expense-row:last-child{border-bottom:0}
+  .mob-expense-dot{width:8px;height:8px;border-radius:50%;background:#17a66c}
+  .mob-expense-dot.red{background:#e24a41}
+  .mob-expense-icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#15aebe;color:#fff}
+  .mob-expense-main strong{display:block;font-size:14px}
+  .mob-expense-main small{display:block;color:#777;font-size:11px}
+  .mob-expense-value{text-align:right}
+  .mob-expense-value b{display:block;font-size:13px;font-weight:500}
+  .mob-expense-value small{display:block;color:#777;font-size:10px}
+
+  .mob-pie-wrap{display:grid;place-items:center;gap:12px}
+  .mob-pie{
+    width:215px;height:215px;border-radius:50%;
+    background:conic-gradient(#d9d9d9 0 35%,#cfcfcf 35% 62%,#e4e4e4 62% 82%,#c7c7c7 82% 100%)
+  }
+  .mob-pie-legenda{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:10px;color:#777}
+
+  .mob-dot{
+    width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+    color:#fff;font-style:normal;font-size:11px
+  }
+  .mob-dot.green{background:#18a964}.mob-dot.amber{background:#f3b400}
+  .mob-dot.red{background:#e44b3d}.mob-dot.gray{background:#a1a1a1}
+
+  .mob-health{text-align:center}
+  .mob-health>strong{display:block;font-size:19px;max-width:320px;margin:10px auto 3px}
+  .mob-health p{color:#777;max-width:360px;margin:0 auto 15px;font-size:12px}
+  .mob-health-radar{
+    width:270px;height:250px;margin:0 auto;position:relative;
+    border:1px solid #edf0f3;border-radius:22px;background:#fff
+  }
+  .mob-health-radar span{position:absolute;font-size:11px}
+  .mob-health-radar .top{top:16px;left:50%;transform:translateX(-50%)}
+  .mob-health-radar .right{right:14px;top:92px}
+  .mob-health-radar .bottom-right{right:16px;bottom:24px}
+  .mob-health-radar .bottom-left{left:38px;bottom:24px}
+  .mob-health-radar .left{left:20px;top:92px}
+  .radar-shape{
+    position:absolute;left:50%;top:51%;width:132px;height:132px;transform:translate(-50%,-50%) rotate(45deg);
+    border:1px solid #e5e8ec;background:linear-gradient(135deg,transparent 48%,#eef1f4 49% 51%,transparent 52%)
+  }
+  .radar-shape:before,.radar-shape:after{
+    content:"";position:absolute;inset:22px;border:1px solid #edf0f3
+  }
+  .radar-shape:after{inset:44px}
+
+  .mob-fab{
+    position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom));
+    width:58px;height:58px;border-radius:50%;border:0;background:#238ee2;color:#fff;
+    font-size:34px;line-height:1;z-index:620;box-shadow:0 7px 20px rgba(0,0,0,.25)
+  }
+}
+
+
+/* V48 - Detalhamento mobile Inicial / Saldo / Previsto */
+.mob-balance-action{
+  border:0;background:transparent;color:inherit;padding:0 2px;min-height:0!important;
+  text-align:center;cursor:pointer;opacity:.7
+}
+.mob-balance-action.principal{opacity:1}
+.mob-balance-action:active{transform:scale(.98)}
+.mob-balance-action span,.mob-balance-action small{display:block}
+.mob-balance-action strong{display:block}
+
+.mobile-balance-sheet-backdrop{
+  position:fixed;inset:0;z-index:1400;background:rgba(0,0,0,.58);
+  display:flex;align-items:flex-end;justify-content:center
+}
+.mobile-balance-sheet-backdrop.hidden{display:none!important}
+.mobile-balance-sheet{
+  width:100%;max-height:78dvh;background:#fff;border-radius:22px 22px 0 0;
+  box-shadow:0 -8px 28px rgba(0,0,0,.18);overflow:hidden
+}
+.mobile-sheet-handle{width:42px;height:5px;border-radius:999px;background:#d5d7db;margin:10px auto 3px}
+.mobile-sheet-scroll{max-height:calc(78dvh - 18px);overflow:auto;padding:16px 18px calc(22px + env(safe-area-inset-bottom))}
+.mobile-sheet-scroll h2{font-size:24px;margin:8px 0 20px}
+.mobile-sheet-scroll h3{font-size:14px;color:#555;font-weight:500;margin:16px 6px 8px}
+.mobile-sheet-reference,.mobile-sheet-box{background:#f8f9fb;border-radius:20px;padding:14px 16px}
+.mobile-sheet-reference{display:flex;align-items:center;justify-content:space-between;font-size:14px}
+.mobile-sheet-box{display:grid;gap:7px}
+.mobile-sheet-box>div{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.mobile-sheet-box span{color:#333}
+.mobile-sheet-box b{font-weight:500;white-space:nowrap}
+.mobile-sheet-box .mobile-sheet-total{margin-top:8px;padding-top:12px;border-top:1px solid #e6e8eb;font-size:17px}
+.mobile-sheet-box .mobile-sheet-total b{font-size:18px;font-weight:700}
+.muted-money{color:#aaa}
+.green-text.soft{color:#76bf8b}
+.red-text.soft{color:#e88d87}
+@media(min-width:981px){.mobile-balance-sheet-backdrop{display:none!important}}
+
+
+/* V49 - efetivação rápida */
+.success-outline{
+  color:#17824f!important;
+  border-color:#8fcfaf!important;
+  background:#f2fbf6!important;
+}
+.prog-effective-field{margin-top:3px}
+.prog-effective-check{
+  display:grid!important;
+  grid-template-columns:22px auto 1fr!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:7px!important;
+  text-align:left!important;
+  padding:9px 10px;
+  border:1px solid #d9e0e7;
+  border-radius:8px;
+  background:#f8fafc;
+}
+.prog-effective-check input{width:18px;height:18px;margin:0}
+.prog-effective-check span{font-weight:700;font-size:12px}
+.prog-effective-check small{color:var(--muted);font-size:10px}
+@media(max-width:980px){
+  .prog-effective-check{
+    grid-template-columns:24px 1fr!important;
+  }
+  .prog-effective-check small{
+    grid-column:2;
+  }
+  .row-actions{gap:5px;flex-wrap:wrap}
+  .row-actions .mini-btn{min-height:34px}
+}
+
 </style>
 </head>
 <body class="principal-mode">
@@ -914,6 +1342,13 @@ body.principal-mode .ribbon-programacao{display:none!important}
 
   <!-- APP -->
   <div id="app" class="app hidden">
+    <header class="mobile-topbar">
+      <div class="mobile-topbar-brand">
+        <strong>Minhas Finanças</strong>
+        <span id="mobileTituloPagina">Início</span>
+      </div>
+      <button type="button" class="mobile-topbar-menu" id="btnMobileConta">⋮</button>
+    </header>
     <header class="desktop-header">
       <div class="window-title">
         <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v31 Categorias</span></strong>
@@ -1081,6 +1516,115 @@ body.principal-mode .ribbon-programacao{display:none!important}
       <section class="content">
         <!-- PRINCIPAL -->
         <section id="principal" class="page active legacy-home-page">
+          <div class="mobile-home-dashboard">
+            <section class="mob-blue-hero">
+              <div class="mob-month-nav">
+                <button type="button" id="mobMesAnterior">‹</button>
+                <strong id="mobMesNome">Outubro</strong>
+                <button type="button" id="mobMesSeguinte">›</button>
+              </div>
+              <div class="mob-balance-row">
+                <button type="button" class="mob-balance-action" data-balance-detail="inicial">
+                  <span>Inicial</span><small id="mobSaldoInicial">R$ 0,00</small>
+                </button>
+                <button type="button" class="mob-balance-action principal" data-balance-detail="saldo">
+                  <span>Saldo</span><strong id="mobileSaldoTotal">R$ 0,00</strong>
+                </button>
+                <button type="button" class="mob-balance-action" data-balance-detail="previsto">
+                  <span>Previsto</span><small id="mobSaldoPrevisto">R$ 0,00</small>
+                </button>
+              </div>
+              <div class="mob-balance-line">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="mob-balance-dates">
+                <small>-6d</small><small>-5d</small><small>-4d</small><small>-3d</small><small>-2d</small><small>-1d</small><small>Hoje</small>
+              </div>
+            </section>
+
+            <button type="button" class="mob-search-card" onclick="abrirPagina('lancamentos')">
+              <span>📊</span><b>Pesquisar no Minhas Finanças</b><span>✨</span>
+            </button>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Visão geral</strong><span>⋮</span></div>
+              <div class="mob-overview-row"><i class="mob-icon blue">🏦</i><span>Contas</span><b id="mobVisaoContas">R$ 0,00</b></div>
+              <div class="mob-overview-row"><i class="mob-icon green">＋</i><span>Receitas</span><b id="mobVisaoReceitas">R$ 0,00</b></div>
+              <div class="mob-overview-row"><i class="mob-icon red">−</i><span>Despesas</span><b id="mobVisaoDespesas">R$ 0,00</b></div>
+              <div class="mob-overview-row"><i class="mob-icon amber">↕</i><span>Balanço transferências</span><b id="mobVisaoTransferencias">R$ 0,00</b></div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Contas</strong><span>↗ ⋮</span></div>
+              <div id="mobileContasHome" class="mob-account-list"></div>
+              <div class="mob-total-row"><strong>Total</strong><b id="mobTotalContas">R$ 0,00</b></div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Economia mensal</strong><span>⋮</span></div>
+              <div class="mob-economy-grid">
+                <div class="mob-gauge-wrap">
+                  <div class="mob-gauge"><strong id="mobEconomiaPct">0%</strong></div>
+                  <b id="mobEconomiaValor">R$ 0,00</b>
+                  <small>Valor economizado</small>
+                </div>
+                <div class="mob-economy-values">
+                  <span>Receitas consideradas</span>
+                  <b class="green-text" id="mobEconomiaReceitas">R$ 0,00</b>
+                  <span>Despesas consideradas</span>
+                  <b class="red-text" id="mobEconomiaDespesas">R$ 0,00</b>
+                </div>
+              </div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Últimas despesas</strong><span>↗ ⋮</span></div>
+              <div id="mobUltimasDespesas" class="mob-expense-list"></div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Despesas por categoria</strong><span>⌄ ↗</span></div>
+              <div class="mob-pie-wrap">
+                <div id="mobPieCategorias" class="mob-pie"></div>
+                <div id="mobPieLegenda" class="mob-pie-legenda"></div>
+              </div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Discriminação das despesas</strong><span>⋮</span></div>
+              <div class="mob-status-row"><i class="mob-dot green">0%</i><span>Efetivadas</span><b id="mobDespEfetivadas">R$ 0,00</b></div>
+              <div class="mob-status-row"><i class="mob-dot amber">0%</i><span>Próximo do vencimento</span><b id="mobDespProximas">R$ 0,00</b></div>
+              <div class="mob-status-row"><i class="mob-dot red">0%</i><span>Vencidas</span><b id="mobDespVencidas">R$ 0,00</b></div>
+              <div class="mob-status-row"><i class="mob-dot gray">0%</i><span>Distante do vencimento</span><b id="mobDespDistantes">R$ 0,00</b></div>
+              <div class="mob-total-row"><strong>Total despesa</strong><b id="mobDespTotal">R$ 0,00</b></div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Discriminação das receitas</strong><span>⋮</span></div>
+              <div class="mob-status-row"><i class="mob-dot green">0%</i><span>Efetivadas</span><b id="mobRecEfetivadas">R$ 0,00</b></div>
+              <div class="mob-status-row"><i class="mob-dot amber">0%</i><span>Próximo do vencimento</span><b id="mobRecProximas">R$ 0,00</b></div>
+              <div class="mob-status-row"><i class="mob-dot red">0%</i><span>Vencidas</span><b id="mobRecVencidas">R$ 0,00</b></div>
+              <div class="mob-total-row"><strong>Total receita</strong><b id="mobRecTotal">R$ 0,00</b></div>
+            </section>
+
+            <section class="mob-card">
+              <div class="mob-card-title"><strong>Saúde Financeira</strong><span>⌃ ✨ ↗</span></div>
+              <div class="mob-health">
+                <strong id="mobSaudeTitulo">Ainda estamos conhecendo suas finanças</strong>
+                <p id="mobSaudeTexto">Acompanhe receitas, despesas, planejamento e reserva para formar uma visão financeira completa.</p>
+                <div class="mob-health-radar">
+                  <span class="top">Economia</span>
+                  <span class="right">Planejamento</span>
+                  <span class="bottom-right">Comprometimento</span>
+                  <span class="bottom-left">Reserva</span>
+                  <span class="left">Crédito</span>
+                  <div class="radar-shape"></div>
+                </div>
+              </div>
+            </section>
+
+            <button type="button" class="mob-fab" id="mobFabAdicionar">＋</button>
+          </div>
           <div class="legacy-home-top">
             <article class="legacy-home-panel legacy-home-bars">
               <div class="legacy-home-panel-head">
@@ -1185,6 +1729,18 @@ body.principal-mode .ribbon-programacao{display:none!important}
               <p>Receitas e despesas da conta selecionada.</p>
             </div>
           </div>
+          <div class="mobile-page-actions mobile-launch-actions">
+            <button type="button" class="mobile-action success" onclick="tratarAbertura('novaReceita')">＋ Receita</button>
+            <button type="button" class="mobile-action danger" onclick="tratarAbertura('novaDespesa')">− Despesa</button>
+            <button type="button" class="mobile-action" onclick="tratarAbertura('novaTransferencia')">⇄ Transferir</button>
+            <button type="button" class="mobile-action" onclick="tratarAbertura('listaContas')">Contas</button>
+          </div>
+
+          <div class="mobile-account-selector">
+            <label for="mobileContaLancamentos">Conta</label>
+            <select id="mobileContaLancamentos"></select>
+            <strong id="mobileSaldoConta">R$ 0,00</strong>
+          </div>
 
           <div id="contaLancamentosCabecalho" class="launch-account-header">
             <div>
@@ -1255,6 +1811,13 @@ body.principal-mode .ribbon-programacao{display:none!important}
 
         <!-- PROGRAMAÇÃO -->
         <section id="programacao" class="page programacao-page">
+          <div class="mobile-page-actions mobile-programacao-actions">
+            <button type="button" class="mobile-action" id="mobProgReceber">Receber</button>
+            <button type="button" class="mobile-action" id="mobProgPagar">Pagar</button>
+            <button type="button" class="mobile-action primary" id="mobProgNovo">＋ Novo</button>
+            <button type="button" class="mobile-action" id="mobProgEditar" disabled>Editar</button>
+            <button type="button" class="mobile-action danger-outline" id="mobProgExcluir" disabled>Excluir</button>
+          </div>
           <div class="programacao-layout">
             <div class="programacao-main">
               <div class="programacao-titlebar"><strong id="programacaoTitulo">Contas a Receber</strong></div>
@@ -1430,6 +1993,11 @@ body.principal-mode .ribbon-programacao{display:none!important}
 
         <!-- CATEGORIAS -->
         <section id="categorias" class="page">
+          <div class="mobile-page-actions mobile-categoria-actions">
+            <button type="button" class="mobile-action primary" id="mobCatNovo">＋ Novo</button>
+            <button type="button" class="mobile-action" id="mobCatEditar" disabled>Editar</button>
+            <button type="button" class="mobile-action danger-outline" id="mobCatExcluir" disabled>Excluir</button>
+          </div>
           <div class="category-legacy-shell">
             <div class="category-legacy-header">Categorias</div>
 
@@ -1519,6 +2087,42 @@ body.principal-mode .ribbon-programacao{display:none!important}
       <button class="mobile-item" data-page="programacao">◷<span>Programação</span></button>
       <button class="mobile-item" data-page="mobileMais">☰<span>Mais</span></button>
     </nav>
+  </div>
+
+  <div id="mobileBalanceSheetBackdrop" class="mobile-balance-sheet-backdrop hidden">
+    <section id="mobileBalanceSheet" class="mobile-balance-sheet" role="dialog" aria-modal="true">
+      <div class="mobile-sheet-handle"></div>
+      <div class="mobile-sheet-scroll">
+        <h2>Detalhamento do saldo</h2>
+
+        <h3>Resumo</h3>
+        <div class="mobile-sheet-reference">
+          <span>Referência</span>
+          <strong id="mobDetalheReferencia">-</strong>
+        </div>
+
+        <h3>Consolidado</h3>
+        <div class="mobile-sheet-box">
+          <div><span>Saldo Inicial</span><b class="green-text" id="mobDetSaldoInicial">R$ 0,00</b></div>
+          <div><span>Receitas efetivadas</span><b class="green-text" id="mobDetReceitasEfetivadas">R$ 0,00</b></div>
+          <div><span>Não somadas</span><b class="muted-money" id="mobDetReceitasNaoSomadas">R$ 0,00</b></div>
+          <div><span>Transf. creditadas efetivadas</span><b class="green-text" id="mobDetTransfCredEfetivadas">R$ 0,00</b></div>
+          <div><span>Transf. debitadas efetivadas</span><b class="red-text" id="mobDetTransfDebEfetivadas">R$ 0,00</b></div>
+          <div><span>Despesas pagas</span><b class="red-text" id="mobDetDespesasPagas">R$ 0,00</b></div>
+          <div><span>Não somadas</span><b class="muted-money" id="mobDetDespesasNaoSomadas">R$ 0,00</b></div>
+          <div class="mobile-sheet-total"><span>Saldo atual</span><b class="green-text" id="mobDetSaldoAtual">R$ 0,00</b></div>
+        </div>
+
+        <h3>Previsto</h3>
+        <div class="mobile-sheet-box">
+          <div><span>Receitas pendentes</span><b class="green-text soft" id="mobDetReceitasPendentes">R$ 0,00</b></div>
+          <div><span>Transf. creditadas pendentes</span><b class="green-text soft" id="mobDetTransfCredPendentes">R$ 0,00</b></div>
+          <div><span>Transf. debitadas pendentes</span><b class="red-text soft" id="mobDetTransfDebPendentes">R$ 0,00</b></div>
+          <div><span>Despesas pendentes</span><b class="red-text soft" id="mobDetDespesasPendentes">R$ 0,00</b></div>
+          <div class="mobile-sheet-total"><span>Saldo previsto</span><b class="green-text" id="mobDetSaldoPrevisto">R$ 0,00</b></div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- MODAL -->
@@ -1706,6 +2310,18 @@ $("btnSair").addEventListener("click", async () => {
 // ============================================================
 
 function abrirPagina(nome) {
+  const titulosMobile = {
+    principal:"Início",
+    lancamentos:"Lançamentos",
+    programacao:"Programação",
+    planejamento:"Planejamento",
+    contas:"Contas",
+    pessoas:"Clientes e Fornecedores",
+    relatorios:"Gráficos e Relatórios",
+    categorias:"Categorias"
+  };
+  if ($("mobileTituloPagina") && titulosMobile[nome]) $("mobileTituloPagina").textContent = titulosMobile[nome];
+
   document.body.classList.toggle("categories-mode", nome === "categorias");
   document.body.classList.toggle("lancamentos-mode", nome === "lancamentos");
   document.body.classList.toggle("principal-mode", nome === "principal");
@@ -1742,6 +2358,10 @@ function abrirPagina(nome) {
   if (nome === "programacao") {
     configurarBotoesProgramacao();
     mostrarProgramacao();
+  }
+  if (nome === "categorias") {
+    configurarAcoesCategoriaMobile();
+    setTimeout(sincronizarAcoesCategoriaMobile,0);
   }
 }
 
@@ -1790,6 +2410,25 @@ function editarProgramacaoSelecionada() {
   abrirFormularioProgramacao(p);
 }
 
+function sincronizarAcoesCategoriaMobile() {
+  [["catRibbonNovo","mobCatNovo"],["catRibbonEditar","mobCatEditar"],["catRibbonExcluir","mobCatExcluir"]].forEach(([orig,mob])=>{
+    const o=$(orig), m=$(mob);
+    if (o && m) m.disabled = !!o.disabled;
+  });
+}
+function configurarAcoesCategoriaMobile() {
+  const ligar=(id,fn)=>{
+    const el=$(id);
+    if (!el || el.dataset.listenerOk==="1") return;
+    el.dataset.listenerOk="1";
+    el.addEventListener("click",fn);
+  };
+  ligar("mobCatNovo",()=>$("catRibbonNovo")?.click());
+  ligar("mobCatEditar",()=>$("catRibbonEditar")?.click());
+  ligar("mobCatExcluir",()=>$("catRibbonExcluir")?.click());
+  sincronizarAcoesCategoriaMobile();
+}
+
 function configurarBotoesProgramacao() {
   const ligar = (id, fn) => {
     const el = $(id);
@@ -1832,6 +2471,22 @@ function configurarBotoesProgramacao() {
   ligar("btnProgNovoLateral", () => {
     abrirFormularioProgramacao(null, programacaoTipoAtual);
   });
+
+  ligar("mobProgReceber", () => {
+    programacaoTipoAtual = "receita";
+    programacaoFiltroAtual = "todos";
+    programacaoSelecionadaId = null;
+    mostrarProgramacao();
+  });
+  ligar("mobProgPagar", () => {
+    programacaoTipoAtual = "despesa";
+    programacaoFiltroAtual = "todos";
+    programacaoSelecionadaId = null;
+    mostrarProgramacao();
+  });
+  ligar("mobProgNovo", () => abrirFormularioProgramacao(null, programacaoTipoAtual));
+  ligar("mobProgEditar", () => editarProgramacaoSelecionada());
+  ligar("mobProgExcluir", () => excluirProgramacaoSelecionada());
 
   ligar("btnEditarProgramacao", () => {
     editarProgramacaoSelecionada();
@@ -2082,6 +2737,42 @@ function mostrarContas() {
 
   $("saldoSidebar").textContent = dinheiro(saldoTotal());
 
+  if ($("mobileSaldoTotal")) $("mobileSaldoTotal").textContent = dinheiro(saldoTotal());
+
+  if ($("mobileContasHome")) {
+    $("mobileContasHome").innerHTML = ativas.length ? ativas.map(c => `
+      <button type="button" class="mobile-account-chip" data-mobile-go-conta="${c.id}">
+        <strong>${escapeHTML(c.nome)}</strong>
+        <small>${escapeHTML(c.tipo || "")}</small>
+        <b>${dinheiro(saldoConta(c.id))}</b>
+      </button>
+    `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
+
+    document.querySelectorAll("[data-mobile-go-conta]").forEach(btn => {
+      btn.onclick = () => {
+        contaLancamentosSelecionadaId = Number(btn.dataset.mobileGoConta);
+        abrirPagina("lancamentos");
+        mostrarContas();
+        mostrarTransacoes();
+      };
+    });
+  }
+
+  if ($("mobileContaLancamentos")) {
+    $("mobileContaLancamentos").innerHTML = ativas.length
+      ? ativas.map(c => `<option value="${c.id}" ${Number(c.id)===Number(contaLancamentosSelecionadaId)?"selected":""}>${escapeHTML(c.nome)}</option>`).join("")
+      : `<option value="">Nenhuma conta</option>`;
+
+    $("mobileContaLancamentos").onchange = () => {
+      contaLancamentosSelecionadaId = Number($("mobileContaLancamentos").value || 0) || null;
+      mostrarContas();
+      mostrarTransacoes();
+    };
+
+    const atual = contas.find(c=>Number(c.id)===Number(contaLancamentosSelecionadaId));
+    if ($("mobileSaldoConta")) $("mobileSaldoConta").textContent = atual ? dinheiro(saldoConta(atual.id)) : dinheiro(0);
+  }
+
   $("contasResumo").innerHTML = ativas.length ? ativas.map(c => `
     <div class="compact-row">
       <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
@@ -2122,6 +2813,72 @@ function mostrarContas() {
       await carregarDados();
     });
   });
+}
+
+function detalhesSaldoMobile() {
+  const inicioMes = new Date(anoAtual, mesAtual, 1);
+  const fimMes = new Date(anoAtual, mesAtual + 1, 0, 23, 59, 59, 999);
+  const inicioISO = inicioMes.toISOString().slice(0,10);
+  const fimISO = fimMes.toISOString().slice(0,10);
+
+  const noMesSelecionado = (t) => {
+    const d = t.data_lancamento || t.data || t.competencia || t.data_vencimento || "";
+    return d >= inicioISO && d <= fimISO;
+  };
+
+  const efetivadas = transacoes.filter(t => t.status === "efetivada" && noMesSelecionado(t));
+  const pendentes = transacoes.filter(t => t.status !== "efetivada" && noMesSelecionado(t));
+
+  const receitasEfetivadas = efetivadas.filter(t=>t.tipo==="receita").reduce((s,t)=>s+Number(t.valor||0),0);
+  const despesasPagas = efetivadas.filter(t=>t.tipo==="despesa").reduce((s,t)=>s+Number(t.valor||0),0);
+  const receitasPendentes = pendentes.filter(t=>t.tipo==="receita").reduce((s,t)=>s+Number(t.valor||0),0);
+  const despesasPendentes = pendentes.filter(t=>t.tipo==="despesa").reduce((s,t)=>s+Number(t.valor||0),0);
+
+  const saldoAtualGeral = saldoTotal();
+  const saldoInicialMes = saldoAtualGeral - receitasEfetivadas + despesasPagas;
+  const saldoPrevistoGeral = saldoAtualGeral + receitasPendentes - despesasPendentes;
+
+  return {
+    saldoInicialMes, receitasEfetivadas, receitasNaoSomadas:0,
+    transfCredEfetivadas:0, transfDebEfetivadas:0,
+    despesasPagas, despesasNaoSomadas:0, saldoAtualGeral,
+    receitasPendentes, transfCredPendentes:0, transfDebPendentes:0,
+    despesasPendentes, saldoPrevistoGeral
+  };
+}
+
+function abrirDetalhamentoSaldoMobile(origem = "saldo") {
+  const d = detalhesSaldoMobile();
+  if ($("mobDetalheReferencia")) $("mobDetalheReferencia").textContent = `${(meses[mesAtual] || "").toLowerCase()} ${anoAtual}`;
+
+  const setMoney = (id,v) => { if ($(id)) $(id).textContent = dinheiro(v); };
+  setMoney("mobDetSaldoInicial", d.saldoInicialMes);
+  setMoney("mobDetReceitasEfetivadas", d.receitasEfetivadas);
+  setMoney("mobDetReceitasNaoSomadas", d.receitasNaoSomadas);
+  setMoney("mobDetTransfCredEfetivadas", d.transfCredEfetivadas);
+  setMoney("mobDetTransfDebEfetivadas", d.transfDebEfetivadas);
+  setMoney("mobDetDespesasPagas", d.despesasPagas);
+  setMoney("mobDetDespesasNaoSomadas", d.despesasNaoSomadas);
+  setMoney("mobDetSaldoAtual", d.saldoAtualGeral);
+  setMoney("mobDetReceitasPendentes", d.receitasPendentes);
+  setMoney("mobDetTransfCredPendentes", d.transfCredPendentes);
+  setMoney("mobDetTransfDebPendentes", d.transfDebPendentes);
+  setMoney("mobDetDespesasPendentes", d.despesasPendentes);
+  setMoney("mobDetSaldoPrevisto", d.saldoPrevistoGeral);
+
+  const overlay = $("mobileBalanceSheetBackdrop");
+  if (!overlay) return;
+  overlay.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  const scroll = $("mobileBalanceSheet")?.querySelector(".mobile-sheet-scroll");
+  if (scroll) scroll.scrollTop = origem === "previsto" ? 320 : 0;
+}
+
+function fecharDetalhamentoSaldoMobile() {
+  const overlay = $("mobileBalanceSheetBackdrop");
+  if (overlay) overlay.classList.add("hidden");
+  document.body.style.overflow = "";
 }
 
 function mostrarDashboard() {
@@ -2243,6 +3000,96 @@ function mostrarDashboard() {
   if ($("resumoCategorias")) $("resumoCategorias").innerHTML = "";
   if ($("proximosVencimentos")) $("proximosVencimentos").innerHTML = "";
   if ($("ultimosLancamentos")) $("ultimosLancamentos").innerHTML = "";
+
+  // ---------------- Mobile dashboard ----------------
+  if ($("mobMesNome")) $("mobMesNome").textContent = `${meses[mesAtual]} ${anoAtual}`;
+  const detalheSaldoMobile = detalhesSaldoMobile();
+  if ($("mobSaldoInicial")) $("mobSaldoInicial").textContent = dinheiro(detalheSaldoMobile.saldoInicialMes);
+  if ($("mobSaldoPrevisto")) $("mobSaldoPrevisto").textContent = dinheiro(detalheSaldoMobile.saldoPrevistoGeral);
+
+  if ($("mobVisaoContas")) $("mobVisaoContas").textContent = dinheiro(saldoTotal());
+  if ($("mobVisaoReceitas")) $("mobVisaoReceitas").textContent = dinheiro(receitas);
+  if ($("mobVisaoDespesas")) $("mobVisaoDespesas").textContent = dinheiro(despesas);
+  if ($("mobVisaoTransferencias")) $("mobVisaoTransferencias").textContent = dinheiro(0);
+  if ($("mobTotalContas")) $("mobTotalContas").textContent = dinheiro(saldoTotal());
+
+  const economia = receitas - despesas;
+  const pctEconomia = receitas > 0 ? Math.max(0, Math.min(100, (economia / receitas) * 100)) : 0;
+  if ($("mobEconomiaPct")) $("mobEconomiaPct").textContent = `${pctEconomia.toFixed(0)}%`;
+  if ($("mobEconomiaValor")) $("mobEconomiaValor").textContent = dinheiro(Math.max(0,economia));
+  if ($("mobEconomiaReceitas")) $("mobEconomiaReceitas").textContent = dinheiro(receitas);
+  if ($("mobEconomiaDespesas")) $("mobEconomiaDespesas").textContent = dinheiro(despesas);
+
+  const ultimasDespesas = transacoes
+    .filter(t => t.tipo === "despesa" && t.status === "efetivada")
+    .slice()
+    .sort((a,b) => String(b.data_lancamento||"").localeCompare(String(a.data_lancamento||"")) || Number(b.id)-Number(a.id))
+    .slice(0,5);
+
+  if ($("mobUltimasDespesas")) {
+    $("mobUltimasDespesas").innerHTML = ultimasDespesas.length ? ultimasDespesas.map((t,i) => `
+      <div class="mob-expense-row">
+        <i class="mob-expense-dot ${i===0?"red":""}"></i>
+        <i class="mob-expense-icon">◆</i>
+        <div class="mob-expense-main">
+          <strong>${escapeHTML(t.favorecido || idNome(pessoas,t.pessoa_id,"Despesa"))}</strong>
+          <small>${escapeHTML(idNome(contas,t.conta_id,""))}${t.historico ? " · " + escapeHTML(t.historico) : ""}</small>
+        </div>
+        <div class="mob-expense-value">
+          <b>${dinheiro(t.valor)}</b>
+          <small>${dataBR(t.data_lancamento)}</small>
+        </div>
+      </div>
+    `).join("") : `<div class="empty">Nenhuma despesa ainda.</div>`;
+  }
+
+  if ($("mobPieCategorias")) {
+    const tonsMob = ["#d4d4d4","#c6c6c6","#e1e1e1","#bdbdbd","#ececec"];
+    if (cats.length && totalCats > 0) {
+      let ac = 0;
+      const partes = cats.map(([nome,valor],i)=>{
+        const ini=ac;
+        ac += (valor/totalCats)*100;
+        return `${tonsMob[i%tonsMob.length]} ${ini.toFixed(2)}% ${ac.toFixed(2)}%`;
+      });
+      $("mobPieCategorias").style.background = `conic-gradient(${partes.join(",")})`;
+      if ($("mobPieLegenda")) $("mobPieLegenda").innerHTML = cats.map(([nome,valor],i)=>`
+        <span>• ${escapeHTML(nome)} ${((valor/totalCats)*100).toFixed(0)}%</span>
+      `).join("");
+    } else {
+      $("mobPieCategorias").style.background = "conic-gradient(#ddd 0 100%)";
+      if ($("mobPieLegenda")) $("mobPieLegenda").innerHTML = `<span>Sem despesas no período</span>`;
+    }
+  }
+
+  const agoraISO = hojeISO();
+  const em30 = new Date(); em30.setDate(em30.getDate()+30);
+  const em30ISO = em30.toISOString().slice(0,10);
+
+  const discriminar = (tipo) => {
+    const efetivadas = mes.filter(t=>t.tipo===tipo && t.status==="efetivada").reduce((s,t)=>s+Number(t.valor||0),0);
+    const pendentes = transacoes.filter(t=>t.tipo===tipo && t.status!=="efetivada");
+    const vencidas = pendentes.filter(t=>(t.data_vencimento||t.data_lancamento||"") < agoraISO).reduce((s,t)=>s+Number(t.valor||0),0);
+    const proximas = pendentes.filter(t=>{
+      const d=t.data_vencimento||t.data_lancamento||"";
+      return d>=agoraISO && d<=em30ISO;
+    }).reduce((s,t)=>s+Number(t.valor||0),0);
+    const distantes = pendentes.filter(t=>(t.data_vencimento||t.data_lancamento||"") > em30ISO).reduce((s,t)=>s+Number(t.valor||0),0);
+    return {efetivadas,vencidas,proximas,distantes,total:efetivadas+vencidas+proximas+distantes};
+  };
+
+  const dd = discriminar("despesa");
+  const rr = discriminar("receita");
+  if ($("mobDespEfetivadas")) $("mobDespEfetivadas").textContent = dinheiro(dd.efetivadas);
+  if ($("mobDespProximas")) $("mobDespProximas").textContent = dinheiro(dd.proximas);
+  if ($("mobDespVencidas")) $("mobDespVencidas").textContent = dinheiro(dd.vencidas);
+  if ($("mobDespDistantes")) $("mobDespDistantes").textContent = dinheiro(dd.distantes);
+  if ($("mobDespTotal")) $("mobDespTotal").textContent = dinheiro(dd.total);
+
+  if ($("mobRecEfetivadas")) $("mobRecEfetivadas").textContent = dinheiro(rr.efetivadas);
+  if ($("mobRecProximas")) $("mobRecProximas").textContent = dinheiro(rr.proximas);
+  if ($("mobRecVencidas")) $("mobRecVencidas").textContent = dinheiro(rr.vencidas);
+  if ($("mobRecTotal")) $("mobRecTotal").textContent = dinheiro(rr.total);
 }
 
 // ============================================================
@@ -2262,6 +3109,8 @@ function mostrarTransacoes() {
   if ($("contaLancamentosSaldo")) {
     $("contaLancamentosSaldo").textContent = contaSelecionada ? dinheiro(saldoConta(contaSelecionada.id)) : dinheiro(0);
   }
+  if ($("mobileSaldoConta")) $("mobileSaldoConta").textContent = contaSelecionada ? dinheiro(saldoConta(contaSelecionada.id)) : dinheiro(0);
+  if ($("mobileContaLancamentos") && contaSelecionada) $("mobileContaLancamentos").value = String(contaSelecionada.id);
 
   const hojeFiltro = new Date();
   hojeFiltro.setHours(0,0,0,0);
@@ -2331,6 +3180,7 @@ function mostrarTransacoes() {
       <td><span class="status-pill ${escapeHTML(t.status)}">${escapeHTML(t.status)}</span></td>
       <td class="right ${t.tipo === "receita" ? "money-income" : "money-expense"}">${t.tipo === "receita" ? "+" : "-"} ${dinheiro(t.valor)}</td>
       <td><div class="row-actions">
+        ${t.status !== "efetivada" ? `<button class="mini-btn success-outline" data-efetivar-transacao="${t.id}">Efetivar</button>` : ""}
         <button class="mini-btn" data-edit-transacao="${t.id}">Editar</button>
         <button class="mini-btn" data-del-transacao="${t.id}">Excluir</button>
       </div></td>
@@ -2339,6 +3189,10 @@ function mostrarTransacoes() {
 
   document.querySelectorAll("[data-edit-transacao]").forEach(btn => {
     btn.addEventListener("click", () => abrirFormularioTransacao(transacoes.find(t => Number(t.id) === Number(btn.dataset.editTransacao))));
+  });
+
+  document.querySelectorAll("[data-efetivar-transacao]").forEach(btn => {
+    btn.addEventListener("click", () => efetivarTransacao(Number(btn.dataset.efetivarTransacao)));
   });
 
   document.querySelectorAll("[data-del-transacao]").forEach(btn => {
@@ -2350,6 +3204,41 @@ $("buscaTransacao").addEventListener("input", mostrarTransacoes);
 $("filtroStatus").addEventListener("change", mostrarTransacoes);
 $("filtroPeriodo").addEventListener("change", mostrarTransacoes);
 $("filtroExtrato").addEventListener("change", mostrarTransacoes);
+
+async function efetivarTransacao(id) {
+  const t = transacoes.find(x => Number(x.id) === Number(id));
+  if (!t) return;
+  if (t.status === "efetivada") return;
+
+  if (!confirm(`Marcar este lançamento como efetivado?\n\n${t.descricao || ""} — ${dinheiro(t.valor)}`)) return;
+
+  const atualizacao = {
+    status: "efetivada",
+    data_efetivacao: hojeISO(),
+    compensado: true
+  };
+
+  const { error } = await supabaseClient.from("fin_transacoes")
+    .update(atualizacao)
+    .eq("id", id)
+    .eq("user_id", usuarioAtual.id);
+
+  if (error) return alert("Erro ao efetivar lançamento: " + error.message);
+
+  // Se o lançamento veio de uma parcela programada, mantém a programação sincronizada.
+  if (t.programacao_parcela_id) {
+    const { error: erroParcela } = await supabaseClient.from("fin_programacao_parcelas")
+      .update({ status:"efetivada", transacao_id:id })
+      .eq("id", t.programacao_parcela_id)
+      .eq("user_id", usuarioAtual.id);
+
+    if (erroParcela) {
+      alert("O lançamento foi efetivado, mas houve erro ao atualizar a parcela programada: " + erroParcela.message);
+    }
+  }
+
+  await carregarDados();
+}
 
 async function excluirTransacao(id) {
   if (!confirm("Excluir este lançamento?")) return;
@@ -2398,6 +3287,11 @@ function mostrarProgramacao() {
   if ($("btnProgReceber")) $("btnProgReceber").classList.toggle("active", programacaoTipoAtual === "receita" && programacaoFiltroAtual !== "efetivada");
   if ($("btnProgPagar")) $("btnProgPagar").classList.toggle("active", programacaoTipoAtual === "despesa" && programacaoFiltroAtual !== "efetivada");
   if ($("btnProgPagas")) $("btnProgPagas").classList.toggle("active", programacaoFiltroAtual === "efetivada");
+  if ($("mobProgReceber")) $("mobProgReceber").classList.toggle("primary", programacaoTipoAtual === "receita" && programacaoFiltroAtual !== "efetivada");
+  if ($("mobProgPagar")) $("mobProgPagar").classList.toggle("primary", programacaoTipoAtual === "despesa" && programacaoFiltroAtual !== "efetivada");
+  if ($("mobProgNovo")) $("mobProgNovo").textContent = programacaoTipoAtual === "receita" ? "＋ Nova receita" : "＋ Nova despesa";
+  if ($("mobProgEditar")) $("mobProgEditar").disabled = !programacaoSelecionadaId;
+  if ($("mobProgExcluir")) $("mobProgExcluir").disabled = !programacaoSelecionadaId;
 
   $("tabelaProgramacao").innerHTML = linhas.length ? linhas.map(p => `
     <tr class="${Number(p.programacao_id)===Number(programacaoSelecionadaId)?"selected":""}" data-prog-row="${p.programacao_id}">
@@ -4785,6 +5679,15 @@ function abrirFormularioProgramacao(item = null, tipoInicial = "receita") {
           <div class="prog-field"><label>Valor</label><input id="prValor" type="number" min="0.01" step="0.01" value="${item?.valor??""}" required></div>
           <div class="prog-field"><label>Centro de Custos</label><select id="prCentro">${optionLista(centrosCusto,item?.centro_custo_id,"Sem centro")}</select></div>
           <div class="prog-field"><label>Parcelas</label><input id="prQtd" type="number" min="1" max="240" value="${item?.quantidade_parcelas||1}" required></div>
+
+          <div class="prog-field full prog-effective-field">
+            <label>Efetivação</label>
+            <label class="prog-effective-check">
+              <input id="prEfetivada" type="checkbox">
+              <span>Efetivada</span>
+              <small>Marcada: concluída. Desmarcada: pendente.</small>
+            </label>
+          </div>
         </div>
       </div>
       <div id="progTabAdicionais" class="prog-panel">
@@ -4793,6 +5696,16 @@ function abrirFormularioProgramacao(item = null, tipoInicial = "receita") {
       <div class="prog-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">OK</button></div>
     </form>
   `);
+
+  if ($("prEfetivada")) {
+    if (item) {
+      const parcelasDaProgramacao = parcelas.filter(p => Number(p.programacao_id) === Number(item.id));
+      $("prEfetivada").checked = parcelasDaProgramacao.length > 0 &&
+        parcelasDaProgramacao.every(p => p.status === "efetivada");
+    } else {
+      $("prEfetivada").checked = false;
+    }
+  }
 
   document.querySelectorAll("[data-prog-tab]").forEach(btn=>{
     btn.onclick=()=>{
@@ -4808,7 +5721,11 @@ function abrirFormularioProgramacao(item = null, tipoInicial = "receita") {
     const quantidade = Math.max(1, Number($("prQtd").value || 1));
     const valor = Number($("prValor").value || 0);
     const freq = quantidade === 1 ? "unica" : $("prFreq").value;
+    const efetivada = !!$("prEfetivada")?.checked;
     if (!valor || valor <= 0) return alert("Informe um valor maior que zero.");
+    if (efetivada && !$("prConta").value) {
+      return alert("Para marcar como efetivada, selecione a conta onde o pagamento/recebimento foi realizado.");
+    }
 
     const registro = {
       user_id: usuarioAtual.id,
@@ -4855,13 +5772,60 @@ function abrirFormularioProgramacao(item = null, tipoInicial = "receita") {
         total_parcelas: quantidade,
         data_vencimento: calcularVencimento(registro.data_inicio, freq, i),
         valor,
-        status: "pendente"
+        status: efetivada ? "efetivada" : "pendente"
       });
     }
 
+    let parcelasCriadas = [];
     if (itens.length) {
-      const respParc = await supabaseClient.from("fin_programacao_parcelas").insert(itens);
+      const respParc = await supabaseClient.from("fin_programacao_parcelas")
+        .insert(itens)
+        .select("*");
       if (respParc.error) return alert("Programação salva, mas houve erro nas parcelas: " + respParc.error.message);
+      parcelasCriadas = respParc.data || [];
+    }
+
+    // Se a conta a pagar/receber foi marcada como efetivada,
+    // cria imediatamente os lançamentos correspondentes.
+    if (efetivada && parcelasCriadas.length) {
+      const lancamentos = parcelasCriadas.map(parcela => ({
+        user_id: usuarioAtual.id,
+        conta_id: registro.conta_id,
+        pessoa_id: registro.pessoa_id || null,
+        plano_conta_id: registro.plano_conta_id || null,
+        centro_custo_id: registro.centro_custo_id || null,
+        forma_pagamento_id: registro.forma_pagamento_id || null,
+        programacao_parcela_id: parcela.id,
+        tipo: registro.tipo,
+        descricao: registro.descricao,
+        numero: registro.numero || null,
+        observacao: registro.observacao || null,
+        valor: Number(parcela.valor || valor),
+        data_lancamento: hojeISO(),
+        data_vencimento: parcela.data_vencimento,
+        data_efetivacao: hojeISO(),
+        status: "efetivada",
+        compensado: true,
+        origem: "programacao",
+        numero_parcela: parcela.numero_parcela,
+        total_parcelas: parcela.total_parcelas
+      }));
+
+      const respTrans = await supabaseClient.from("fin_transacoes")
+        .insert(lancamentos)
+        .select("id, programacao_parcela_id");
+
+      if (respTrans.error) {
+        return alert("A programação foi salva, mas houve erro ao gerar os lançamentos efetivados: " + respTrans.error.message);
+      }
+
+      for (const t of (respTrans.data || [])) {
+        if (!t.programacao_parcela_id) continue;
+        await supabaseClient.from("fin_programacao_parcelas")
+          .update({ status:"efetivada", transacao_id:t.id })
+          .eq("id", t.programacao_parcela_id)
+          .eq("user_id", usuarioAtual.id);
+      }
     }
 
     fecharModal();
@@ -4937,7 +5901,72 @@ async function iniciarSistema() {
   else mostrarTelaLogin();
 })();
 
+
 configurarBotoesProgramacao();
+configurarAcoesCategoriaMobile();
+
+["catRibbonNovo","catRibbonEditar","catRibbonExcluir"].forEach(id=>{
+  const el=$(id);
+  if (!el) return;
+  new MutationObserver(sincronizarAcoesCategoriaMobile).observe(el,{attributes:true,attributeFilter:["disabled"]});
+});
+
+
+document.querySelectorAll("[data-balance-detail]").forEach(btn=>{
+  btn.addEventListener("click",()=>abrirDetalhamentoSaldoMobile(btn.dataset.balanceDetail));
+});
+
+if ($("mobileBalanceSheetBackdrop")) {
+  $("mobileBalanceSheetBackdrop").addEventListener("click",(e)=>{
+    if (e.target === $("mobileBalanceSheetBackdrop")) fecharDetalhamentoSaldoMobile();
+  });
+}
+document.addEventListener("keydown",(e)=>{
+  if (e.key==="Escape" && !$("mobileBalanceSheetBackdrop")?.classList.contains("hidden")) {
+    fecharDetalhamentoSaldoMobile();
+  }
+});
+
+if ($("mobMesAnterior")) $("mobMesAnterior").addEventListener("click", () => {
+  mesAtual--;
+  if (mesAtual < 0) { mesAtual = 11; anoAtual--; }
+  mostrarDashboard();
+});
+if ($("mobMesSeguinte")) $("mobMesSeguinte").addEventListener("click", () => {
+  mesAtual++;
+  if (mesAtual > 11) { mesAtual = 0; anoAtual++; }
+  mostrarDashboard();
+});
+if ($("mobFabAdicionar")) $("mobFabAdicionar").addEventListener("click", () => {
+  abrirModal("Novo lançamento", `
+    <div style="display:grid;gap:10px">
+      <button class="btn success" id="mobNovaReceitaFab">＋ Receita</button>
+      <button class="btn danger" id="mobNovaDespesaFab">− Despesa</button>
+      <button class="btn" id="mobNovaTransferenciaFab">⇄ Transferência</button>
+    </div>
+  `);
+  if ($("mobNovaReceitaFab")) $("mobNovaReceitaFab").onclick=()=>{fecharModal();tratarAbertura("novaReceita")};
+  if ($("mobNovaDespesaFab")) $("mobNovaDespesaFab").onclick=()=>{fecharModal();tratarAbertura("novaDespesa")};
+  if ($("mobNovaTransferenciaFab")) $("mobNovaTransferenciaFab").onclick=()=>{fecharModal();tratarAbertura("novaTransferencia")};
+});
+
+if ($("btnMobileConta")) {
+  $("btnMobileConta").addEventListener("click", () => {
+    abrirModal("Menu", `
+      <div class="mobile-more">
+        <button class="btn" data-go-mobile="contas">Lista de Contas</button>
+        <button class="btn" data-go-mobile="categorias">Categorias</button>
+        <button class="btn" data-go-mobile="relatorios">Relatórios</button>
+        <button class="btn danger" id="mobileSairConta">Sair</button>
+      </div>
+    `);
+    document.querySelectorAll("[data-go-mobile]").forEach(btn=>{
+      btn.onclick=()=>{ fecharModal(); abrirPagina(btn.dataset.goMobile); };
+    });
+    if ($("mobileSairConta")) $("mobileSairConta").onclick=()=>$("btnSair")?.click();
+  });
+}
+
 
 </script>
 </body>
