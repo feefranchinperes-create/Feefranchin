@@ -1293,6 +1293,10 @@ body.principal-mode .ribbon-programacao{display:none!important}
   .row-actions .mini-btn{min-height:34px}
 }
 
+
+/* V50 - saldos negativos em vermelho */
+.valor-negativo{color:#d32f2f!important}
+
 </style>
 </head>
 <body class="principal-mode">
@@ -2189,6 +2193,12 @@ function dinheiro(valor) {
   });
 }
 
+function aplicarCorValor(el, valor) {
+  if (!el) return;
+  el.classList.toggle("valor-negativo", Number(valor || 0) < 0);
+}
+
+
 function dataBR(data) {
   if (!data) return "";
   const [a,m,d] = String(data).split("-");
@@ -2722,7 +2732,7 @@ function mostrarContas() {
     <div class="account-item ${Number(c.id)===Number(contaLancamentosSelecionadaId) ? "selected" : ""}" data-select-conta-lancamentos="${c.id}">
       <div class="account-icon">🏦</div>
       <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
-      <div class="account-value">${dinheiro(saldoConta(c.id))}</div>
+      <div class="account-value ${saldoConta(c.id) < 0 ? "valor-negativo" : ""}">${dinheiro(saldoConta(c.id))}</div>
     </div>
   `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
 
@@ -2736,15 +2746,16 @@ function mostrarContas() {
   });
 
   $("saldoSidebar").textContent = dinheiro(saldoTotal());
+  aplicarCorValor($("saldoSidebar"), saldoTotal());
 
-  if ($("mobileSaldoTotal")) $("mobileSaldoTotal").textContent = dinheiro(saldoTotal());
+  if ($("mobileSaldoTotal")) { $("mobileSaldoTotal").textContent = dinheiro(saldoTotal()); aplicarCorValor($("mobileSaldoTotal"), saldoTotal()); }
 
   if ($("mobileContasHome")) {
     $("mobileContasHome").innerHTML = ativas.length ? ativas.map(c => `
       <button type="button" class="mobile-account-chip" data-mobile-go-conta="${c.id}">
         <strong>${escapeHTML(c.nome)}</strong>
         <small>${escapeHTML(c.tipo || "")}</small>
-        <b>${dinheiro(saldoConta(c.id))}</b>
+        <b class="${saldoConta(c.id) < 0 ? "valor-negativo" : ""}">${dinheiro(saldoConta(c.id))}</b>
       </button>
     `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
 
@@ -2770,13 +2781,13 @@ function mostrarContas() {
     };
 
     const atual = contas.find(c=>Number(c.id)===Number(contaLancamentosSelecionadaId));
-    if ($("mobileSaldoConta")) $("mobileSaldoConta").textContent = atual ? dinheiro(saldoConta(atual.id)) : dinheiro(0);
+    if ($("mobileSaldoConta")) { const sv = atual ? saldoConta(atual.id) : 0; $("mobileSaldoConta").textContent = dinheiro(sv); aplicarCorValor($("mobileSaldoConta"), sv); }
   }
 
   $("contasResumo").innerHTML = ativas.length ? ativas.map(c => `
     <div class="compact-row">
       <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
-      <strong>${dinheiro(saldoConta(c.id))}</strong>
+      <strong class="${saldoConta(c.id) < 0 ? "valor-negativo" : ""}">${dinheiro(saldoConta(c.id))}</strong>
     </div>
   `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
 
@@ -2793,7 +2804,7 @@ function mostrarContas() {
           <button class="mini-btn" data-toggle-conta="${c.id}">${c.ativo===false ? "Reativar" : "Arquivar"}</button>
         </div>
       </div>
-      <strong>${dinheiro(saldoConta(c.id))}</strong>
+      <strong class="${saldoConta(c.id) < 0 ? "valor-negativo" : ""}">${dinheiro(saldoConta(c.id))}</strong>
     </article>
   `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
 
@@ -2898,9 +2909,11 @@ function mostrarDashboard() {
     .reduce((s,t) => s + Number(t.valor || 0), 0);
 
   $("saldoAtual").textContent = dinheiro(saldoTotal());
+  aplicarCorValor($("saldoAtual"), saldoTotal());
   $("receitasMes").textContent = dinheiro(receitas);
   $("despesasMes").textContent = dinheiro(despesas);
   $("saldoPrevisto").textContent = dinheiro(saldoTotal() + pendReceita - pendDespesa);
+  aplicarCorValor($("saldoPrevisto"), saldoTotal() + pendReceita - pendDespesa);
 
   const max = Math.max(receitas, despesas, 1);
   $("barraReceita").style.height = `${Math.max(2, (receitas / max) * 125)}px`;
@@ -3004,14 +3017,14 @@ function mostrarDashboard() {
   // ---------------- Mobile dashboard ----------------
   if ($("mobMesNome")) $("mobMesNome").textContent = `${meses[mesAtual]} ${anoAtual}`;
   const detalheSaldoMobile = detalhesSaldoMobile();
-  if ($("mobSaldoInicial")) $("mobSaldoInicial").textContent = dinheiro(detalheSaldoMobile.saldoInicialMes);
-  if ($("mobSaldoPrevisto")) $("mobSaldoPrevisto").textContent = dinheiro(detalheSaldoMobile.saldoPrevistoGeral);
+  if ($("mobSaldoInicial")) { $("mobSaldoInicial").textContent = dinheiro(detalheSaldoMobile.saldoInicialMes); aplicarCorValor($("mobSaldoInicial"), detalheSaldoMobile.saldoInicialMes); }
+  if ($("mobSaldoPrevisto")) { $("mobSaldoPrevisto").textContent = dinheiro(detalheSaldoMobile.saldoPrevistoGeral); aplicarCorValor($("mobSaldoPrevisto"), detalheSaldoMobile.saldoPrevistoGeral); }
 
-  if ($("mobVisaoContas")) $("mobVisaoContas").textContent = dinheiro(saldoTotal());
+  if ($("mobVisaoContas")) { $("mobVisaoContas").textContent = dinheiro(saldoTotal()); aplicarCorValor($("mobVisaoContas"), saldoTotal()); }
   if ($("mobVisaoReceitas")) $("mobVisaoReceitas").textContent = dinheiro(receitas);
   if ($("mobVisaoDespesas")) $("mobVisaoDespesas").textContent = dinheiro(despesas);
   if ($("mobVisaoTransferencias")) $("mobVisaoTransferencias").textContent = dinheiro(0);
-  if ($("mobTotalContas")) $("mobTotalContas").textContent = dinheiro(saldoTotal());
+  if ($("mobTotalContas")) { $("mobTotalContas").textContent = dinheiro(saldoTotal()); aplicarCorValor($("mobTotalContas"), saldoTotal()); }
 
   const economia = receitas - despesas;
   const pctEconomia = receitas > 0 ? Math.max(0, Math.min(100, (economia / receitas) * 100)) : 0;
@@ -3107,9 +3120,11 @@ function mostrarTransacoes() {
     $("contaLancamentosNome").textContent = contaSelecionada?.nome || "Selecione uma conta";
   }
   if ($("contaLancamentosSaldo")) {
-    $("contaLancamentosSaldo").textContent = contaSelecionada ? dinheiro(saldoConta(contaSelecionada.id)) : dinheiro(0);
+    const sv = contaSelecionada ? saldoConta(contaSelecionada.id) : 0;
+    $("contaLancamentosSaldo").textContent = dinheiro(sv);
+    aplicarCorValor($("contaLancamentosSaldo"), sv);
   }
-  if ($("mobileSaldoConta")) $("mobileSaldoConta").textContent = contaSelecionada ? dinheiro(saldoConta(contaSelecionada.id)) : dinheiro(0);
+  if ($("mobileSaldoConta")) { const sv = contaSelecionada ? saldoConta(contaSelecionada.id) : 0; $("mobileSaldoConta").textContent = dinheiro(sv); aplicarCorValor($("mobileSaldoConta"), sv); }
   if ($("mobileContaLancamentos") && contaSelecionada) $("mobileContaLancamentos").value = String(contaSelecionada.id);
 
   const hojeFiltro = new Date();
@@ -4205,7 +4220,7 @@ function abrirListaContas() {
           <td>${escapeHTML(c.nome || "")}${c.ativo===false?' <span style="color:#999">(encerrada)</span>':""}</td>
           <td>${escapeHTML(numeroContaFormatado(c))}</td>
           <td>${escapeHTML(nomeBancoConta(c))}</td>
-          <td class="right">${dinheiro(saldoConta(c.id))}</td>
+          <td class="right ${saldoConta(c.id) < 0 ? "valor-negativo" : ""}">${dinheiro(saldoConta(c.id))}</td>
         </tr>
       `).join("")}
     `).join("");
