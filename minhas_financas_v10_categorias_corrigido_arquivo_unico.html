@@ -1,0 +1,2731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Finanças</title>
+  <style>
+*{box-sizing:border-box}
+:root{
+  --blue:#2d5f9f;
+  --blue-2:#3c73b8;
+  --line:#d8dde4;
+  --bg:#eef2f6;
+  --panel:#ffffff;
+  --text:#27313d;
+  --muted:#718096;
+  --green:#278b57;
+  --red:#c84b4b;
+  --orange:#d88a25;
+  --shadow:0 12px 28px rgba(29,48,73,.14);
+}
+html,body{margin:0;min-height:100%;font-family:"Segoe UI",Arial,sans-serif;color:var(--text);background:var(--bg)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.right{text-align:right}
+.muted{color:var(--muted)}
+.full{width:100%}
+
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#edf2f8,#dce7f2)}
+.auth-card{width:min(420px,100%);background:#fff;padding:30px;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px}
+.brand-mark{width:58px;height:58px;margin:0 auto 12px;display:grid;place-items:center;border-radius:15px;background:var(--blue);color:#fff;font-weight:700;font-size:21px}
+.auth-card h1{text-align:center;margin:0 0 4px}
+.auth-card>p{text-align:center;color:var(--muted)}
+.auth-form{display:grid;gap:8px;margin:24px 0 12px}
+.auth-form input{margin-bottom:8px}
+input,select,textarea{width:100%;border:1px solid #bec8d4;border-radius:6px;padding:9px 10px;background:#fff;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(60,115,184,.18);border-color:var(--blue-2)}
+textarea{min-height:86px;resize:vertical}
+.btn{border:1px solid #aeb8c5;border-radius:6px;padding:9px 14px;background:#fff;color:var(--text)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.success{background:var(--green);border-color:var(--green);color:#fff}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ghost{background:#f7f9fb}
+.msg{min-height:20px;color:var(--red);font-size:13px}
+
+.app{min-height:100vh;display:flex;flex-direction:column;background:#fff}
+.desktop-header{background:#fff;border-bottom:1px solid var(--line)}
+.window-title{height:34px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--line);font-size:12px}
+.window-title strong{margin-right:auto}
+.window-title span{color:var(--muted);margin-right:12px}
+.link-button,.text-action{border:0;background:none;color:var(--blue);padding:4px 6px}
+.top-tabs{height:40px;display:flex;align-items:end;padding-left:8px;overflow-x:auto}
+.top-tab{height:40px;border:0;border-bottom:3px solid transparent;background:#fff;padding:0 15px;font-size:11px;white-space:nowrap;color:#445}
+.top-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.ribbon{display:flex;gap:5px;padding:7px 10px;background:#f7f9fb;border-top:1px solid #f3f4f6;overflow-x:auto}
+.ribbon-action{min-width:94px;border:0;background:transparent;font-size:10px;color:#374151;padding:4px}
+.ribbon-action span{display:grid;width:34px;height:34px;margin:0 auto 4px;place-items:center;border:1px solid #c6d0dc;border-radius:4px;background:linear-gradient(#fff,#e8edf4);font-size:18px}
+
+.app-shell{flex:1;display:flex;min-height:0}
+.desktop-sidebar{width:250px;background:#fafbfd;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.sidebar-title{padding:16px 14px 10px;font-size:17px}
+.account-list{padding:0 10px}
+.account-item{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;padding:10px 5px;border-bottom:1px solid #eceff3}
+.account-icon{width:30px;height:30px;border-radius:7px;background:#e6edf6;display:grid;place-items:center;color:var(--blue)}
+.account-item small{display:block;color:var(--muted);margin-top:2px}
+.account-value{font-weight:600;font-size:12px}
+.sidebar-total{margin-top:auto;border-top:1px solid var(--line);padding:16px}
+.sidebar-total span{display:block;color:var(--muted);font-size:12px}
+.sidebar-total strong{display:block;font-size:24px;color:var(--blue);margin-top:5px}
+
+.content{flex:1;min-width:0;background:#f4f6f9;overflow:auto}
+.page{display:none;padding:20px;max-width:1500px;margin:0 auto}
+.page.active{display:block}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+.page-heading h1{font-size:22px;margin:0 0 4px;font-weight:500}
+.page-heading p{margin:0;color:var(--muted)}
+.heading-actions{display:flex;gap:8px}
+.period-nav{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:7px;padding:4px}
+.period-nav button{border:0;background:transparent;font-size:22px;color:var(--blue);width:30px;height:30px}
+.period-nav strong{min-width:130px;text-align:center}
+
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.summary-grid.small{grid-template-columns:repeat(2,minmax(0,240px))}
+.summary-card{background:#fff;border:1px solid var(--line);padding:16px;border-radius:8px;box-shadow:0 2px 8px rgba(25,42,67,.04)}
+.summary-card span{display:block;color:var(--muted);font-size:12px;margin-bottom:7px}
+.summary-card strong{font-size:24px;font-weight:600;color:var(--blue)}
+.summary-card.income strong{color:var(--green)}
+.summary-card.expense strong{color:var(--red)}
+
+.dashboard-grid{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.dashboard-grid.two{grid-template-columns:1fr 1fr}
+.panel{background:#fff;border:1px solid var(--line);border-radius:7px;margin-bottom:14px;overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid #e7ebef}
+.panel-head h2{margin:0;font-size:16px;font-weight:500}
+.compact-list{padding:4px 12px}
+.compact-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 0;border-bottom:1px solid #eef1f4}
+.compact-row:last-child{border-bottom:0}
+.compact-row small{display:block;color:var(--muted);margin-top:2px}
+.empty{padding:20px;color:var(--muted);text-align:center}
+.bars{height:190px;display:flex;justify-content:center;align-items:end;gap:50px;padding:25px 20px 18px}
+.bar-column{height:150px;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px}
+.bar{width:48px;min-height:4px;border-radius:4px 4px 0 0;transition:.25s}
+.income-bar{background:var(--green)}
+.expense-bar{background:var(--red)}
+.bar-column span{font-size:11px;color:var(--muted)}
+.category-summary{padding:12px}
+.category-row{margin-bottom:12px}
+.category-row-top{display:flex;justify-content:space-between;gap:8px;font-size:12px}
+.progress{height:7px;border-radius:999px;background:#eef1f4;overflow:hidden;margin-top:5px}
+.progress>span{display:block;height:100%;background:var(--blue)}
+
+.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(240px,1fr));gap:12px}
+.account-card,.simple-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px}
+.account-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.account-card h3,.simple-card h3{margin:0;font-size:16px}
+.account-card strong{font-size:22px;color:var(--blue)}
+
+.filters{display:grid;grid-template-columns:1fr 190px 190px;gap:10px;margin-bottom:12px}
+.table-wrap{background:#fff;border:1px solid var(--line);border-radius:7px;overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:780px}
+th,td{padding:10px 11px;border-bottom:1px solid #edf0f3;font-size:12px;text-align:left;vertical-align:middle}
+th{background:#f8f9fb;color:#5f6b78;font-weight:600}
+tr:last-child td{border-bottom:0}
+.money-income{color:var(--green);font-weight:600}
+.money-expense{color:var(--red);font-weight:600}
+.status-pill{display:inline-flex;padding:3px 7px;border-radius:999px;background:#eef2f6;font-size:10px}
+.status-pill.efetivada{background:#e4f5eb;color:#237246}
+.status-pill.pendente,.status-pill.prevista{background:#fff2d9;color:#9a6415}
+.row-actions{display:flex;justify-content:flex-end;gap:4px}
+.mini-btn{border:1px solid #ccd3dc;background:#fff;border-radius:4px;padding:4px 7px;font-size:11px}
+
+.tree{padding:12px}
+.tree-node{padding:5px 2px}
+.tree-node-line{display:flex;align-items:center;gap:7px}
+.tree-children{padding-left:22px;border-left:1px dotted #cad2dc;margin-left:7px}
+.tree-badge{font-size:10px;color:#fff;background:var(--blue);padding:2px 5px;border-radius:999px}
+.report-number{padding:24px 14px 5px;font-size:34px;font-weight:600;color:var(--blue)}
+.panel .muted{padding:0 14px 18px}
+
+.mobile-nav{display:none}
+
+.modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(25,32,42,.45)}
+.modal-card{position:relative;width:min(780px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:9px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-head{position:sticky;top:0;z-index:2;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid var(--line)}
+.modal-head h2{margin:0;font-size:18px;font-weight:500}
+.icon-btn{border:0;background:transparent;font-size:24px}
+.modal-body{padding:16px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field.full-span{grid-column:1/-1}
+.form-field label{font-size:12px;color:#596574}
+.form-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px;padding-top:8px}
+.inline-check{display:flex;align-items:center;gap:8px}
+.inline-check input{width:auto}
+.mobile-more{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mobile-more .btn{min-height:58px}
+
+@media(max-width:980px){
+  body{background:#f3f6f9}
+  .desktop-header{display:none}
+  .app-shell{padding-bottom:66px}
+  .desktop-sidebar{display:none}
+  .page{padding:13px}
+  .content{background:#f3f6f9}
+  .page-heading{align-items:flex-start}
+  .page-heading h1{font-size:20px}
+  .page-heading p{font-size:12px}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .dashboard-grid,.dashboard-grid.two{grid-template-columns:1fr}
+  .cards-grid{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr}
+  .heading-actions{display:grid}
+  .period-nav{position:absolute;right:13px;top:13px}
+  #principal .page-heading{padding-right:155px;min-height:48px}
+  .mobile-nav{position:fixed;z-index:500;left:0;right:0;bottom:0;height:64px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:max(0px,env(safe-area-inset-bottom))}
+  .mobile-item{border:0;background:#fff;color:#697586;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:18px}
+  .mobile-item span{font-size:9px}
+  .mobile-item.active{color:var(--blue)}
+  .mobile-plus{width:50px;height:50px;border-radius:50%;align-self:center;justify-self:center;background:var(--blue);color:#fff;font-size:28px;transform:translateY(-9px);box-shadow:0 6px 15px rgba(45,95,159,.25)}
+  .modal{padding:0;align-items:end}
+  .modal-card{width:100%;max-height:94vh;border-radius:16px 16px 0 0}
+  .form-grid{grid-template-columns:1fr}
+  .form-field.full-span,.form-actions{grid-column:auto}
+  .form-actions{position:sticky;bottom:0;background:#fff;padding:10px 0 0}
+}
+
+@media(max-width:560px){
+  .summary-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .summary-card{padding:12px}
+  .summary-card strong{font-size:18px}
+  .page-heading{margin-bottom:12px}
+  .period-nav strong{min-width:92px;font-size:11px}
+  .period-nav{gap:2px}
+  .panel-head h2{font-size:14px}
+}
+
+
+/* ===== CATEGORIAS - LAYOUT DESKTOP TIPO PROGRAMA ANTIGO ===== */
+.categories-sidebar-menu{display:none}
+
+.category-legacy-shell{background:#fff;border:1px solid #cfd5db;min-height:610px}
+.category-legacy-header{height:32px;display:flex;align-items:center;padding:0 8px;background:#f5f5f5;border-bottom:1px solid #cfd5db;font-size:15px}
+.category-legacy-grid{display:grid;grid-template-columns:300px 1fr;min-height:575px}
+.legacy-category-left{border-right:1px solid #cfd5db;background:#fff}
+.legacy-category-right{min-width:0;background:#fff}
+.legacy-pane-title{height:32px;display:flex;align-items:center;padding:0 8px;background:#f2f2f2;border-bottom:1px solid #cfd5db;font-size:14px}
+.legacy-nav-tree{padding:6px 4px 20px;font-size:12px}
+.legacy-nav-group{margin-bottom:4px}
+.legacy-nav-group-title{padding:3px 5px;font-weight:600}
+.legacy-nav-item{display:block;width:100%;border:0;background:transparent;text-align:left;padding:4px 6px 4px 28px;font-size:12px;color:#222}
+.legacy-nav-item:hover{background:#eef5ff}
+.legacy-nav-item.active{background:#5b9bd5;color:#fff}
+.legacy-toolbar{height:54px;display:flex;gap:4px;align-items:center;padding:4px 6px;border-bottom:1px solid #d7dce1;background:#fafafa}
+.legacy-toolbar-btn{width:70px;height:44px;border:1px solid transparent;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;border-radius:3px}
+.legacy-toolbar-btn small{font-size:10px;margin-top:2px}
+.legacy-toolbar-btn:hover:not(:disabled){background:#eef5ff;border-color:#c9d9eb}
+.legacy-toolbar-btn:disabled{opacity:.35;cursor:default}
+.legacy-plan-view{display:grid;grid-template-columns:1fr 1fr;min-height:488px}
+.legacy-plan-column{border-right:1px solid #d9dde1;min-width:0}
+.legacy-plan-column:last-child{border-right:0}
+.legacy-plan-head{height:35px;display:flex;align-items:center;padding:0 10px;border-bottom:1px solid #d7dce1;font-size:15px;font-weight:600}
+.legacy-plan-head.receita{color:#006fc9}
+.legacy-plan-head.despesa{color:#e11}
+.legacy-tree{padding:4px 6px 20px;font-size:12px;min-height:448px}
+.legacy-single-view{min-height:488px}
+.legacy-placeholder{min-height:488px;display:grid;place-items:center;color:#7c8794}
+.legacy-node{user-select:none}
+.legacy-node-row{display:flex;align-items:center;gap:3px;min-height:22px;padding:1px 2px;cursor:pointer;border:1px solid transparent}
+.legacy-node-row:hover{background:#eef5ff}
+.legacy-node-row.selected{background:#cfe5ff;border-color:#9fc5ef}
+.legacy-toggle{width:16px;height:16px;border:0;background:transparent;padding:0;font-size:10px;line-height:16px}
+.legacy-toggle.empty{visibility:hidden}
+.legacy-icon{width:15px;text-align:center}
+.legacy-node-name{font-size:12px;white-space:nowrap}
+.legacy-children{padding-left:18px;margin-left:6px;border-left:1px dotted #b9b9b9}
+.legacy-children.collapsed{display:none}
+.cat-context-menu{position:fixed;z-index:2500;min-width:175px;background:#fff;border:1px solid #bfc8d2;border-radius:2px;box-shadow:0 8px 20px rgba(0,0,0,.18);padding:2px}
+.cat-context-menu button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:6px 9px;font-size:12px}
+.cat-context-menu button:hover{background:#e7f1fb}
+.cat-context-menu button.danger{color:#b70000}
+
+/* NORMAL: só mostra contas/carteira */
+body:not(.categories-mode) .categories-sidebar-menu{display:none !important}
+
+/* CATEGORIAS: usa a lateral verdadeira no lugar da carteira */
+body.categories-mode .desktop-sidebar{
+  display:flex !important;
+  width:305px !important;
+  min-width:305px !important;
+  background:#fff !important;
+  border-right:1px solid #cfd5db !important;
+}
+body.categories-mode .desktop-sidebar > .sidebar-title,
+body.categories-mode .desktop-sidebar > .account-list,
+body.categories-mode .desktop-sidebar > .sidebar-total{
+  display:none !important;
+}
+body.categories-mode .desktop-sidebar > #categoriesSidebarMenu{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  overflow:auto !important;
+}
+body.categories-mode .content{
+  flex:1 1 auto !important;
+  width:auto !important;
+}
+body.categories-mode #categorias.page{
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+body.categories-mode #categorias .category-legacy-header{display:none !important}
+body.categories-mode #categorias .category-legacy-grid{
+  display:block !important;
+  width:100% !important;
+  min-height:calc(100vh - 116px) !important;
+}
+body.categories-mode #categorias .legacy-category-left{display:none !important}
+body.categories-mode #categorias .legacy-category-right{width:100% !important}
+body.categories-mode #categoriesSidebarMenu .legacy-nav-tree{
+  display:block !important;
+  padding:6px 4px 20px !important;
+}
+body.categories-mode #categoriesSidebarMenu .legacy-nav-group{
+  display:block !important;
+  width:100% !important;
+}
+body.categories-mode #categoriesSidebarMenu .legacy-nav-item{
+  display:block !important;
+  width:100% !important;
+  text-align:left !important;
+  white-space:nowrap !important;
+}
+
+@media(max-width:980px){
+  body.categories-mode .desktop-sidebar{display:none !important}
+  body.categories-mode #categorias.page{padding:13px !important}
+  body.categories-mode #categorias .category-legacy-header{display:flex !important}
+  body.categories-mode #categorias .category-legacy-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+  body.categories-mode #categorias .legacy-category-left{display:block !important}
+  .legacy-plan-view{grid-template-columns:1fr}
+  .legacy-plan-column{border-right:0;border-bottom:1px solid #d9dde1}
+}
+
+</style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <section id="telaLogin" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand-mark">MF</div>
+      <h1>Minhas Finanças</h1>
+      <p>Controle financeiro pessoal e empresarial</p>
+
+      <form id="formLogin" class="auth-form">
+        <label for="emailLogin">E-mail</label>
+        <input id="emailLogin" type="email" autocomplete="email" required>
+
+        <label for="senhaLogin">Senha</label>
+        <input id="senhaLogin" type="password" autocomplete="current-password" required>
+
+        <button type="submit" class="btn primary full">Entrar</button>
+      </form>
+
+      <button id="btnMostrarCadastro" class="btn ghost full" type="button">Criar conta</button>
+      <p id="mensagemLogin" class="msg"></p>
+    </div>
+  </section>
+
+  <!-- CADASTRO -->
+  <section id="telaCadastro" class="auth-screen hidden">
+    <div class="auth-card">
+      <div class="brand-mark">MF</div>
+      <h1>Criar conta</h1>
+
+      <form id="formCadastro" class="auth-form">
+        <label for="emailCadastro">E-mail</label>
+        <input id="emailCadastro" type="email" required>
+
+        <label for="senhaCadastro">Senha</label>
+        <input id="senhaCadastro" type="password" minlength="6" required>
+
+        <button type="submit" class="btn primary full">Cadastrar</button>
+      </form>
+
+      <button id="btnVoltarLogin" class="btn ghost full" type="button">Voltar</button>
+      <p id="mensagemCadastro" class="msg"></p>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <div id="app" class="app hidden">
+    <header class="desktop-header">
+      <div class="window-title">
+        <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v10 Categorias</span></strong>
+        <span id="emailUsuario"></span>
+        <button id="btnSair" type="button" class="link-button">Sair</button>
+      </div>
+
+      <nav class="top-tabs">
+        <button class="top-tab active" data-page="principal">PRINCIPAL</button>
+        <button class="top-tab" data-page="lancamentos">LANÇAMENTOS</button>
+        <button class="top-tab" data-page="programacao">PROGRAMAÇÃO</button>
+        <button class="top-tab" data-page="planejamento">PLANEJAMENTO</button>
+        <button class="top-tab" data-page="pessoas">CLIENTES E FORNECEDORES</button>
+        <button class="top-tab" data-page="relatorios">GRÁFICOS E RELATÓRIOS</button>
+        <button class="top-tab" data-page="categorias">CATEGORIAS</button>
+      </nav>
+
+      <div class="ribbon">
+        <button class="ribbon-action" data-page="lancamentos">
+          <span>＋</span>
+          Novo lançamento
+        </button>
+        <button class="ribbon-action" data-open="novaConta">
+          <span>🏦</span>
+          Nova conta
+        </button>
+        <button class="ribbon-action" data-open="novaTransferencia">
+          <span>⇄</span>
+          Transferência
+        </button>
+        <button class="ribbon-action" data-page="programacao">
+          <span>📅</span>
+          Programação
+        </button>
+        <button class="ribbon-action" data-page="planejamento">
+          <span>📊</span>
+          Planejamento
+        </button>
+        <button class="ribbon-action" data-page="pessoas">
+          <span>👥</span>
+          Pessoas
+        </button>
+        <button class="ribbon-action" data-page="categorias">
+          <span>🗂️</span>
+          Categorias
+        </button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="desktop-sidebar">
+        <div id="categoriesSidebarMenu" class="categories-sidebar-menu">
+          <div class="legacy-pane-title">Categorias Disponíveis</div>
+
+          <div class="legacy-nav-tree">
+            <div class="legacy-nav-group">
+              <div class="legacy-nav-group-title">⌄ 📁 Geral</div>
+              <button class="legacy-nav-item" data-cat-screen="cargos">▦ Cargos e Funções</button>
+              <button class="legacy-nav-item" data-cat-screen="categorias_pessoas">▦ Categorias de Cliente / Fornecedor</button>
+              <button class="legacy-nav-item" data-cat-screen="classificacao_pessoas">▦ Classificação de Cliente / Fornecedor</button>
+              <button class="legacy-nav-item" data-cat-screen="estados">▦ Estados/Municípios</button>
+            </div>
+
+            <div class="legacy-nav-group">
+              <div class="legacy-nav-group-title">⌄ 📁 Financeiro</div>
+              <button class="legacy-nav-item" data-cat-screen="bancos">▦ Bancos</button>
+              <button class="legacy-nav-item" data-cat-screen="tipos_documento">▦ Tipos de Documento</button>
+              <button class="legacy-nav-item" data-cat-screen="tipos_conta">▦ Tipos de Contas</button>
+              <button class="legacy-nav-item active" data-cat-screen="plano">▦ Plano de Contas</button>
+              <button class="legacy-nav-item" data-cat-screen="centro">▦ Centro de Custos</button>
+              <button class="legacy-nav-item" data-cat-screen="moedas">▦ Moedas</button>
+              <button class="legacy-nav-item" data-cat-screen="categorias_extrato">▦ Categorias de Extratos</button>
+            </div>
+
+            <div class="legacy-nav-group">
+              <div class="legacy-nav-group-title">⌄ 📁 Cobrança</div>
+              <button class="legacy-nav-item" data-cat-screen="formas">▦ Meios de Pagamento</button>
+            </div>
+
+            <div class="legacy-nav-group">
+              <div class="legacy-nav-group-title">⌄ 📁 Segurança</div>
+              <button class="legacy-nav-item" data-cat-screen="grupos">▦ Grupos</button>
+              <button class="legacy-nav-item" data-cat-screen="usuarios">▦ Usuários</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-title">Contas de movimentação</div>
+        <div id="listaContasSidebar" class="account-list"></div>
+
+        <div class="sidebar-total">
+          <span>Saldo total</span>
+          <strong id="saldoSidebar">R$ 0,00</strong>
+        </div>
+      </aside>
+
+      <section class="content">
+        <!-- PRINCIPAL -->
+        <section id="principal" class="page active">
+          <div class="page-heading">
+            <div>
+              <h1>Principal</h1>
+              <p>Visão geral da sua vida financeira.</p>
+            </div>
+            <div class="period-nav">
+              <button id="mesAnterior" type="button">‹</button>
+              <strong id="nomeMes"></strong>
+              <button id="mesSeguinte" type="button">›</button>
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span>Saldo atual</span>
+              <strong id="saldoAtual">R$ 0,00</strong>
+            </article>
+            <article class="summary-card income">
+              <span>Receitas do mês</span>
+              <strong id="receitasMes">R$ 0,00</strong>
+            </article>
+            <article class="summary-card expense">
+              <span>Despesas do mês</span>
+              <strong id="despesasMes">R$ 0,00</strong>
+            </article>
+            <article class="summary-card">
+              <span>Saldo previsto</span>
+              <strong id="saldoPrevisto">R$ 0,00</strong>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Contas</h2>
+                <button class="text-action" data-page="contas">Gerenciar</button>
+              </div>
+              <div id="contasResumo"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Receitas x Despesas</h2>
+              </div>
+              <div class="bars">
+                <div class="bar-column">
+                  <div id="barraReceita" class="bar income-bar"></div>
+                  <span>Receitas</span>
+                </div>
+                <div class="bar-column">
+                  <div id="barraDespesa" class="bar expense-bar"></div>
+                  <span>Despesas</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Despesas por categoria</h2>
+              </div>
+              <div id="resumoCategorias" class="category-summary"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Próximos vencimentos</h2>
+              <button class="text-action" data-page="programacao">Ver programação</button>
+            </div>
+            <div id="proximosVencimentos" class="compact-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Últimos lançamentos</h2>
+              <button class="text-action" data-page="lancamentos">Ver todos</button>
+            </div>
+            <div id="ultimosLancamentos" class="compact-list"></div>
+          </article>
+        </section>
+
+        <!-- CONTAS -->
+        <section id="contas" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Contas</h1>
+              <p>Bancos, carteiras e demais contas financeiras.</p>
+            </div>
+            <button class="btn primary" data-open="novaConta">Nova conta</button>
+          </div>
+
+          <div id="listaContas" class="cards-grid"></div>
+        </section>
+
+        <!-- LANÇAMENTOS -->
+        <section id="lancamentos" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Lançamentos</h1>
+              <p>Receitas e despesas realizadas ou pendentes.</p>
+            </div>
+            <div class="heading-actions">
+              <button class="btn success" data-open="novaReceita">Nova receita</button>
+              <button class="btn danger" data-open="novaDespesa">Nova despesa</button>
+            </div>
+          </div>
+
+          <div class="filters">
+            <input id="buscaTransacao" type="search" placeholder="Pesquisar lançamento...">
+            <select id="filtroTipo">
+              <option value="todos">Todos os tipos</option>
+              <option value="receita">Receitas</option>
+              <option value="despesa">Despesas</option>
+            </select>
+            <select id="filtroStatus">
+              <option value="todos">Todas as situações</option>
+              <option value="efetivada">Efetivadas</option>
+              <option value="pendente">Pendentes</option>
+              <option value="prevista">Previstas</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                  <th>Conta</th>
+                  <th>Plano de conta</th>
+                  <th>Situação</th>
+                  <th class="right">Valor</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tabelaTransacoes"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- PROGRAMAÇÃO -->
+        <section id="programacao" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Programação</h1>
+              <p>Contas a pagar, contas a receber e recorrências.</p>
+            </div>
+            <button class="btn primary" data-open="novaProgramacao">Nova programação</button>
+          </div>
+
+          <div class="summary-grid small">
+            <article class="summary-card income">
+              <span>A receber</span>
+              <strong id="totalAReceber">R$ 0,00</strong>
+            </article>
+            <article class="summary-card expense">
+              <span>A pagar</span>
+              <strong id="totalAPagar">R$ 0,00</strong>
+            </article>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vencimento</th>
+                  <th>Descrição</th>
+                  <th>Tipo</th>
+                  <th>Parcela</th>
+                  <th>Status</th>
+                  <th class="right">Valor</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tabelaProgramacao"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- PLANEJAMENTO -->
+        <section id="planejamento" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Planejamento</h1>
+              <p>Orçamento anual por plano de conta e mês.</p>
+            </div>
+            <button class="btn primary" data-open="novoOrcamento">Novo orçamento</button>
+          </div>
+
+          <div class="planning-toolbar">
+            <div class="form-field">
+              <label>Orçamento atual</label>
+              <select id="orcamentoSelecionado"></select>
+            </div>
+            <div class="form-field">
+              <label>Mês para comparação</label>
+              <select id="mesPlanejamento"></select>
+            </div>
+            <button id="btnExcluirOrcamento" class="btn danger" type="button">Excluir orçamento</button>
+          </div>
+
+          <div id="listaOrcamentos" class="cards-grid"></div>
+
+          <article class="panel" id="painelMatrizOrcamento">
+            <div class="panel-head">
+              <h2>Valores previstos por mês</h2>
+              <span class="muted">Os valores são salvos ao sair de cada campo.</span>
+            </div>
+            <div class="table-wrap planning-table-wrap">
+              <table class="planning-table">
+                <thead>
+                  <tr>
+                    <th>Plano de conta</th>
+                    <th>Tipo</th>
+                    <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th>
+                    <th>Mai</th><th>Jun</th><th>Jul</th><th>Ago</th>
+                    <th>Set</th><th>Out</th><th>Nov</th><th>Dez</th>
+                  </tr>
+                </thead>
+                <tbody id="matrizOrcamento"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <div class="dashboard-grid two">
+            <article class="panel">
+              <div class="panel-head"><h2>Previsto x Realizado</h2></div>
+              <div id="comparativoOrcamento" class="compact-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><h2>Resumo do orçamento</h2></div>
+              <div id="resumoOrcamento" class="compact-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- PESSOAS -->
+        <section id="pessoas" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Clientes e Fornecedores</h1>
+              <p>Cadastre as pessoas relacionadas aos seus lançamentos.</p>
+            </div>
+            <button class="btn primary" data-open="novaPessoa">Nova pessoa</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Papel</th>
+                  <th>Tipo</th>
+                  <th>Telefone</th>
+                  <th>E-mail</th>
+                  <th>Cidade</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tabelaPessoas"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RELATÓRIOS -->
+        <section id="relatorios" class="page">
+          <div class="page-heading">
+            <div>
+              <h1>Gráficos e Relatórios</h1>
+              <p>Filtre e analise sua movimentação financeira.</p>
+            </div>
+            <button id="btnExportarCSV" class="btn" type="button">Exportar CSV</button>
+          </div>
+
+          <div class="report-filters">
+            <div class="form-field"><label>Data inicial</label><input id="relDataIni" type="date"></div>
+            <div class="form-field"><label>Data final</label><input id="relDataFim" type="date"></div>
+            <div class="form-field"><label>Conta</label><select id="relConta"></select></div>
+            <div class="form-field"><label>Tipo</label>
+              <select id="relTipo">
+                <option value="todos">Todos</option>
+                <option value="receita">Receitas</option>
+                <option value="despesa">Despesas</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Status</label>
+              <select id="relStatus">
+                <option value="todos">Todos</option>
+                <option value="efetivada">Efetivadas</option>
+                <option value="pendente">Pendentes</option>
+                <option value="prevista">Previstas</option>
+              </select>
+            </div>
+            <button id="btnAtualizarRelatorio" class="btn primary" type="button">Atualizar relatório</button>
+          </div>
+
+          <div class="summary-grid small report-summary">
+            <article class="summary-card income"><span>Receitas</span><strong id="relReceitas">R$ 0,00</strong></article>
+            <article class="summary-card expense"><span>Despesas</span><strong id="relDespesas">R$ 0,00</strong></article>
+            <article class="summary-card"><span>Resultado</span><strong id="resultadoMes">R$ 0,00</strong></article>
+          </div>
+
+          <div class="dashboard-grid two">
+            <article class="panel">
+              <div class="panel-head"><h2>Resumo por plano de conta</h2></div>
+              <div id="relatorioCategorias" class="compact-list"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head"><h2>Movimentação</h2></div>
+              <div id="relatorioMovimentacao" class="compact-list"></div>
+            </article>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th><th>Descrição</th><th>Conta</th><th>Plano de conta</th>
+                  <th>Status</th><th class="right">Valor</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaRelatorio"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CATEGORIAS -->
+        <section id="categorias" class="page">
+          <div class="category-legacy-shell">
+            <div class="category-legacy-header">Categorias</div>
+
+            <div class="category-legacy-grid">
+              <aside class="legacy-category-left">
+                <div class="legacy-pane-title">Categorias Disponíveis</div>
+
+                <div class="legacy-nav-tree">
+                  <div class="legacy-nav-group">
+                    <div class="legacy-nav-group-title">⌄ 📁 Geral</div>
+                    <button class="legacy-nav-item" data-cat-screen="cargos">▦ Cargos e Funções</button>
+                    <button class="legacy-nav-item" data-cat-screen="categorias_pessoas">▦ Categorias de Cliente / Fornecedor</button>
+                    <button class="legacy-nav-item" data-cat-screen="classificacao_pessoas">▦ Classificação de Cliente / Fornecedor</button>
+                    <button class="legacy-nav-item" data-cat-screen="estados">▦ Estados/Municípios</button>
+                  </div>
+
+                  <div class="legacy-nav-group">
+                    <div class="legacy-nav-group-title">⌄ 📁 Financeiro</div>
+                    <button class="legacy-nav-item" data-cat-screen="bancos">▦ Bancos</button>
+                    <button class="legacy-nav-item" data-cat-screen="tipos_documento">▦ Tipos de Documento</button>
+                    <button class="legacy-nav-item" data-cat-screen="tipos_conta">▦ Tipos de Contas</button>
+                    <button class="legacy-nav-item active" data-cat-screen="plano">▦ Plano de Contas</button>
+                    <button class="legacy-nav-item" data-cat-screen="centro">▦ Centro de Custos</button>
+                    <button class="legacy-nav-item" data-cat-screen="moedas">▦ Moedas</button>
+                    <button class="legacy-nav-item" data-cat-screen="categorias_extrato">▦ Categorias de Extratos</button>
+                  </div>
+
+                  <div class="legacy-nav-group">
+                    <div class="legacy-nav-group-title">⌄ 📁 Cobrança</div>
+                    <button class="legacy-nav-item" data-cat-screen="formas">▦ Meios de Pagamento</button>
+                  </div>
+
+                  <div class="legacy-nav-group">
+                    <div class="legacy-nav-group-title">⌄ 📁 Segurança</div>
+                    <button class="legacy-nav-item" data-cat-screen="grupos">▦ Grupos</button>
+                    <button class="legacy-nav-item" data-cat-screen="usuarios">▦ Usuários</button>
+                  </div>
+                </div>
+              </aside>
+
+              <section class="legacy-category-right">
+                <div id="legacyRightTitle" class="legacy-pane-title">Plano de Contas</div>
+
+                <div id="legacyToolbar" class="legacy-toolbar">
+                  <button id="catBtnNovoRaiz" class="legacy-toolbar-btn" type="button">
+                    <span>🆕</span><small>Novo</small>
+                  </button>
+                  <button id="catBtnNovoFilho" class="legacy-toolbar-btn" type="button" disabled>
+                    <span>➕</span><small>Nova dentro</small>
+                  </button>
+                  <button id="catBtnEditar" class="legacy-toolbar-btn" type="button" disabled>
+                    <span>✏️</span><small>Editar</small>
+                  </button>
+                  <button id="catBtnExcluir" class="legacy-toolbar-btn" type="button" disabled>
+                    <span>🗑️</span><small>Excluir</small>
+                  </button>
+                </div>
+
+                <div id="legacyPlanoView" class="legacy-plan-view">
+                  <section class="legacy-plan-column">
+                    <div class="legacy-plan-head receita">📁 Receitas</div>
+                    <div id="arvoreReceitas" class="legacy-tree"></div>
+                  </section>
+
+                  <section class="legacy-plan-column">
+                    <div class="legacy-plan-head despesa">📁 Despesas</div>
+                    <div id="arvoreDespesas" class="legacy-tree"></div>
+                  </section>
+                </div>
+
+                <div id="legacyCentroView" class="legacy-single-view hidden">
+                  <div id="arvoreCentroUnico" class="legacy-tree"></div>
+                </div>
+
+                <div id="legacyPlaceholderView" class="legacy-placeholder hidden">
+                  <div>
+                    <strong id="legacyPlaceholderTitle">Categoria</strong>
+                    <p>Esta área será implementada depois.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- MOBILE -->
+    <nav class="mobile-nav">
+      <button class="mobile-item active" data-page="principal">⌂<span>Início</span></button>
+      <button class="mobile-item" data-page="lancamentos">☷<span>Lançamentos</span></button>
+      <button class="mobile-item mobile-plus" data-open="mobileNovo">＋</button>
+      <button class="mobile-item" data-page="programacao">◷<span>Programação</span></button>
+      <button class="mobile-item" data-page="mobileMais">☰<span>Mais</span></button>
+    </nav>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modalTitulo">Cadastro</h2>
+        <button type="button" class="icon-btn" data-close-modal>×</button>
+      </div>
+      <div id="modalConteudo" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+// ============================================================
+// MINHAS FINANÇAS - NOVA VERSÃO
+// ============================================================
+
+const SUPABASE_URL = "https://ibqrxueyxrresvarfggm.supabase.co";
+const SUPABASE_KEY = "sb_publishable_K9BnZiIWoPCsxcP93FHL7g_vswpNF8r";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let usuarioAtual = null;
+let contas = [];
+let transacoes = [];
+let pessoas = [];
+let planoContas = [];
+let centrosCusto = [];
+let formasPagamento = [];
+let programacoes = [];
+let parcelas = [];
+let orcamentos = [];
+let orcamentoItens = [];
+let orcamentoSelecionadoId = null;
+let relatorioAtual = [];
+let categoriaModuloAtual = "plano";
+let categoriaSelecionadaId = null;
+const categoriaExpandidos = new Set();
+
+
+const agora = new Date();
+let mesAtual = agora.getMonth();
+let anoAtual = agora.getFullYear();
+
+const meses = [
+  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+];
+
+const $ = (id) => document.getElementById(id);
+
+function dinheiro(valor) {
+  return Number(valor || 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}
+
+function dataBR(data) {
+  if (!data) return "";
+  const [a,m,d] = String(data).split("-");
+  if (!a || !m || !d) return data;
+  return `${d}/${m}/${a}`;
+}
+
+function hojeISO() {
+  const d = new Date();
+  const a = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const dia = String(d.getDate()).padStart(2,"0");
+  return `${a}-${m}-${dia}`;
+}
+
+function escapeHTML(v) {
+  return String(v ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function idNome(lista, id, fallback = "") {
+  const item = lista.find(x => Number(x.id) === Number(id));
+  return item ? item.nome : fallback;
+}
+
+function referenciaData(t) {
+  return t.data_vencimento || t.data_lancamento;
+}
+
+function doMes(t) {
+  const data = referenciaData(t);
+  if (!data) return false;
+  const [a,m] = data.split("-").map(Number);
+  return a === anoAtual && (m - 1) === mesAtual;
+}
+
+function atualizarNomeMes() {
+  $("nomeMes").textContent = `${meses[mesAtual]} ${anoAtual}`;
+}
+
+function mostrarTelaLogin() {
+  $("telaLogin").classList.remove("hidden");
+  $("telaCadastro").classList.add("hidden");
+  $("app").classList.add("hidden");
+}
+
+function mostrarTelaCadastro() {
+  $("telaLogin").classList.add("hidden");
+  $("telaCadastro").classList.remove("hidden");
+  $("app").classList.add("hidden");
+}
+
+function mostrarApp() {
+  $("telaLogin").classList.add("hidden");
+  $("telaCadastro").classList.add("hidden");
+  $("app").classList.remove("hidden");
+}
+
+async function pegarUsuario() {
+  const { data } = await supabaseClient.auth.getUser();
+  return data.user;
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+
+$("btnMostrarCadastro").addEventListener("click", mostrarTelaCadastro);
+$("btnVoltarLogin").addEventListener("click", mostrarTelaLogin);
+
+$("formLogin").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("mensagemLogin").textContent = "Entrando...";
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: $("emailLogin").value.trim(),
+    password: $("senhaLogin").value
+  });
+
+  if (error) {
+    $("mensagemLogin").textContent = "Erro: " + error.message;
+    return;
+  }
+
+  usuarioAtual = data.user;
+  $("mensagemLogin").textContent = "";
+  iniciarSistema();
+});
+
+$("formCadastro").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("mensagemCadastro").textContent = "Cadastrando...";
+
+  const { error } = await supabaseClient.auth.signUp({
+    email: $("emailCadastro").value.trim(),
+    password: $("senhaCadastro").value
+  });
+
+  if (error) {
+    $("mensagemCadastro").textContent = "Erro: " + error.message;
+    return;
+  }
+
+  $("mensagemCadastro").textContent = "Cadastro criado. Agora faça o login.";
+});
+
+$("btnSair").addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  usuarioAtual = null;
+  mostrarTelaLogin();
+});
+
+// ============================================================
+// NAVEGAÇÃO
+// ============================================================
+
+function abrirPagina(nome) {
+  document.body.classList.toggle("categories-mode", nome === "categorias");
+
+  if (nome === "mobileMais") {
+    abrirModal("Mais", `
+      <div class="mobile-more">
+        <button class="btn" data-go="contas">Contas</button>
+        <button class="btn" data-go="planejamento">Planejamento</button>
+        <button class="btn" data-go="pessoas">Clientes e Fornecedores</button>
+        <button class="btn" data-go="relatorios">Relatórios</button>
+        <button class="btn" data-go="categorias">Categorias</button>
+      </div>
+    `);
+
+    document.querySelectorAll("[data-go]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        fecharModal();
+        abrirPagina(btn.dataset.go);
+      });
+    });
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  const pagina = $(nome);
+  if (pagina) pagina.classList.add("active");
+
+  document.querySelectorAll("[data-page]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === nome);
+  });
+}
+
+document.addEventListener("click", (e) => {
+  const pag = e.target.closest("[data-page]");
+  if (pag) abrirPagina(pag.dataset.page);
+
+  const abrir = e.target.closest("[data-open]");
+  if (abrir) tratarAbertura(abrir.dataset.open);
+});
+
+$("mesAnterior").addEventListener("click", () => {
+  mesAtual--;
+  if (mesAtual < 0) {
+    mesAtual = 11;
+    anoAtual--;
+  }
+  atualizarInterface();
+});
+
+$("mesSeguinte").addEventListener("click", () => {
+  mesAtual++;
+  if (mesAtual > 11) {
+    mesAtual = 0;
+    anoAtual++;
+  }
+  atualizarInterface();
+});
+
+// ============================================================
+// MODAL
+// ============================================================
+
+function abrirModal(titulo, html) {
+  $("modalTitulo").textContent = titulo;
+  $("modalConteudo").innerHTML = html;
+  $("modal").classList.remove("hidden");
+}
+
+function fecharModal() {
+  $("modal").classList.add("hidden");
+  $("modalConteudo").innerHTML = "";
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-close-modal]")) fecharModal();
+});
+
+function optionLista(lista, selecionado = "", vazio = "Selecione") {
+  let html = `<option value="">${escapeHTML(vazio)}</option>`;
+  for (const item of lista) {
+    html += `<option value="${item.id}" ${String(item.id) === String(selecionado) ? "selected" : ""}>${escapeHTML(item.nome)}</option>`;
+  }
+  return html;
+}
+
+// ============================================================
+// DADOS
+// ============================================================
+
+async function carregarDados() {
+  if (!usuarioAtual) return;
+
+  const uid = usuarioAtual.id;
+
+  const [
+    contasResp,
+    transResp,
+    pessoasResp,
+    planoResp,
+    centrosResp,
+    formasResp,
+    progResp,
+    parcelasResp,
+    orcResp,
+    orcItensResp
+  ] = await Promise.all([
+    supabaseClient.from("fin_contas").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_transacoes").select("*").eq("user_id", uid).order("data_lancamento", { ascending: false }).order("id", { ascending: false }),
+    supabaseClient.from("fin_pessoas").select("*").eq("user_id", uid).order("nome"),
+    supabaseClient.from("fin_plano_contas").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_centros_custo").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_formas_pagamento").select("*").eq("user_id", uid).order("ordem").order("nome"),
+    supabaseClient.from("fin_programacoes").select("*").eq("user_id", uid).order("created_at", { ascending: false }),
+    supabaseClient.from("fin_programacao_parcelas").select("*").eq("user_id", uid).order("data_vencimento"),
+    supabaseClient.from("fin_orcamentos").select("*").eq("user_id", uid).order("ano", { ascending: false }),
+    supabaseClient.from("fin_orcamento_itens").select("*").eq("user_id", uid)
+  ]);
+
+  const erros = [contasResp,transResp,pessoasResp,planoResp,centrosResp,formasResp,progResp,parcelasResp,orcResp,orcItensResp]
+    .map(x => x.error).filter(Boolean);
+
+  if (erros.length) {
+    console.error("Erros ao carregar:", erros);
+    alert("Alguns dados não puderam ser carregados. Veja o Console do navegador.");
+  }
+
+  contas = contasResp.data || [];
+  transacoes = transResp.data || [];
+  pessoas = pessoasResp.data || [];
+  planoContas = planoResp.data || [];
+  centrosCusto = centrosResp.data || [];
+  formasPagamento = formasResp.data || [];
+  programacoes = progResp.data || [];
+  parcelas = parcelasResp.data || [];
+  orcamentos = orcResp.data || [];
+  orcamentoItens = orcItensResp.data || [];
+
+  if (!orcamentoSelecionadoId && orcamentos.length) orcamentoSelecionadoId = orcamentos[0].id;
+  if (orcamentoSelecionadoId && !orcamentos.some(o => Number(o.id) === Number(orcamentoSelecionadoId))) {
+    orcamentoSelecionadoId = orcamentos[0]?.id || null;
+  }
+
+  atualizarInterface();
+}
+
+function saldoConta(contaId) {
+  const conta = contas.find(c => Number(c.id) === Number(contaId));
+  let saldo = Number(conta?.saldo_inicial || 0);
+
+  for (const t of transacoes) {
+    if (Number(t.conta_id) !== Number(contaId)) continue;
+    if (t.status !== "efetivada") continue;
+    saldo += t.tipo === "receita" ? Number(t.valor || 0) : -Number(t.valor || 0);
+  }
+
+  return saldo;
+}
+
+function saldoTotal() {
+  return contas.filter(c => c.ativo !== false).reduce((s,c) => s + saldoConta(c.id), 0);
+}
+
+function atualizarInterface() {
+  atualizarNomeMes();
+  mostrarContas();
+  mostrarDashboard();
+  mostrarTransacoes();
+  mostrarProgramacao();
+  mostrarPessoas();
+  mostrarGerenciadorCategorias();
+  mostrarOrcamentos();
+  mostrarRelatorios();
+}
+
+// ============================================================
+// DASHBOARD / CONTAS
+// ============================================================
+
+function mostrarContas() {
+  const ativas = contas.filter(c => c.ativo !== false);
+
+  $("listaContasSidebar").innerHTML = ativas.length ? ativas.map(c => `
+    <div class="account-item">
+      <div class="account-icon">🏦</div>
+      <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
+      <div class="account-value">${dinheiro(saldoConta(c.id))}</div>
+    </div>
+  `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
+
+  $("saldoSidebar").textContent = dinheiro(saldoTotal());
+
+  $("contasResumo").innerHTML = ativas.length ? ativas.map(c => `
+    <div class="compact-row">
+      <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
+      <strong>${dinheiro(saldoConta(c.id))}</strong>
+    </div>
+  `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
+
+  const todas = contas;
+  $("listaContas").innerHTML = todas.length ? todas.map(c => `
+    <article class="account-card" style="${c.ativo===false ? "opacity:.6" : ""}">
+      <div class="account-card-top">
+        <div>
+          <h3>${escapeHTML(c.nome)}</h3>
+          <small>${escapeHTML(c.tipo)}${c.ativo===false ? " · arquivada" : ""}</small>
+        </div>
+        <div class="row-actions">
+          <button class="mini-btn" data-edit-conta="${c.id}">Editar</button>
+          <button class="mini-btn" data-toggle-conta="${c.id}">${c.ativo===false ? "Reativar" : "Arquivar"}</button>
+        </div>
+      </div>
+      <strong>${dinheiro(saldoConta(c.id))}</strong>
+    </article>
+  `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
+
+  document.querySelectorAll("[data-edit-conta]").forEach(btn => {
+    btn.addEventListener("click", () => abrirFormularioConta(contas.find(c => Number(c.id) === Number(btn.dataset.editConta))));
+  });
+  document.querySelectorAll("[data-toggle-conta]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const conta = contas.find(c => Number(c.id) === Number(btn.dataset.toggleConta));
+      if (!conta) return;
+      const novo = conta.ativo === false;
+      const { error } = await supabaseClient.from("fin_contas")
+        .update({ativo: novo})
+        .eq("id", conta.id)
+        .eq("user_id", usuarioAtual.id);
+      if (error) return alert("Erro: " + error.message);
+      await carregarDados();
+    });
+  });
+}
+
+function mostrarDashboard() {
+  const mes = transacoes.filter(doMes);
+  const receitas = mes.filter(t => t.tipo === "receita" && t.status === "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+  const despesas = mes.filter(t => t.tipo === "despesa" && t.status === "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+
+  const pendReceita = mes.filter(t => t.tipo === "receita" && t.status !== "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+  const pendDespesa = mes.filter(t => t.tipo === "despesa" && t.status !== "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+
+  $("saldoAtual").textContent = dinheiro(saldoTotal());
+  $("receitasMes").textContent = dinheiro(receitas);
+  $("despesasMes").textContent = dinheiro(despesas);
+  $("saldoPrevisto").textContent = dinheiro(saldoTotal() + pendReceita - pendDespesa);
+
+  const max = Math.max(receitas, despesas, 1);
+  $("barraReceita").style.height = `${Math.max(5, (receitas / max) * 115)}px`;
+  $("barraDespesa").style.height = `${Math.max(5, (despesas / max) * 115)}px`;
+
+  const despPorCat = {};
+  for (const t of mes.filter(t => t.tipo === "despesa" && t.status === "efetivada")) {
+    const nome = idNome(planoContas, t.plano_conta_id, "Sem categoria");
+    despPorCat[nome] = (despPorCat[nome] || 0) + Number(t.valor || 0);
+  }
+
+  const catOrdenadas = Object.entries(despPorCat).sort((a,b) => b[1] - a[1]).slice(0,5);
+  const maior = catOrdenadas[0]?.[1] || 1;
+
+  $("resumoCategorias").innerHTML = catOrdenadas.length ? catOrdenadas.map(([nome,valor]) => `
+    <div class="category-row">
+      <div class="category-row-top"><span>${escapeHTML(nome)}</span><strong>${dinheiro(valor)}</strong></div>
+      <div class="progress"><span style="width:${Math.max(4,valor/maior*100)}%"></span></div>
+    </div>
+  `).join("") : `<div class="empty">Sem despesas neste mês.</div>`;
+
+  const ultimos = transacoes.slice(0,6);
+  $("ultimosLancamentos").innerHTML = ultimos.length ? ultimos.map(t => `
+    <div class="compact-row">
+      <div><strong>${escapeHTML(t.descricao)}</strong><small>${dataBR(referenciaData(t))} · ${escapeHTML(idNome(contas,t.conta_id,""))}</small></div>
+      <strong class="${t.tipo === "receita" ? "money-income" : "money-expense"}">${t.tipo === "receita" ? "+" : "-"} ${dinheiro(t.valor)}</strong>
+    </div>
+  `).join("") : `<div class="empty">Nenhum lançamento.</div>`;
+
+  const hoje = hojeISO();
+  const futuros = parcelas.filter(p => p.status === "pendente" && p.data_vencimento >= hoje).slice(0,6);
+  $("proximosVencimentos").innerHTML = futuros.length ? futuros.map(p => {
+    const prog = programacoes.find(x => Number(x.id) === Number(p.programacao_id));
+    return `<div class="compact-row">
+      <div><strong>${escapeHTML(prog?.descricao || "Programação")}</strong><small>${dataBR(p.data_vencimento)} · Parcela ${p.numero_parcela}/${p.total_parcelas}</small></div>
+      <strong>${dinheiro(p.valor)}</strong>
+    </div>`;
+  }).join("") : `<div class="empty">Nenhum vencimento programado.</div>`;
+}
+
+// ============================================================
+// TRANSAÇÕES
+// ============================================================
+
+function mostrarTransacoes() {
+  const busca = ($("buscaTransacao")?.value || "").toLowerCase();
+  const tipo = $("filtroTipo")?.value || "todos";
+  const status = $("filtroStatus")?.value || "todos";
+
+  const lista = transacoes.filter(t => {
+    if (tipo !== "todos" && t.tipo !== tipo) return false;
+    if (status !== "todos" && t.status !== status) return false;
+    if (busca && !String(t.descricao || "").toLowerCase().includes(busca)) return false;
+    return true;
+  });
+
+  $("tabelaTransacoes").innerHTML = lista.length ? lista.map(t => `
+    <tr>
+      <td>${dataBR(referenciaData(t))}</td>
+      <td><strong>${escapeHTML(t.descricao)}</strong></td>
+      <td>${escapeHTML(idNome(contas,t.conta_id,""))}</td>
+      <td>${escapeHTML(idNome(planoContas,t.plano_conta_id,"Sem categoria"))}</td>
+      <td><span class="status-pill ${escapeHTML(t.status)}">${escapeHTML(t.status)}</span></td>
+      <td class="right ${t.tipo === "receita" ? "money-income" : "money-expense"}">${t.tipo === "receita" ? "+" : "-"} ${dinheiro(t.valor)}</td>
+      <td><div class="row-actions">
+        <button class="mini-btn" data-edit-transacao="${t.id}">Editar</button>
+        <button class="mini-btn" data-del-transacao="${t.id}">Excluir</button>
+      </div></td>
+    </tr>
+  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhum lançamento encontrado.</div></td></tr>`;
+
+  document.querySelectorAll("[data-edit-transacao]").forEach(btn => {
+    btn.addEventListener("click", () => abrirFormularioTransacao(transacoes.find(t => Number(t.id) === Number(btn.dataset.editTransacao))));
+  });
+
+  document.querySelectorAll("[data-del-transacao]").forEach(btn => {
+    btn.addEventListener("click", () => excluirTransacao(Number(btn.dataset.delTransacao)));
+  });
+}
+
+$("buscaTransacao").addEventListener("input", mostrarTransacoes);
+$("filtroTipo").addEventListener("change", mostrarTransacoes);
+$("filtroStatus").addEventListener("change", mostrarTransacoes);
+
+async function excluirTransacao(id) {
+  if (!confirm("Excluir este lançamento?")) return;
+  const { error } = await supabaseClient.from("fin_transacoes").delete().eq("id", id).eq("user_id", usuarioAtual.id);
+  if (error) return alert("Erro: " + error.message);
+  await carregarDados();
+}
+
+// ============================================================
+// PROGRAMAÇÃO
+// ============================================================
+
+function mostrarProgramacao() {
+  const linhas = parcelas.map(p => {
+    const prog = programacoes.find(x => Number(x.id) === Number(p.programacao_id));
+    return { ...p, prog };
+  });
+
+  $("tabelaProgramacao").innerHTML = linhas.length ? linhas.map(p => `
+    <tr>
+      <td>${dataBR(p.data_vencimento)}</td>
+      <td>${escapeHTML(p.prog?.descricao || "")}</td>
+      <td>${escapeHTML(p.prog?.tipo || "")}</td>
+      <td>${p.numero_parcela}/${p.total_parcelas}</td>
+      <td><span class="status-pill ${escapeHTML(p.status)}">${escapeHTML(p.status)}</span></td>
+      <td class="right ${p.prog?.tipo === "receita" ? "money-income" : "money-expense"}">${dinheiro(p.valor)}</td>
+      <td><div class="row-actions">
+        ${p.status === "pendente" ? `<button class="mini-btn" data-efetivar-parcela="${p.id}">Efetivar</button>` : ""}
+        ${p.status === "pendente" ? `<button class="mini-btn" data-cancelar-parcela="${p.id}">Cancelar</button>` : ""}
+      </div></td>
+    </tr>
+  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhuma programação cadastrada.</div></td></tr>`;
+
+  document.querySelectorAll("[data-efetivar-parcela]").forEach(btn => {
+    btn.addEventListener("click", () => efetivarParcela(Number(btn.dataset.efetivarParcela)));
+  });
+  document.querySelectorAll("[data-cancelar-parcela]").forEach(btn => {
+    btn.addEventListener("click", () => cancelarParcela(Number(btn.dataset.cancelarParcela)));
+  });
+
+  let receber = 0, pagar = 0;
+  for (const p of linhas.filter(x => x.status === "pendente")) {
+    if (p.prog?.tipo === "receita") receber += Number(p.valor || 0);
+    if (p.prog?.tipo === "despesa") pagar += Number(p.valor || 0);
+  }
+  $("totalAReceber").textContent = dinheiro(receber);
+  $("totalAPagar").textContent = dinheiro(pagar);
+}
+
+// ============================================================
+// PESSOAS
+// ============================================================
+
+function mostrarPessoas() {
+  $("tabelaPessoas").innerHTML = pessoas.length ? pessoas.map(p => `
+    <tr>
+      <td><strong>${escapeHTML(p.nome)}</strong></td>
+      <td>${escapeHTML(p.papel)}</td>
+      <td>${escapeHTML(p.tipo_pessoa)}</td>
+      <td>${escapeHTML(p.telefone || p.celular || "")}</td>
+      <td>${escapeHTML(p.email || "")}</td>
+      <td>${escapeHTML([p.cidade,p.estado].filter(Boolean).join(" / "))}</td>
+      <td><div class="row-actions">
+        <button class="mini-btn" data-edit-pessoa="${p.id}">Editar</button>
+        <button class="mini-btn" data-del-pessoa="${p.id}">Excluir</button>
+      </div></td>
+    </tr>
+  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhuma pessoa cadastrada.</div></td></tr>`;
+
+  document.querySelectorAll("[data-edit-pessoa]").forEach(btn => {
+    btn.addEventListener("click", () => abrirFormularioPessoa(pessoas.find(p => Number(p.id) === Number(btn.dataset.editPessoa))));
+  });
+  document.querySelectorAll("[data-del-pessoa]").forEach(btn => {
+    btn.addEventListener("click", () => excluirPessoa(Number(btn.dataset.delPessoa)));
+  });
+}
+
+// ============================================================
+// CATEGORIAS
+// ============================================================
+
+let categoriaTelaAtual = "plano";
+
+function categoriaListaAtual() {
+  return categoriaTelaAtual === "centro" ? centrosCusto : planoContas;
+}
+
+function categoriaItemAtual() {
+  return categoriaListaAtual().find(x => Number(x.id) === Number(categoriaSelecionadaId)) || null;
+}
+
+function categoriaTemFilhos(lista, id) {
+  return lista.some(x => Number(x.parent_id) === Number(id));
+}
+
+function categoriaDescendentes(lista, id) {
+  const filhos = lista.filter(x => Number(x.parent_id) === Number(id));
+  return filhos.flatMap(f => [f, ...categoriaDescendentes(lista, f.id)]);
+}
+
+function categoriaCaminho(lista, item) {
+  if (!item) return "";
+  const nomes = [item.nome];
+  let atual = item;
+  let guarda = 0;
+  while (atual?.parent_id && guarda < 50) {
+    atual = lista.find(x => Number(x.id) === Number(atual.parent_id));
+    if (atual) nomes.unshift(atual.nome);
+    guarda++;
+  }
+  return nomes.join(" › ");
+}
+
+function raizTipoPlano(tipo) {
+  return planoContas.find(x => x.parent_id === null && x.tipo === tipo) ||
+         planoContas.find(x => x.parent_id === null && String(x.nome).toLowerCase() === (tipo === "receita" ? "receitas" : "despesas")) ||
+         null;
+}
+
+function montarLegacyTree(lista, parentId) {
+  const filhos = lista
+    .filter(x => Number(x.parent_id) === Number(parentId))
+    .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome).localeCompare(String(b.nome), "pt-BR"));
+
+  if (!filhos.length) return "";
+
+  return filhos.map(item => {
+    const temFilhos = categoriaTemFilhos(lista, item.id);
+    const chave = `${categoriaTelaAtual}:${item.id}`;
+    const aberto = categoriaExpandidos.has(chave);
+    const selecionado = Number(item.id) === Number(categoriaSelecionadaId);
+
+    return `
+      <div class="legacy-node">
+        <div class="legacy-node-row ${selecionado ? "selected" : ""}"
+             data-cat-select="${item.id}"
+             data-cat-context="${item.id}">
+          <button class="legacy-toggle ${temFilhos ? "" : "empty"}"
+                  type="button"
+                  data-cat-toggle="${item.id}">
+            ${temFilhos ? (aberto ? "⌄" : "›") : ""}
+          </button>
+          <span class="legacy-icon">${temFilhos ? "📁" : "📄"}</span>
+          <span class="legacy-node-name">${escapeHTML(item.nome)}</span>
+        </div>
+        ${temFilhos ? `<div class="legacy-children ${aberto ? "" : "collapsed"}">${montarLegacyTree(lista,item.id)}</div>` : ""}
+      </div>`;
+  }).join("");
+}
+
+function montarLegacyTreePlano(tipo) {
+  const raiz = raizTipoPlano(tipo);
+  if (!raiz) {
+    const roots = planoContas
+      .filter(x => x.parent_id === null && x.tipo === tipo)
+      .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome).localeCompare(String(b.nome), "pt-BR"));
+    return roots.map(item => {
+      const temFilhos = categoriaTemFilhos(planoContas,item.id);
+      const chave = `plano:${item.id}`;
+      const aberto = categoriaExpandidos.has(chave);
+      const selecionado = Number(item.id) === Number(categoriaSelecionadaId);
+      return `
+        <div class="legacy-node">
+          <div class="legacy-node-row ${selecionado ? "selected" : ""}"
+               data-cat-select="${item.id}" data-cat-context="${item.id}">
+            <button class="legacy-toggle ${temFilhos ? "" : "empty"}" type="button" data-cat-toggle="${item.id}">
+              ${temFilhos ? (aberto ? "⌄" : "›") : ""}
+            </button>
+            <span class="legacy-icon">${temFilhos ? "📁" : "📄"}</span>
+            <span class="legacy-node-name">${escapeHTML(item.nome)}</span>
+          </div>
+          ${temFilhos ? `<div class="legacy-children ${aberto ? "" : "collapsed"}">${montarLegacyTree(planoContas,item.id)}</div>` : ""}
+        </div>`;
+    }).join("");
+  }
+  return montarLegacyTree(planoContas, raiz.id);
+}
+
+function vincularLegacyTree(container) {
+  if (!container) return;
+
+  container.querySelectorAll("[data-cat-select]").forEach(row => {
+    row.addEventListener("click", e => {
+      if (e.target.closest("[data-cat-toggle]")) return;
+      categoriaSelecionadaId = Number(row.dataset.catSelect);
+      mostrarGerenciadorCategorias();
+    });
+
+    row.addEventListener("dblclick", e => {
+      if (e.target.closest("[data-cat-toggle]")) return;
+      categoriaSelecionadaId = Number(row.dataset.catSelect);
+      abrirEdicaoCategoriaAtual();
+    });
+
+    row.addEventListener("contextmenu", e => {
+      e.preventDefault();
+      categoriaSelecionadaId = Number(row.dataset.catContext);
+      mostrarGerenciadorCategorias();
+      abrirMenuContextoCategoria(e.clientX, e.clientY);
+    });
+  });
+
+  container.querySelectorAll("[data-cat-toggle]").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const id = Number(btn.dataset.catToggle);
+      const chave = `${categoriaTelaAtual}:${id}`;
+      if (categoriaExpandidos.has(chave)) categoriaExpandidos.delete(chave);
+      else categoriaExpandidos.add(chave);
+      mostrarGerenciadorCategorias();
+    });
+  });
+}
+
+function atualizarBotoesCategorias() {
+  const item = categoriaItemAtual();
+  $("catBtnNovoFilho").disabled = !item;
+  $("catBtnEditar").disabled = !item;
+  $("catBtnExcluir").disabled = !item;
+}
+
+function mostrarGerenciadorCategorias() {
+  document.querySelectorAll("[data-cat-screen]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.catScreen === categoriaTelaAtual);
+  });
+
+  $("legacyPlanoView").classList.add("hidden");
+  $("legacyCentroView").classList.add("hidden");
+  $("legacyPlaceholderView").classList.add("hidden");
+
+  if (categoriaTelaAtual === "plano") {
+    $("legacyRightTitle").textContent = "Plano de Contas";
+    $("legacyPlanoView").classList.remove("hidden");
+    $("legacyToolbar").classList.remove("hidden");
+
+    $("arvoreReceitas").innerHTML = montarLegacyTreePlano("receita") || `<div class="empty">Nenhuma receita cadastrada.</div>`;
+    $("arvoreDespesas").innerHTML = montarLegacyTreePlano("despesa") || `<div class="empty">Nenhuma despesa cadastrada.</div>`;
+
+    vincularLegacyTree($("arvoreReceitas"));
+    vincularLegacyTree($("arvoreDespesas"));
+  } else if (categoriaTelaAtual === "centro") {
+    $("legacyRightTitle").textContent = "Centro de Custos";
+    $("legacyCentroView").classList.remove("hidden");
+    $("legacyToolbar").classList.remove("hidden");
+
+    const roots = centrosCusto
+      .filter(x => x.parent_id === null)
+      .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome).localeCompare(String(b.nome), "pt-BR"));
+
+    $("arvoreCentroUnico").innerHTML = roots.map(item => {
+      const temFilhos = categoriaTemFilhos(centrosCusto,item.id);
+      const chave = `centro:${item.id}`;
+      const aberto = categoriaExpandidos.has(chave);
+      const selecionado = Number(item.id) === Number(categoriaSelecionadaId);
+      return `
+        <div class="legacy-node">
+          <div class="legacy-node-row ${selecionado ? "selected" : ""}"
+               data-cat-select="${item.id}" data-cat-context="${item.id}">
+            <button class="legacy-toggle ${temFilhos ? "" : "empty"}" type="button" data-cat-toggle="${item.id}">
+              ${temFilhos ? (aberto ? "⌄" : "›") : ""}
+            </button>
+            <span class="legacy-icon">${temFilhos ? "📁" : "📄"}</span>
+            <span class="legacy-node-name">${escapeHTML(item.nome)}</span>
+          </div>
+          ${temFilhos ? `<div class="legacy-children ${aberto ? "" : "collapsed"}">${montarLegacyTree(centrosCusto,item.id)}</div>` : ""}
+        </div>`;
+    }).join("") || `<div class="empty">Nenhum centro de custo cadastrado.</div>`;
+
+    vincularLegacyTree($("arvoreCentroUnico"));
+  } else {
+    const mapa = {
+      cargos:"Cargos e Funções",
+      categorias_pessoas:"Categorias de Cliente / Fornecedor",
+      classificacao_pessoas:"Classificação de Cliente / Fornecedor",
+      estados:"Estados/Municípios",
+      bancos:"Bancos",
+      tipos_documento:"Tipos de Documento",
+      tipos_conta:"Tipos de Contas",
+      moedas:"Moedas",
+      categorias_extrato:"Categorias de Extratos",
+      formas:"Meios de Pagamento",
+      grupos:"Grupos",
+      usuarios:"Usuários"
+    };
+
+    $("legacyRightTitle").textContent = mapa[categoriaTelaAtual] || "Categorias";
+    $("legacyPlaceholderTitle").textContent = mapa[categoriaTelaAtual] || "Categorias";
+    $("legacyPlaceholderView").classList.remove("hidden");
+    $("legacyToolbar").classList.add("hidden");
+  }
+
+  atualizarBotoesCategorias();
+}
+
+function selecionarModuloCategorias(modulo) {
+  categoriaTelaAtual = modulo;
+  categoriaSelecionadaId = null;
+  mostrarGerenciadorCategorias();
+}
+
+function abrirMenuContextoCategoria(x, y) {
+  fecharMenuContextoCategoria();
+  const item = categoriaItemAtual();
+  if (!item) return;
+
+  const menu = document.createElement("div");
+  menu.id = "catContextMenu";
+  menu.className = "cat-context-menu";
+  menu.style.left = `${Math.min(x, window.innerWidth - 190)}px`;
+  menu.style.top = `${Math.min(y, window.innerHeight - 140)}px`;
+  menu.innerHTML = `
+    <button type="button" data-cat-menu="editar">✏️ Editar</button>
+    <button type="button" data-cat-menu="filho">➕ Novo dentro</button>
+    <button type="button" class="danger" data-cat-menu="excluir">🗑 Excluir</button>
+  `;
+  document.body.appendChild(menu);
+
+  menu.querySelector('[data-cat-menu="editar"]').onclick = () => { fecharMenuContextoCategoria(); abrirEdicaoCategoriaAtual(); };
+  menu.querySelector('[data-cat-menu="filho"]').onclick = () => { fecharMenuContextoCategoria(); abrirNovoFilhoCategoria(); };
+  menu.querySelector('[data-cat-menu="excluir"]').onclick = () => { fecharMenuContextoCategoria(); excluirCategoriaAtual(); };
+}
+
+function fecharMenuContextoCategoria() {
+  document.getElementById("catContextMenu")?.remove();
+}
+
+document.addEventListener("click", e => {
+  if (!e.target.closest(".cat-context-menu")) fecharMenuContextoCategoria();
+});
+
+function abrirNovaCategoriaRaiz() {
+  if (categoriaTelaAtual === "plano") {
+    abrirModal("Novo Plano de Conta", `
+      <div class="mobile-more">
+        <button class="btn success" id="novoTipoReceita">Receita</button>
+        <button class="btn danger" id="novoTipoDespesa">Despesa</button>
+      </div>
+    `);
+    $("novoTipoReceita").onclick = () => {
+      fecharModal();
+      const raiz = raizTipoPlano("receita");
+      abrirFormularioPlano(null, raiz?.id || null, "receita");
+    };
+    $("novoTipoDespesa").onclick = () => {
+      fecharModal();
+      const raiz = raizTipoPlano("despesa");
+      abrirFormularioPlano(null, raiz?.id || null, "despesa");
+    };
+  } else if (categoriaTelaAtual === "centro") {
+    abrirFormularioCentro(null, null);
+  }
+}
+
+function abrirNovoFilhoCategoria() {
+  const item = categoriaItemAtual();
+  if (!item) return alert("Selecione um item primeiro.");
+
+  if (categoriaTelaAtual === "plano") abrirFormularioPlano(null, item.id, item.tipo);
+  else if (categoriaTelaAtual === "centro") abrirFormularioCentro(null, item.id);
+}
+
+function abrirEdicaoCategoriaAtual() {
+  const item = categoriaItemAtual();
+  if (!item) return;
+  if (categoriaTelaAtual === "plano") abrirFormularioPlano(item);
+  else if (categoriaTelaAtual === "centro") abrirFormularioCentro(item);
+}
+
+async function excluirCategoriaAtual() {
+  const item = categoriaItemAtual();
+  if (!item) return;
+
+  const lista = categoriaListaAtual();
+  const descendentes = categoriaDescendentes(lista, item.id);
+  const aviso = descendentes.length ? `\n\nEste item possui ${descendentes.length} item(ns) dentro dele.` : "";
+
+  if (!confirm(`Excluir "${item.nome}"?${aviso}`)) return;
+
+  const tabela = categoriaTelaAtual === "plano" ? "fin_plano_contas" : "fin_centros_custo";
+  const { error } = await supabaseClient.from(tabela)
+    .delete()
+    .eq("id", item.id)
+    .eq("user_id", usuarioAtual.id);
+
+  if (error) {
+    return alert("Não foi possível excluir.\n\nO item pode estar sendo usado em lançamentos, programação ou planejamento.\n\n" + error.message);
+  }
+
+  categoriaSelecionadaId = null;
+  await carregarDados();
+}
+
+// ============================================================
+// ORÇAMENTOS / RELATÓRIOS
+// ============================================================
+
+function categoriasFolha() {
+  return planoContas.filter(p => !planoContas.some(x => Number(x.parent_id) === Number(p.id)) && p.ativo !== false);
+}
+
+function valorOrcado(orcamentoId, planoId, mes) {
+  const item = orcamentoItens.find(x =>
+    Number(x.orcamento_id) === Number(orcamentoId) &&
+    Number(x.plano_conta_id) === Number(planoId) &&
+    Number(x.mes) === Number(mes)
+  );
+  return Number(item?.valor_previsto || 0);
+}
+
+function nomeHierarquicoPlano(item) {
+  const nomes = [item.nome];
+  let atual = item;
+  let trava = 0;
+  while (atual?.parent_id && trava < 20) {
+    atual = planoContas.find(x => Number(x.id) === Number(atual.parent_id));
+    if (atual) nomes.unshift(atual.nome);
+    trava++;
+  }
+  return nomes.join(" › ");
+}
+
+function mostrarOrcamentos() {
+  const select = $("orcamentoSelecionado");
+  const mesSelect = $("mesPlanejamento");
+
+  if (mesSelect && !mesSelect.dataset.pronto) {
+    mesSelect.innerHTML = meses.map((m,i) => `<option value="${i+1}">${m}</option>`).join("");
+    mesSelect.value = String(mesAtual + 1);
+    mesSelect.dataset.pronto = "1";
+    mesSelect.addEventListener("change", renderComparativoOrcamento);
+  }
+
+  if (select) {
+    select.innerHTML = orcamentos.length
+      ? orcamentos.map(o => `<option value="${o.id}" ${Number(o.id)===Number(orcamentoSelecionadoId)?"selected":""}>${escapeHTML(o.nome)} (${o.ano})</option>`).join("")
+      : `<option value="">Nenhum orçamento</option>`;
+
+    if (!select.dataset.pronto) {
+      select.dataset.pronto = "1";
+      select.addEventListener("change", () => {
+        orcamentoSelecionadoId = select.value ? Number(select.value) : null;
+        mostrarOrcamentos();
+      });
+    }
+  }
+
+  $("listaOrcamentos").innerHTML = orcamentos.length ? orcamentos.map(o => {
+    const total = orcamentoItens
+      .filter(i => Number(i.orcamento_id) === Number(o.id))
+      .reduce((s,i) => s + Number(i.valor_previsto || 0), 0);
+    return `
+      <article class="simple-card" style="${Number(o.id)===Number(orcamentoSelecionadoId)?"border-color:var(--blue)":""}">
+        <h3>${escapeHTML(o.nome)}</h3>
+        <p>Ano: ${o.ano}</p>
+        <strong>${dinheiro(total)}</strong>
+        <small style="display:block;margin-top:7px">${escapeHTML(o.observacao || "")}</small>
+        <button class="mini-btn" style="margin-top:10px" data-usar-orcamento="${o.id}">Abrir</button>
+      </article>`;
+  }).join("") : `<div class="empty">Nenhum orçamento cadastrado. Clique em "Novo orçamento".</div>`;
+
+  document.querySelectorAll("[data-usar-orcamento]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      orcamentoSelecionadoId = Number(btn.dataset.usarOrcamento);
+      mostrarOrcamentos();
+    });
+  });
+
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  const folhas = categoriasFolha();
+
+  if (!orc) {
+    $("matrizOrcamento").innerHTML = `<tr><td colspan="14"><div class="empty">Crie ou selecione um orçamento.</div></td></tr>`;
+    $("comparativoOrcamento").innerHTML = `<div class="empty">Sem orçamento selecionado.</div>`;
+    $("resumoOrcamento").innerHTML = `<div class="empty">Sem orçamento selecionado.</div>`;
+    return;
+  }
+
+  $("matrizOrcamento").innerHTML = folhas.length ? folhas.map(p => `
+    <tr>
+      <td title="${escapeHTML(nomeHierarquicoPlano(p))}"><strong>${escapeHTML(nomeHierarquicoPlano(p))}</strong></td>
+      <td>${escapeHTML(p.tipo)}</td>
+      ${Array.from({length:12},(_,i) => `
+        <td><input class="budget-input" type="number" step="0.01" min="0"
+          data-budget-plan="${p.id}" data-budget-month="${i+1}"
+          value="${valorOrcado(orc.id,p.id,i+1) || ""}" placeholder="0,00"></td>
+      `).join("")}
+    </tr>
+  `).join("") : `<tr><td colspan="14"><div class="empty">Cadastre categorias finais no Plano de Contas.</div></td></tr>`;
+
+  document.querySelectorAll(".budget-input").forEach(input => {
+    input.addEventListener("change", () => salvarValorOrcamento(input));
+  });
+
+  renderComparativoOrcamento();
+
+  const itens = orcamentoItens.filter(i => Number(i.orcamento_id) === Number(orc.id));
+  const totalReceitas = itens.filter(i => idNome(planoContas,i.plano_conta_id,"") && planoContas.find(p=>Number(p.id)===Number(i.plano_conta_id))?.tipo==="receita")
+    .reduce((s,i)=>s+Number(i.valor_previsto||0),0);
+  const totalDespesas = itens.filter(i => planoContas.find(p=>Number(p.id)===Number(i.plano_conta_id))?.tipo==="despesa")
+    .reduce((s,i)=>s+Number(i.valor_previsto||0),0);
+
+  $("resumoOrcamento").innerHTML = `
+    <div class="compact-row"><span>Receitas previstas no ano</span><strong class="money-income">${dinheiro(totalReceitas)}</strong></div>
+    <div class="compact-row"><span>Despesas previstas no ano</span><strong class="money-expense">${dinheiro(totalDespesas)}</strong></div>
+    <div class="compact-row"><span>Resultado previsto</span><strong>${dinheiro(totalReceitas-totalDespesas)}</strong></div>
+  `;
+}
+
+async function salvarValorOrcamento(input) {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc) return;
+
+  const planoId = Number(input.dataset.budgetPlan);
+  const mes = Number(input.dataset.budgetMonth);
+  const valor = Number(input.value || 0);
+  const existente = orcamentoItens.find(x =>
+    Number(x.orcamento_id) === Number(orc.id) &&
+    Number(x.plano_conta_id) === planoId &&
+    Number(x.mes) === mes
+  );
+
+  let resp;
+  if (existente) {
+    resp = await supabaseClient.from("fin_orcamento_itens")
+      .update({valor_previsto: valor})
+      .eq("id", existente.id)
+      .eq("user_id", usuarioAtual.id);
+  } else {
+    resp = await supabaseClient.from("fin_orcamento_itens").insert([{
+      user_id: usuarioAtual.id,
+      orcamento_id: orc.id,
+      plano_conta_id: planoId,
+      centro_custo_id: null,
+      mes,
+      valor_previsto: valor
+    }]);
+  }
+
+  input.classList.remove("saved","error");
+  if (resp.error) {
+    input.classList.add("error");
+    alert("Erro ao salvar orçamento: " + resp.error.message);
+    return;
+  }
+  input.classList.add("saved");
+  setTimeout(() => input.classList.remove("saved"), 900);
+  await carregarDados();
+}
+
+function renderComparativoOrcamento() {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc || !$("comparativoOrcamento")) return;
+
+  const mes = Number($("mesPlanejamento")?.value || (mesAtual+1));
+  const folhas = categoriasFolha();
+
+  const linhas = folhas.map(p => {
+    const previsto = valorOrcado(orc.id,p.id,mes);
+    const realizado = transacoes.filter(t => {
+      const d = referenciaData(t);
+      if (!d || t.status !== "efetivada") return false;
+      const [a,m] = d.split("-").map(Number);
+      return a === Number(orc.ano) && m === mes && Number(t.plano_conta_id) === Number(p.id);
+    }).reduce((s,t)=>s+Number(t.valor||0),0);
+    return {p,previsto,realizado,diferenca: previsto-realizado};
+  }).filter(x => x.previsto || x.realizado)
+    .sort((a,b)=>Math.max(b.previsto,b.realizado)-Math.max(a.previsto,a.realizado))
+    .slice(0,12);
+
+  $("comparativoOrcamento").innerHTML = linhas.length ? linhas.map(x => `
+    <div class="compact-row">
+      <div><strong>${escapeHTML(x.p.nome)}</strong><small>Previsto ${dinheiro(x.previsto)} · Realizado ${dinheiro(x.realizado)}</small></div>
+      <strong>${dinheiro(x.diferenca)}</strong>
+    </div>
+  `).join("") : `<div class="empty">Sem valores previstos ou realizados neste mês.</div>`;
+}
+
+async function excluirOrcamentoAtual() {
+  const orc = orcamentos.find(o => Number(o.id) === Number(orcamentoSelecionadoId));
+  if (!orc) return alert("Nenhum orçamento selecionado.");
+  if (!confirm(`Excluir o orçamento "${orc.nome}" e todos os valores dele?`)) return;
+
+  const { error } = await supabaseClient.from("fin_orcamentos")
+    .delete().eq("id",orc.id).eq("user_id",usuarioAtual.id);
+  if (error) return alert("Erro: " + error.message);
+  orcamentoSelecionadoId = null;
+  await carregarDados();
+}
+
+function datasRelatorioPadrao() {
+  const ini = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-01`;
+  const ultimo = new Date(anoAtual,mesAtual+1,0).getDate();
+  const fim = `${anoAtual}-${String(mesAtual+1).padStart(2,"0")}-${String(ultimo).padStart(2,"0")}`;
+  return {ini,fim};
+}
+
+function prepararFiltrosRelatorio() {
+  const contaSel = $("relConta");
+  if (!contaSel) return;
+
+  contaSel.innerHTML = `<option value="">Todas as contas</option>` +
+    contas.map(c => `<option value="${c.id}">${escapeHTML(c.nome)}</option>`).join("");
+
+  const pad = datasRelatorioPadrao();
+  if (!$("relDataIni").value) $("relDataIni").value = pad.ini;
+  if (!$("relDataFim").value) $("relDataFim").value = pad.fim;
+}
+
+function filtrarRelatorio() {
+  prepararFiltrosRelatorio();
+  const ini = $("relDataIni").value || "0000-01-01";
+  const fim = $("relDataFim").value || "9999-12-31";
+  const conta = $("relConta").value;
+  const tipo = $("relTipo").value;
+  const status = $("relStatus").value;
+
+  relatorioAtual = transacoes.filter(t => {
+    const d = referenciaData(t) || "";
+    if (d < ini || d > fim) return false;
+    if (conta && Number(t.conta_id) !== Number(conta)) return false;
+    if (tipo !== "todos" && t.tipo !== tipo) return false;
+    if (status !== "todos" && t.status !== status) return false;
+    return true;
+  });
+
+  return relatorioAtual;
+}
+
+function mostrarRelatorios() {
+  if (!$("relConta")) return;
+  const lista = filtrarRelatorio();
+  const receita = lista.filter(t => t.tipo === "receita").reduce((s,t)=>s+Number(t.valor||0),0);
+  const despesa = lista.filter(t => t.tipo === "despesa").reduce((s,t)=>s+Number(t.valor||0),0);
+
+  $("relReceitas").textContent = dinheiro(receita);
+  $("relDespesas").textContent = dinheiro(despesa);
+  $("resultadoMes").textContent = dinheiro(receita - despesa);
+
+  const grupos = {};
+  lista.forEach(t => {
+    const nome = idNome(planoContas,t.plano_conta_id,"Sem categoria");
+    const sinal = t.tipo === "receita" ? 1 : -1;
+    grupos[nome] = (grupos[nome] || 0) + sinal * Number(t.valor || 0);
+  });
+
+  const agrupado = Object.entries(grupos).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+  $("relatorioCategorias").innerHTML = agrupado.length ? agrupado.slice(0,15).map(([nome,valor]) => `
+    <div class="compact-row"><span>${escapeHTML(nome)}</span><strong class="${valor>=0?"money-income":"money-expense"}">${dinheiro(valor)}</strong></div>
+  `).join("") : `<div class="empty">Sem dados no período.</div>`;
+
+  $("relatorioMovimentacao").innerHTML = `
+    <div class="compact-row"><span>Quantidade de lançamentos</span><strong>${lista.length}</strong></div>
+    <div class="compact-row"><span>Receitas</span><strong class="money-income">${dinheiro(receita)}</strong></div>
+    <div class="compact-row"><span>Despesas</span><strong class="money-expense">${dinheiro(despesa)}</strong></div>
+    <div class="compact-row"><span>Resultado</span><strong>${dinheiro(receita-despesa)}</strong></div>
+  `;
+
+  $("tabelaRelatorio").innerHTML = lista.length ? lista.map(t => `
+    <tr>
+      <td>${dataBR(referenciaData(t))}</td>
+      <td>${escapeHTML(t.descricao)}</td>
+      <td>${escapeHTML(idNome(contas,t.conta_id,""))}</td>
+      <td>${escapeHTML(idNome(planoContas,t.plano_conta_id,"Sem categoria"))}</td>
+      <td><span class="status-pill ${escapeHTML(t.status)}">${escapeHTML(t.status)}</span></td>
+      <td class="right ${t.tipo==="receita"?"money-income":"money-expense"}">${t.tipo==="receita"?"+":"-"} ${dinheiro(t.valor)}</td>
+    </tr>
+  `).join("") : `<tr><td colspan="6"><div class="empty">Nenhum lançamento no período.</div></td></tr>`;
+}
+
+function exportarRelatorioCSV() {
+  const lista = filtrarRelatorio();
+  if (!lista.length) return alert("Não há dados para exportar.");
+
+  const linhas = [["Data","Descrição","Conta","Plano de conta","Tipo","Status","Valor"]];
+  lista.forEach(t => linhas.push([
+    referenciaData(t) || "",
+    t.descricao || "",
+    idNome(contas,t.conta_id,""),
+    idNome(planoContas,t.plano_conta_id,""),
+    t.tipo || "",
+    t.status || "",
+    Number(t.valor || 0).toFixed(2).replace(".",",")
+  ]));
+
+  const csv = linhas.map(l => l.map(v => `"${String(v).replaceAll('"','""')}"`).join(";")).join("\r\n");
+  const blob = new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `relatorio-financeiro-${hojeISO()}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================
+// FORMULÁRIOS
+// ============================================================
+
+function tratarAbertura(tipo) {
+  if (tipo === "novaConta") return abrirFormularioConta();
+  if (tipo === "novaTransferencia") return abrirFormularioTransferencia();
+  if (tipo === "novaReceita") return abrirFormularioTransacao(null,"receita");
+  if (tipo === "novaDespesa") return abrirFormularioTransacao(null,"despesa");
+  if (tipo === "novaPessoa") return abrirFormularioPessoa();
+  if (tipo === "novoPlano") return abrirFormularioPlano();
+  if (tipo === "novoCentro") return abrirFormularioCentro();
+  if (tipo === "novaProgramacao") return abrirFormularioProgramacao();
+  if (tipo === "novoOrcamento") return abrirFormularioOrcamento();
+
+  if (tipo === "mobileNovo") {
+    abrirModal("Novo", `
+      <div class="mobile-more">
+        <button class="btn success" data-mobile-open="novaReceita">Receita</button>
+        <button class="btn danger" data-mobile-open="novaDespesa">Despesa</button>
+        <button class="btn" data-mobile-open="novaProgramacao">Programação</button>
+        <button class="btn" data-mobile-open="novaConta">Conta</button>
+        <button class="btn" data-mobile-open="novaTransferencia">Transferência</button>
+      </div>
+    `);
+    document.querySelectorAll("[data-mobile-open]").forEach(btn => {
+      btn.addEventListener("click", () => tratarAbertura(btn.dataset.mobileOpen));
+    });
+  }
+}
+
+function abrirFormularioConta(item = null) {
+  abrirModal(item ? "Editar conta" : "Nova conta", `
+    <form id="formConta" class="form-grid">
+      <div class="form-field full-span"><label>Nome</label><input id="contaNome" value="${escapeHTML(item?.nome || "")}" required></div>
+      <div class="form-field"><label>Tipo</label><select id="contaTipo">
+        ${["corrente","poupanca","dinheiro","cartao","investimento","carteira_digital","outro"].map(v => `<option value="${v}" ${item?.tipo===v?"selected":""}>${v}</option>`).join("")}
+      </select></div>
+      <div class="form-field"><label>Saldo inicial</label><input id="contaSaldo" type="number" step="0.01" value="${item?.saldo_inicial ?? 0}"></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="contaObs">${escapeHTML(item?.observacao || "")}</textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formConta").addEventListener("submit", async e => {
+    e.preventDefault();
+    const registro = {
+      user_id: usuarioAtual.id,
+      nome: $("contaNome").value.trim(),
+      tipo: $("contaTipo").value,
+      saldo_inicial: Number($("contaSaldo").value || 0),
+      observacao: $("contaObs").value.trim() || null,
+      ativo: true
+    };
+
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_contas").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_contas").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
+  const tipo = item?.tipo || tipoInicial;
+  abrirModal(item ? "Editar lançamento" : (tipo === "receita" ? "Nova receita" : "Nova despesa"), `
+    <form id="formTransacao" class="form-grid">
+      <div class="form-field full-span"><label>Descrição</label><input id="trDescricao" value="${escapeHTML(item?.descricao || "")}" required></div>
+      <div class="form-field"><label>Tipo</label><select id="trTipo">
+        <option value="receita" ${tipo==="receita"?"selected":""}>Receita</option>
+        <option value="despesa" ${tipo==="despesa"?"selected":""}>Despesa</option>
+      </select></div>
+      <div class="form-field"><label>Valor</label><input id="trValor" type="number" min="0" step="0.01" value="${item?.valor ?? ""}" required></div>
+      <div class="form-field"><label>Conta</label><select id="trConta" required>${optionLista(contas.filter(c=>c.ativo!==false),item?.conta_id)}</select></div>
+      <div class="form-field"><label>Situação</label><select id="trStatus">
+        <option value="efetivada" ${item?.status==="efetivada"?"selected":""}>Efetivada</option>
+        <option value="pendente" ${item?.status==="pendente"?"selected":""}>Pendente</option>
+        <option value="prevista" ${item?.status==="prevista"?"selected":""}>Prevista</option>
+      </select></div>
+      <div class="form-field"><label>Data lançamento</label><input id="trData" type="date" value="${item?.data_lancamento || hojeISO()}"></div>
+      <div class="form-field"><label>Data vencimento</label><input id="trVencimento" type="date" value="${item?.data_vencimento || hojeISO()}"></div>
+      <div class="form-field"><label>Plano de conta</label><select id="trPlano">${optionLista(planoContas,item?.plano_conta_id,"Sem categoria")}</select></div>
+      <div class="form-field"><label>Centro de custo</label><select id="trCentro">${optionLista(centrosCusto,item?.centro_custo_id,"Sem centro")}</select></div>
+      <div class="form-field"><label>Cliente / Fornecedor</label><select id="trPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select></div>
+      <div class="form-field"><label>Forma de pagamento</label><select id="trForma">${optionLista(formasPagamento,item?.forma_pagamento_id,"Nenhuma")}</select></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="trObs">${escapeHTML(item?.observacao || "")}</textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formTransacao").addEventListener("submit", async e => {
+    e.preventDefault();
+    const status = $("trStatus").value;
+    const registro = {
+      user_id: usuarioAtual.id,
+      conta_id: Number($("trConta").value),
+      pessoa_id: $("trPessoa").value ? Number($("trPessoa").value) : null,
+      plano_conta_id: $("trPlano").value ? Number($("trPlano").value) : null,
+      centro_custo_id: $("trCentro").value ? Number($("trCentro").value) : null,
+      forma_pagamento_id: $("trForma").value ? Number($("trForma").value) : null,
+      tipo: $("trTipo").value,
+      descricao: $("trDescricao").value.trim(),
+      valor: Number($("trValor").value || 0),
+      data_lancamento: $("trData").value,
+      data_vencimento: $("trVencimento").value || null,
+      data_efetivacao: status === "efetivada" ? $("trData").value : null,
+      status,
+      compensado: status === "efetivada",
+      observacao: $("trObs").value.trim() || null,
+      origem: item?.origem || "manual"
+    };
+
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_transacoes").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_transacoes").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioPessoa(item = null) {
+  abrirModal(item ? "Editar pessoa" : "Nova pessoa", `
+    <form id="formPessoa" class="form-grid">
+      <div class="form-field full-span"><label>Nome</label><input id="pNome" value="${escapeHTML(item?.nome || "")}" required></div>
+      <div class="form-field"><label>Papel</label><select id="pPapel">
+        <option value="cliente" ${item?.papel==="cliente"?"selected":""}>Cliente</option>
+        <option value="fornecedor" ${item?.papel==="fornecedor"?"selected":""}>Fornecedor</option>
+        <option value="ambos" ${item?.papel==="ambos"?"selected":""}>Ambos</option>
+      </select></div>
+      <div class="form-field"><label>Tipo</label><select id="pTipo">
+        <option value="fisica" ${item?.tipo_pessoa==="fisica"?"selected":""}>Pessoa Física</option>
+        <option value="juridica" ${item?.tipo_pessoa==="juridica"?"selected":""}>Pessoa Jurídica</option>
+      </select></div>
+      <div class="form-field"><label>Telefone</label><input id="pTelefone" value="${escapeHTML(item?.telefone || "")}"></div>
+      <div class="form-field"><label>E-mail</label><input id="pEmail" type="email" value="${escapeHTML(item?.email || "")}"></div>
+      <div class="form-field"><label>Cidade</label><input id="pCidade" value="${escapeHTML(item?.cidade || "")}"></div>
+      <div class="form-field"><label>Estado</label><input id="pEstado" maxlength="2" value="${escapeHTML(item?.estado || "")}"></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formPessoa").addEventListener("submit", async e => {
+    e.preventDefault();
+    const registro = {
+      user_id: usuarioAtual.id,
+      nome: $("pNome").value.trim(),
+      papel: $("pPapel").value,
+      tipo_pessoa: $("pTipo").value,
+      telefone: $("pTelefone").value.trim() || null,
+      email: $("pEmail").value.trim() || null,
+      cidade: $("pCidade").value.trim() || null,
+      estado: $("pEstado").value.trim().toUpperCase() || null,
+      ativo: true
+    };
+    let resp;
+    if (item) resp = await supabaseClient.from("fin_pessoas").update(registro).eq("id", item.id).eq("user_id", usuarioAtual.id);
+    else resp = await supabaseClient.from("fin_pessoas").insert([registro]);
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+async function excluirPessoa(id) {
+  if (!confirm("Excluir esta pessoa?")) return;
+  const { error } = await supabaseClient.from("fin_pessoas").delete().eq("id", id).eq("user_id", usuarioAtual.id);
+  if (error) return alert("Não foi possível excluir. Esta pessoa pode estar vinculada a lançamentos.\\n\\n" + error.message);
+  await carregarDados();
+}
+
+function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPreselecionado = null) {
+  const todosDesc = item ? categoriaDescendentes(planoContas, item.id).map(x => Number(x.id)) : [];
+  const possiveisPais = planoContas.filter(x =>
+    !item ||
+    (Number(x.id) !== Number(item.id) && !todosDesc.includes(Number(x.id)))
+  );
+
+  const parentInicial = item ? item.parent_id : parentPreselecionado;
+  const tipoInicial = item?.tipo || tipoPreselecionado || "despesa";
+  const titulo = item ? "Editar Plano de Conta" : (parentPreselecionado ? "Nova Subcategoria" : "Novo Plano de Conta");
+
+  abrirModal(titulo, `
+    <form id="formPlano" class="form-grid">
+      ${parentPreselecionado ? `
+        <div class="form-field full-span">
+          <div class="cat-breadcrumb">Será criado dentro de: <strong>${escapeHTML(categoriaCaminho(planoContas, planoContas.find(x=>Number(x.id)===Number(parentPreselecionado))))}</strong></div>
+        </div>` : ""}
+
+      <div class="form-field full-span">
+        <label>Nome</label>
+        <input id="pcNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
+      </div>
+
+      <div class="form-field">
+        <label>Tipo</label>
+        <select id="pcTipo">
+          <option value="receita" ${tipoInicial==="receita"?"selected":""}>Receita</option>
+          <option value="despesa" ${tipoInicial==="despesa"?"selected":""}>Despesa</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Categoria superior</label>
+        <select id="pcPai">${optionLista(possiveisPais,parentInicial || "","Nenhuma - nível principal")}</select>
+      </div>
+
+      <div class="form-field">
+        <label>Ordem</label>
+        <input id="pcOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}">
+      </div>
+
+      <div class="form-field">
+        <label class="inline-check">
+          <input id="pcAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}>
+          Ativo
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">Salvar</button>
+      </div>
+    </form>
+  `);
+
+  $("formPlano").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const novoPai = $("pcPai").value ? Number($("pcPai").value) : null;
+
+    if (item && novoPai && (Number(novoPai) === Number(item.id) || todosDesc.includes(Number(novoPai)))) {
+      return alert("Uma categoria não pode ficar dentro dela mesma nem dentro de uma subcategoria dela.");
+    }
+
+    const registro = {
+      user_id: usuarioAtual.id,
+      parent_id: novoPai,
+      nome: $("pcNome").value.trim(),
+      tipo: $("pcTipo").value,
+      ordem: Number($("pcOrdem").value || 0),
+      ativo: $("pcAtivo").checked
+    };
+
+    let resp;
+    if (item) {
+      resp = await supabaseClient.from("fin_plano_contas")
+        .update(registro)
+        .eq("id", item.id)
+        .eq("user_id", usuarioAtual.id);
+    } else {
+      resp = await supabaseClient.from("fin_plano_contas").insert([registro]).select("*").single();
+    }
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+
+    if (!item && resp.data?.id) {
+      categoriaSelecionadaId = resp.data.id;
+      if (registro.parent_id) categoriaExpandidos.add(`plano:${registro.parent_id}`);
+    }
+
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioCentro(item = null, parentPreselecionado = null) {
+  const todosDesc = item ? categoriaDescendentes(centrosCusto, item.id).map(x => Number(x.id)) : [];
+  const possiveisPais = centrosCusto.filter(x =>
+    !item ||
+    (Number(x.id) !== Number(item.id) && !todosDesc.includes(Number(x.id)))
+  );
+
+  const parentInicial = item ? item.parent_id : parentPreselecionado;
+  const titulo = item ? "Editar Centro de Custo" : (parentPreselecionado ? "Novo Subcentro" : "Novo Centro de Custo");
+
+  abrirModal(titulo, `
+    <form id="formCentro" class="form-grid">
+      ${parentPreselecionado ? `
+        <div class="form-field full-span">
+          <div class="cat-breadcrumb">Será criado dentro de: <strong>${escapeHTML(categoriaCaminho(centrosCusto, centrosCusto.find(x=>Number(x.id)===Number(parentPreselecionado))))}</strong></div>
+        </div>` : ""}
+
+      <div class="form-field full-span">
+        <label>Nome</label>
+        <input id="ccNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
+      </div>
+
+      <div class="form-field">
+        <label>Centro superior</label>
+        <select id="ccPai">${optionLista(possiveisPais,parentInicial || "","Nenhum - nível principal")}</select>
+      </div>
+
+      <div class="form-field">
+        <label>Ordem</label>
+        <input id="ccOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}">
+      </div>
+
+      <div class="form-field">
+        <label class="inline-check">
+          <input id="ccAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}>
+          Ativo
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">Salvar</button>
+      </div>
+    </form>
+  `);
+
+  $("formCentro").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const novoPai = $("ccPai").value ? Number($("ccPai").value) : null;
+
+    if (item && novoPai && (Number(novoPai) === Number(item.id) || todosDesc.includes(Number(novoPai)))) {
+      return alert("Um centro de custo não pode ficar dentro dele mesmo nem dentro de um subcentro dele.");
+    }
+
+    const registro = {
+      user_id: usuarioAtual.id,
+      parent_id: novoPai,
+      nome: $("ccNome").value.trim(),
+      ordem: Number($("ccOrdem").value || 0),
+      ativo: $("ccAtivo").checked
+    };
+
+    let resp;
+    if (item) {
+      resp = await supabaseClient.from("fin_centros_custo")
+        .update(registro)
+        .eq("id", item.id)
+        .eq("user_id", usuarioAtual.id);
+    } else {
+      resp = await supabaseClient.from("fin_centros_custo").insert([registro]).select("*").single();
+    }
+
+    if (resp.error) return alert("Erro: " + resp.error.message);
+
+    if (!item && resp.data?.id) {
+      categoriaSelecionadaId = resp.data.id;
+      if (registro.parent_id) categoriaExpandidos.add(`centro:${registro.parent_id}`);
+    }
+
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function adicionarMeses(dataISO, mesesSomar) {
+  const [a,m,d] = dataISO.split("-").map(Number);
+  const data = new Date(a,m-1,d);
+  const dia = data.getDate();
+  data.setDate(1);
+  data.setMonth(data.getMonth()+mesesSomar);
+  const ultimo = new Date(data.getFullYear(), data.getMonth()+1, 0).getDate();
+  data.setDate(Math.min(dia, ultimo));
+  return `${data.getFullYear()}-${String(data.getMonth()+1).padStart(2,"0")}-${String(data.getDate()).padStart(2,"0")}`;
+}
+
+function adicionarDias(dataISO, dias) {
+  const [a,m,d] = dataISO.split("-").map(Number);
+  const data = new Date(a,m-1,d);
+  data.setDate(data.getDate()+dias);
+  return `${data.getFullYear()}-${String(data.getMonth()+1).padStart(2,"0")}-${String(data.getDate()).padStart(2,"0")}`;
+}
+
+function calcularVencimento(dataInicial, frequencia, indice) {
+  if (indice === 0) return dataInicial;
+  if (frequencia === "diaria") return adicionarDias(dataInicial, indice);
+  if (frequencia === "semanal") return adicionarDias(dataInicial, indice*7);
+  if (frequencia === "quinzenal") return adicionarDias(dataInicial, indice*15);
+  if (frequencia === "mensal") return adicionarMeses(dataInicial, indice);
+  if (frequencia === "bimestral") return adicionarMeses(dataInicial, indice*2);
+  if (frequencia === "trimestral") return adicionarMeses(dataInicial, indice*3);
+  if (frequencia === "semestral") return adicionarMeses(dataInicial, indice*6);
+  if (frequencia === "anual") return adicionarMeses(dataInicial, indice*12);
+  return dataInicial;
+}
+
+
+async function efetivarParcela(id) {
+  const parcela = parcelas.find(p => Number(p.id) === Number(id));
+  if (!parcela) return;
+  const prog = programacoes.find(p => Number(p.id) === Number(parcela.programacao_id));
+  if (!prog) return alert("Programação não encontrada.");
+  if (!prog.conta_id) return alert("Esta programação não possui uma conta definida.");
+
+  if (!confirm(`Efetivar ${prog.tipo === "receita" ? "recebimento" : "pagamento"} de ${dinheiro(parcela.valor)}?`)) return;
+
+  const transacao = {
+    user_id: usuarioAtual.id,
+    conta_id: prog.conta_id,
+    pessoa_id: prog.pessoa_id || null,
+    plano_conta_id: prog.plano_conta_id || null,
+    centro_custo_id: prog.centro_custo_id || null,
+    forma_pagamento_id: prog.forma_pagamento_id || null,
+    programacao_parcela_id: parcela.id,
+    tipo: prog.tipo,
+    descricao: prog.descricao,
+    valor: Number(parcela.valor || 0),
+    data_lancamento: hojeISO(),
+    data_vencimento: parcela.data_vencimento,
+    data_efetivacao: hojeISO(),
+    status: "efetivada",
+    compensado: true,
+    origem: "programacao",
+    serie_id: prog.serie_id || null,
+    numero_parcela: parcela.numero_parcela,
+    total_parcelas: parcela.total_parcelas
+  };
+
+  const { data: nova, error } = await supabaseClient.from("fin_transacoes").insert([transacao]).select("*").single();
+  if (error) return alert("Erro ao criar lançamento: " + error.message);
+
+  const upd = await supabaseClient.from("fin_programacao_parcelas")
+    .update({status:"efetivada", transacao_id:nova.id})
+    .eq("id", parcela.id)
+    .eq("user_id", usuarioAtual.id);
+
+  if (upd.error) return alert("Lançamento criado, mas não consegui atualizar a parcela: " + upd.error.message);
+  await carregarDados();
+}
+
+async function cancelarParcela(id) {
+  if (!confirm("Cancelar esta parcela programada?")) return;
+  const { error } = await supabaseClient.from("fin_programacao_parcelas")
+    .update({status:"cancelada"})
+    .eq("id",id)
+    .eq("user_id",usuarioAtual.id);
+  if (error) return alert("Erro: " + error.message);
+  await carregarDados();
+}
+
+function abrirFormularioTransferencia() {
+  const ativas = contas.filter(c => c.ativo !== false);
+  if (ativas.length < 2) return alert("Cadastre pelo menos duas contas para fazer uma transferência.");
+
+  abrirModal("Transferência entre contas", `
+    <form id="formTransferencia" class="form-grid">
+      <div class="form-field"><label>Conta de origem</label><select id="tfOrigem" required>${optionLista(ativas)}</select></div>
+      <div class="form-field"><label>Conta de destino</label><select id="tfDestino" required>${optionLista(ativas)}</select></div>
+      <div class="form-field"><label>Valor</label><input id="tfValor" type="number" min="0.01" step="0.01" required></div>
+      <div class="form-field"><label>Data</label><input id="tfData" type="date" value="${hojeISO()}" required></div>
+      <div class="form-field full-span"><label>Descrição</label><input id="tfDescricao" value="Transferência entre contas"></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="tfObs"></textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Transferir</button></div>
+    </form>
+  `);
+
+  $("formTransferencia").addEventListener("submit", async e => {
+    e.preventDefault();
+    const origem = Number($("tfOrigem").value);
+    const destino = Number($("tfDestino").value);
+    const valor = Number($("tfValor").value || 0);
+    const data = $("tfData").value;
+    const descricao = $("tfDescricao").value.trim() || "Transferência entre contas";
+    const obs = $("tfObs").value.trim() || null;
+
+    if (origem === destino) return alert("A conta de origem e a conta de destino precisam ser diferentes.");
+    if (valor <= 0) return alert("Informe um valor maior que zero.");
+
+    const { data: regTf, error: eTf } = await supabaseClient.from("fin_transferencias").insert([{
+      user_id: usuarioAtual.id,
+      conta_origem_id: origem,
+      conta_destino_id: destino,
+      valor,
+      data_transferencia: data,
+      descricao,
+      observacao: obs,
+      status: "efetivada"
+    }]).select("*").single();
+
+    if (eTf) return alert("Erro ao criar transferência: " + eTf.message);
+
+    const { data: lancs, error: eLanc } = await supabaseClient.from("fin_transacoes").insert([
+      {
+        user_id: usuarioAtual.id, conta_id: origem, tipo:"despesa",
+        descricao: `${descricao} - saída`, valor, data_lancamento:data, data_vencimento:data,
+        data_efetivacao:data, status:"efetivada", compensado:true, origem:"transferencia", observacao:obs
+      },
+      {
+        user_id: usuarioAtual.id, conta_id: destino, tipo:"receita",
+        descricao: `${descricao} - entrada`, valor, data_lancamento:data, data_vencimento:data,
+        data_efetivacao:data, status:"efetivada", compensado:true, origem:"transferencia", observacao:obs
+      }
+    ]).select("*");
+
+    if (eLanc) {
+      await supabaseClient.from("fin_transferencias").delete().eq("id",regTf.id).eq("user_id",usuarioAtual.id);
+      return alert("Erro ao criar os lançamentos da transferência: " + eLanc.message);
+    }
+
+    await supabaseClient.from("fin_transferencias").update({
+      transacao_saida_id: lancs[0].id,
+      transacao_entrada_id: lancs[1].id
+    }).eq("id",regTf.id).eq("user_id",usuarioAtual.id);
+
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioProgramacao() {
+  abrirModal("Nova programação", `
+    <form id="formProgramacao" class="form-grid">
+      <div class="form-field full-span"><label>Descrição</label><input id="prDescricao" required></div>
+      <div class="form-field"><label>Tipo</label><select id="prTipo"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div>
+      <div class="form-field"><label>Valor por parcela</label><input id="prValor" type="number" step="0.01" min="0" required></div>
+      <div class="form-field"><label>Primeiro vencimento</label><input id="prData" type="date" value="${hojeISO()}" required></div>
+      <div class="form-field"><label>Quantidade</label><input id="prQtd" type="number" min="1" max="240" value="1" required></div>
+      <div class="form-field"><label>Frequência</label><select id="prFreq">
+        <option value="unica">Única</option><option value="diaria">Diária</option><option value="semanal">Semanal</option>
+        <option value="quinzenal">Quinzenal</option><option value="mensal" selected>Mensal</option><option value="bimestral">Bimestral</option>
+        <option value="trimestral">Trimestral</option><option value="semestral">Semestral</option><option value="anual">Anual</option>
+      </select></div>
+      <div class="form-field"><label>Conta</label><select id="prConta">${optionLista(contas.filter(c=>c.ativo!==false),"","Nenhuma")}</select></div>
+      <div class="form-field"><label>Plano de conta</label><select id="prPlano">${optionLista(planoContas,"","Sem categoria")}</select></div>
+      <div class="form-field"><label>Centro de custo</label><select id="prCentro">${optionLista(centrosCusto,"","Sem centro")}</select></div>
+      <div class="form-field"><label>Cliente / Fornecedor</label><select id="prPessoa">${optionLista(pessoas,"","Nenhum")}</select></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar programação</button></div>
+    </form>
+  `);
+
+  $("formProgramacao").addEventListener("submit", async e => {
+    e.preventDefault();
+    const quantidade = Math.max(1, Number($("prQtd").value || 1));
+    const valor = Number($("prValor").value || 0);
+    const freq = quantidade === 1 ? "unica" : $("prFreq").value;
+
+    const registro = {
+      user_id: usuarioAtual.id,
+      tipo: $("prTipo").value,
+      descricao: $("prDescricao").value.trim(),
+      pessoa_id: $("prPessoa").value ? Number($("prPessoa").value) : null,
+      conta_id: $("prConta").value ? Number($("prConta").value) : null,
+      plano_conta_id: $("prPlano").value ? Number($("prPlano").value) : null,
+      centro_custo_id: $("prCentro").value ? Number($("prCentro").value) : null,
+      valor,
+      data_inicio: $("prData").value,
+      quantidade_parcelas: quantidade,
+      frequencia: freq,
+      intervalo: 1,
+      ativo: true
+    };
+
+    const { data: criada, error } = await supabaseClient.from("fin_programacoes").insert([registro]).select("*").single();
+    if (error) return alert("Erro: " + error.message);
+
+    const itens = [];
+    for (let i=0;i<quantidade;i++) {
+      itens.push({
+        user_id: usuarioAtual.id,
+        programacao_id: criada.id,
+        numero_parcela: i+1,
+        total_parcelas: quantidade,
+        data_vencimento: calcularVencimento(registro.data_inicio, freq, i),
+        valor,
+        status: "pendente"
+      });
+    }
+
+    const respParc = await supabaseClient.from("fin_programacao_parcelas").insert(itens);
+    if (respParc.error) return alert("Programação criada, mas houve erro nas parcelas: " + respParc.error.message);
+
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+function abrirFormularioOrcamento() {
+  abrirModal("Novo orçamento", `
+    <form id="formOrcamento" class="form-grid">
+      <div class="form-field full-span"><label>Nome</label><input id="orNome" placeholder="Ex.: Orçamento 2027" required></div>
+      <div class="form-field"><label>Ano</label><input id="orAno" type="number" min="2000" max="2100" value="${anoAtual}" required></div>
+      <div class="form-field full-span"><label>Observação</label><textarea id="orObs"></textarea></div>
+      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+    </form>
+  `);
+
+  $("formOrcamento").addEventListener("submit", async e => {
+    e.preventDefault();
+    const { error } = await supabaseClient.from("fin_orcamentos").insert([{
+      user_id: usuarioAtual.id,
+      nome: $("orNome").value.trim(),
+      ano: Number($("orAno").value),
+      observacao: $("orObs").value.trim() || null,
+      ativo: true
+    }]);
+    if (error) return alert("Erro: " + error.message);
+    fecharModal();
+    await carregarDados();
+  });
+}
+
+
+$("btnExcluirOrcamento")?.addEventListener("click", excluirOrcamentoAtual);
+$("btnAtualizarRelatorio")?.addEventListener("click", mostrarRelatorios);
+$("btnExportarCSV")?.addEventListener("click", exportarRelatorioCSV);
+["relDataIni","relDataFim","relConta","relTipo","relStatus"].forEach(id => {
+  $(id)?.addEventListener("change", mostrarRelatorios);
+});
+
+
+
+document.querySelectorAll("[data-cat-screen]").forEach(btn => {
+  btn.addEventListener("click", () => selecionarModuloCategorias(btn.dataset.catScreen));
+});
+$("catBtnNovoRaiz")?.addEventListener("click", abrirNovaCategoriaRaiz);
+$("catBtnNovoFilho")?.addEventListener("click", abrirNovoFilhoCategoria);
+$("catBtnEditar")?.addEventListener("click", abrirEdicaoCategoriaAtual);
+$("catBtnExcluir")?.addEventListener("click", excluirCategoriaAtual);
+
+// ============================================================
+// INÍCIO
+// ============================================================
+
+async function iniciarSistema() {
+  if (!usuarioAtual) usuarioAtual = await pegarUsuario();
+  if (!usuarioAtual) return mostrarTelaLogin();
+
+  $("emailUsuario").textContent = usuarioAtual.email || "";
+  mostrarApp();
+  atualizarNomeMes();
+  await carregarDados();
+  abrirPagina("principal");
+}
+
+(async function init() {
+  usuarioAtual = await pegarUsuario();
+  if (usuarioAtual) iniciarSistema();
+  else mostrarTelaLogin();
+})();
+
+</script>
+</body>
+</html>
