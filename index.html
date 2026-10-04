@@ -358,9 +358,516 @@ body.categories-mode #legacyToolbar{display:none !important}
 .centro-history-table th,.centro-history-table td{padding:6px 8px;border-bottom:1px solid #eceff2;font-size:11px;text-align:left}
 .centro-history-empty{padding:22px;text-align:center;color:#818b97;font-size:11px}
 
+
+    .launch-form{grid-template-columns:repeat(4,minmax(0,1fr));}
+    .launch-form .span-2{grid-column:span 2;}
+    .launch-form .span-3{grid-column:span 3;}
+    .launch-form .span-4{grid-column:1/-1;}
+    .launch-section-title{
+      grid-column:1/-1;
+      margin:6px 0 2px;
+      padding:7px 10px;
+      border:1px solid var(--line);
+      background:linear-gradient(#f8fafc,#eef2f7);
+      font-size:12px;
+      font-weight:800;
+      color:#374151;
+    }
+    .launch-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+    .launch-check{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-height:38px;
+      padding-top:19px;
+    }
+    .launch-check input{width:auto;}
+    @media (max-width:900px){
+      .launch-form{grid-template-columns:1fr 1fr;}
+      .launch-form .span-3,.launch-form .span-4{grid-column:1/-1;}
+    }
+    @media (max-width:600px){
+      .launch-form{grid-template-columns:1fr;}
+      .launch-form .span-2,.launch-form .span-3,.launch-form .span-4{grid-column:1/-1;}
+    }
+
+
+    .split-box{
+      grid-column:1/-1;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:10px;
+      border-radius:8px;
+      margin-top:2px;
+    }
+    .split-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;}
+    .split-table{width:100%;border-collapse:collapse;font-size:12px;}
+    .split-table th,.split-table td{border:1px solid var(--line);padding:6px;vertical-align:middle;}
+    .split-table th{background:#f4f6f8;text-align:left;}
+    .split-table select,.split-table input{width:100%;min-width:90px;}
+    .split-totals{display:flex;justify-content:flex-end;gap:18px;margin-top:8px;font-size:12px;font-weight:700;flex-wrap:wrap;}
+
+
+    .account-item{
+      cursor:pointer;
+      border:1px solid transparent;
+      transition:.12s ease;
+    }
+    .account-item:hover{background:#eef4fb;}
+    .account-item.selected{
+      background:#e5eef8;
+      border-color:#9bb7d8;
+      box-shadow:inset 3px 0 0 #2b6cb0;
+    }
+    .launch-account-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:9px 12px;
+      margin-bottom:10px;
+      border:1px solid var(--line);
+      background:linear-gradient(#fafafa,#f0f2f4);
+    }
+    .launch-account-header small{
+      display:block;
+      color:var(--muted);
+      margin-bottom:2px;
+    }
+    .launch-account-header strong{font-size:14px;}
+
+
+    .ribbon-lancamentos{display:none}
+    body.lancamentos-mode .ribbon-default{display:none !important}
+    body.lancamentos-mode .ribbon-lancamentos{display:flex !important}
+    body.categories-mode .ribbon-lancamentos{display:none !important}
+    .ribbon-lancamentos .ribbon-action{min-width:82px}
+    .ribbon-lancamentos .ribbon-action:disabled{opacity:.38;cursor:default}
+
+
+/* V37 - Tela inicial no estilo jFinanças */
+.ribbon-principal{display:none}
+body.principal-mode .ribbon-default{display:none!important}
+body.principal-mode .ribbon-principal{display:flex!important}
+body.categories-mode .ribbon-principal,
+body.lancamentos-mode .ribbon-principal{display:none!important}
+
+.legacy-home-page{
+  max-width:none!important;
+  padding:0!important;
+  background:#fff!important;
+}
+.legacy-home-top{
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(300px,.8fr);
+  min-height:230px;
+  border-bottom:1px solid #d8dde4;
+}
+.legacy-home-panel{
+  background:#fff;
+  border-right:1px solid #d8dde4;
+}
+.legacy-home-panel-head{
+  min-height:34px;
+  padding:7px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid #eceff3;
+  color:#666;
+  font-size:13px;
+}
+.compact-period{margin-left:auto}
+.compact-period button{
+  width:26px;height:24px;border:1px solid #cfd5dc;background:#fff;
+}
+.compact-period strong{font-size:11px;min-width:120px;text-align:center;color:#777}
+.legacy-chart-bars{
+  height:185px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:36px;
+  padding:16px 20px 12px;
+}
+.legacy-bar-group{
+  width:95px;
+  text-align:center;
+  font-size:11px;
+}
+.legacy-bar-track{
+  height:125px;
+  width:58px;
+  margin:0 auto 6px;
+  display:flex;
+  align-items:flex-end;
+  background:linear-gradient(#fafafa,#f4f4f4);
+  border-bottom:1px solid #d8dde4;
+}
+.legacy-bar-fill{
+  width:100%;
+  min-height:2px;
+  transition:.2s ease;
+}
+.legacy-bar-fill.receita{background:#bfc1c5}
+.legacy-bar-fill.despesa{background:#e4e5e7}
+.legacy-bar-group span,.legacy-bar-group strong{display:block}
+.legacy-bar-group strong{margin-top:2px;color:#555;font-size:10px}
+
+.legacy-donut-wrap{
+  min-height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  padding:18px;
+}
+.legacy-donut{
+  width:118px;height:118px;border-radius:50%;
+  background:conic-gradient(#d6dbe1 0 100%);
+  position:relative;flex:none;
+}
+.legacy-donut:after{
+  content:"";position:absolute;inset:27px;border-radius:50%;background:#fff;
+}
+.legacy-donut-legend{font-size:10px;min-width:120px;max-width:190px}
+.legacy-donut-legend div{display:flex;align-items:center;gap:6px;margin:6px 0}
+.legacy-donut-legend i{display:block;width:9px;height:9px;background:#aaa;flex:none}
+
+.legacy-home-forecast{
+  min-height:270px;
+  border-right:0;
+  border-bottom:1px solid #d8dde4;
+}
+.forecast-chart{
+  position:relative;
+  height:225px;
+  margin:4px 16px 10px;
+  overflow:hidden;
+  border-bottom:1px solid #d7dce2;
+}
+.forecast-zero{
+  position:absolute;left:0;right:0;top:50%;
+  border-top:1px solid #d5dbe3;
+}
+.forecast-area{
+  position:absolute;left:0;right:0;bottom:0;height:42%;
+  background:rgba(76,132,190,.16);
+  border-top:1px solid #4f83bd;
+}
+.forecast-line{
+  position:absolute;left:0;right:0;top:58%;
+  border-top:2px solid #4f83bd;
+}
+.forecast-label{position:absolute;bottom:4px;font-size:9px;color:#777}
+.forecast-label.start{left:4px}
+.forecast-label.end{right:4px}
+
+.legacy-home-bottom{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  min-height:105px;
+}
+.legacy-balance-box{
+  padding:16px 20px;border-right:1px solid #d8dde4;
+}
+.legacy-balance-box span{display:block;color:#555;font-size:12px}
+.legacy-balance-box strong{display:block;font-size:27px;color:#4b73aa;margin:6px 0}
+.legacy-balance-box small{color:#777}
+.legacy-programacao-box{padding:6px 14px}
+.legacy-programacao-box .legacy-home-panel-head{padding-left:0;border-bottom:0}
+.legacy-programacao-cols{display:flex;gap:70px;padding:0 20px}
+.legacy-programacao-cols div{display:grid;gap:3px;font-size:11px}
+.legacy-programacao-cols span{color:#888;text-align:center}
+.legacy-programacao-cols b{font-size:11px}
+
+@media(max-width:850px){
+  .legacy-home-top{grid-template-columns:1fr}
+  .legacy-home-panel{border-right:0;border-bottom:1px solid #d8dde4}
+  .legacy-home-bottom{grid-template-columns:1fr}
+  .legacy-balance-box{border-right:0;border-bottom:1px solid #d8dde4}
+}
+
+
+/* V39 - Lista e configuração de contas */
+.account-list-modal{min-width:min(760px,92vw)}
+.account-list-toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px}
+.account-list-table{min-width:620px}
+.account-group-row td{font-weight:800;background:#eef2f6;color:#2f5f91}
+.account-list-row.selected td{background:#dceafa!important}
+.account-list-row:hover td{background:#f1f6fb}
+.account-config-form{min-width:min(780px,94vw)}
+.account-tabs{
+  display:flex;gap:1px;border-bottom:1px solid #bfc8d1;margin:-4px -4px 14px;
+}
+.account-tab{
+  border:1px solid transparent;border-bottom:0;background:#f3f3f3;
+  padding:7px 14px;font-size:12px;line-height:1.2;
+}
+.account-tab.active{background:#fff;border-color:#bfc8d1;position:relative;top:1px}
+.account-tab-panel{display:none}
+.account-tab-panel.active{display:block}
+.account-config-grid{
+  display:grid;grid-template-columns:minmax(420px,1fr) 220px;gap:20px;align-items:start;
+}
+.account-fields{display:grid;gap:9px}
+.account-row{
+  display:grid;grid-template-columns:130px minmax(0,1fr);column-gap:10px;align-items:center;
+}
+.account-row label{font-size:12px;text-align:right;line-height:1.25;padding-right:2px}
+.account-row input,.account-row select{min-height:32px;box-sizing:border-box;padding:6px 8px}
+.account-number-pair{display:grid;grid-template-columns:minmax(0,1fr) 14px 56px;align-items:center;gap:4px}
+.account-number-pair span{text-align:center;color:#666}
+.account-divider{border-top:1px solid #d9dde2;margin:3px 0}
+.account-balance-box{
+  align-self:start;border:1px solid #d7dde4;background:#fafafa;padding:12px;text-align:center;
+}
+.account-balance-box strong{display:block;font-size:12px;margin-bottom:8px;line-height:1.25}
+.account-balance-box div{
+  border:1px solid #ddd;background:#fffbea;padding:7px 8px;text-align:right;margin-bottom:8px;font-weight:700;
+}
+.account-options{
+  display:grid;gap:8px;border-top:1px solid #d9dde2;margin-top:14px;padding-top:12px;font-size:12px;
+}
+.account-options label{display:grid;grid-template-columns:16px 1fr;align-items:start;gap:8px;line-height:1.3}
+.account-options input[type=checkbox]{width:auto;margin:2px 0 0}
+.account-form-actions{margin-top:14px;border-top:1px solid #d9dde2;padding-top:12px}
+@media(max-width:820px){
+  .account-config-grid{grid-template-columns:1fr}
+  .account-balance-box{max-width:none}
+}
+@media(max-width:720px){
+  .account-row{grid-template-columns:1fr}
+  .account-row label{text-align:left;padding-right:0}
+}
+
+
+/* V41 - enquadramento da janela Configuração de Contas */
+.account-config-form{
+  min-width:0 !important;
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+.account-config-form *{box-sizing:border-box}
+
+.account-config-grid{
+  grid-template-columns:minmax(0,1fr) 185px !important;
+  gap:14px !important;
+  width:100%;
+  min-width:0;
+}
+.account-fields{min-width:0}
+.account-row{
+  grid-template-columns:118px minmax(0,1fr) !important;
+  column-gap:8px !important;
+  min-width:0;
+}
+.account-row input,
+.account-row select,
+.account-number-pair{
+  min-width:0;
+  max-width:100%;
+}
+.account-number-pair{
+  grid-template-columns:minmax(0,1fr) 10px 42px !important;
+}
+.account-balance-box{
+  width:185px;
+  max-width:100%;
+  padding:10px !important;
+}
+.account-balance-box .btn{
+  width:100%;
+  white-space:normal;
+}
+.account-options{
+  width:100%;
+  padding-right:2px;
+}
+.account-options label{
+  grid-template-columns:16px minmax(0,1fr) !important;
+}
+.account-form-actions{
+  width:100%;
+  position:static !important;
+}
+.account-config-form textarea{max-width:100%}
+
+/* Evita a barra horizontal dentro do modal */
+#modalConteudo:has(.account-config-form){
+  overflow-x:hidden !important;
+}
+.modal-card:has(.account-config-form){
+  width:min(760px, calc(100vw - 24px)) !important;
+  max-width:calc(100vw - 24px) !important;
+  overflow-x:hidden !important;
+}
+
+/* Em espaços menores, saldo vai para baixo para manter tudo visível */
+@media(max-width:760px){
+  .modal-card:has(.account-config-form){
+    width:calc(100vw - 12px) !important;
+    max-width:calc(100vw - 12px) !important;
+  }
+  .account-config-grid{
+    grid-template-columns:1fr !important;
+  }
+  .account-balance-box{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px 12px;
+    align-items:center;
+    text-align:left;
+  }
+  .account-balance-box strong{margin:0 !important}
+  .account-balance-box div{margin:0 !important}
+  .account-balance-box .btn{grid-column:1/-1}
+}
+
+@media(max-width:560px){
+  .account-row{
+    grid-template-columns:1fr !important;
+    gap:4px !important;
+  }
+  .account-row label{
+    text-align:left !important;
+    padding-right:0 !important;
+  }
+  .account-number-pair{
+    grid-template-columns:minmax(0,1fr) 10px 42px !important;
+  }
+  .account-tabs{overflow-x:auto}
+  .account-tab{white-space:nowrap}
+}
+
+
+/* V42 - filtros da tela de Lançamentos */
+.launch-filters{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin:0 0 8px;
+  padding:0;
+}
+.launch-filter-search{
+  display:flex;
+  justify-content:flex-end;
+}
+.launch-filter-search input{
+  width:min(300px,100%);
+  height:29px;
+  padding:5px 9px;
+  border-radius:2px;
+  font-size:12px;
+}
+.launch-filter-controls{
+  min-height:34px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:12px;
+  padding:4px 6px;
+  border-top:1px solid #d9dde2;
+  border-bottom:1px solid #d9dde2;
+  background:#fafafa;
+  font-size:11px;
+}
+.launch-filter-controls label{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
+}
+.launch-filter-controls select{
+  width:auto;
+  min-width:105px;
+  height:26px;
+  padding:3px 24px 3px 6px;
+  border-radius:2px;
+  font-size:11px;
+}
+.launch-filter-controls label:nth-child(2) select{min-width:130px}
+.launch-filter-check input{
+  width:auto;
+  margin:0;
+}
+#lancamentos.extrato-mode table th:nth-child(5),
+#lancamentos.extrato-mode table td:nth-child(5),
+#lancamentos.extrato-mode table th:nth-child(6),
+#lancamentos.extrato-mode table td:nth-child(6),
+#lancamentos.extrato-mode table th:nth-child(7),
+#lancamentos.extrato-mode table td:nth-child(7),
+#lancamentos.extrato-mode table th:nth-child(8),
+#lancamentos.extrato-mode table td:nth-child(8){
+  display:none;
+}
+@media(max-width:760px){
+  .launch-filter-controls{
+    justify-content:flex-start;
+    flex-wrap:wrap;
+  }
+  .launch-filter-search{justify-content:stretch}
+  .launch-filter-search input{width:100%}
+}
+
+
+/* V43 - Programação */
+.ribbon-programacao{display:none}
+body.programacao-mode .ribbon-default{display:none!important}
+body.programacao-mode .ribbon-programacao{display:flex!important}
+body.categories-mode .ribbon-programacao,
+body.lancamentos-mode .ribbon-programacao,
+body.principal-mode .ribbon-programacao{display:none!important}
+.ribbon-programacao .ribbon-action:disabled{opacity:.35;cursor:default}
+.programacao-page{max-width:none!important;padding:0!important;background:#fff!important}
+.programacao-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;min-height:calc(100vh - 150px);border-top:1px solid #d8dde4;background:#fff}
+.programacao-main{min-width:0;overflow:auto}
+.programacao-titlebar{height:34px;display:flex;align-items:center;padding:0 8px;border-bottom:1px solid #d8dde4;background:#fafafa;font-size:13px}
+.programacao-table{width:100%;border-collapse:collapse;font-size:11px}
+.programacao-table th,.programacao-table td{padding:6px 7px;border-bottom:1px solid #eceff2;text-align:left;white-space:nowrap}
+.programacao-table th{background:#fff;border-bottom:1px solid #cfd5db;font-weight:500}
+.programacao-table tbody tr{cursor:pointer}
+.programacao-table tbody tr:hover td{background:#f3f7fb}
+.programacao-table tbody tr.selected td{background:#dceafa}
+.programacao-side{border-left:1px solid #d8dde4;background:#fafafa;padding:8px 0}
+.programacao-side-search{padding:0 8px 7px}
+.programacao-side-search input{height:27px;padding:4px 7px;border-radius:2px;font-size:11px}
+.programacao-filter-title{padding:7px 10px;background:#3b8edb;color:#fff;font-size:11px;font-weight:700}
+.programacao-filter-item{display:block;width:100%;border:0;background:transparent;text-align:left;padding:7px 10px;font-size:11px;color:#555}
+.programacao-filter-item:hover,.programacao-filter-item.active{background:#e7f1fb;color:#1f5f99}
+.programacao-filter-new{color:#4e8d16}
+.prog-form{min-width:min(760px,92vw)}
+.prog-tabs{display:flex;border-bottom:1px solid #bfc8d1;margin:-4px -4px 12px}
+.prog-tab{border:1px solid transparent;border-bottom:0;background:#f3f3f3;padding:6px 12px;font-size:12px}
+.prog-tab.active{background:#fff;border-color:#bfc8d1;position:relative;top:1px}
+.prog-panel{display:none}.prog-panel.active{display:block}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.prog-section-title{grid-column:1/-1;font-size:12px;font-weight:700;border-bottom:1px solid #d9dde2;padding:4px 0}
+.prog-field{display:grid;grid-template-columns:120px minmax(0,1fr);gap:8px;align-items:center}
+.prog-field.full{grid-column:1/-1}
+.prog-field label{font-size:11px;text-align:right}
+.prog-field input,.prog-field select{min-height:30px;padding:5px 7px}
+.prog-actions{display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #d9dde2;margin-top:12px;padding-top:10px}
+@media(max-width:820px){
+  .programacao-layout{grid-template-columns:1fr}
+  .programacao-side{border-left:0;border-top:1px solid #d8dde4}
+  .prog-grid{grid-template-columns:1fr}
+  .prog-field.full{grid-column:auto}
+}
+
+
+.ribbon-programacao .ribbon-action.active{
+  background:#dbeaf8;
+  border-color:#97b9d9;
+}
+
 </style>
 </head>
-<body>
+<body class="principal-mode">
 
   <!-- LOGIN -->
   <section id="telaLogin" class="auth-screen">
@@ -409,7 +916,7 @@ body.categories-mode #legacyToolbar{display:none !important}
   <div id="app" class="app hidden">
     <header class="desktop-header">
       <div class="window-title">
-        <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v22 Categorias</span></strong>
+        <strong>Minhas Finanças <span style="font-weight:400;color:#7a8797">v31 Categorias</span></strong>
         <span id="emailUsuario"></span>
         <button id="btnSair" type="button" class="link-button">Sair</button>
       </div>
@@ -453,6 +960,66 @@ body.categories-mode #legacyToolbar{display:none !important}
           <span>🗂️</span>
           Categorias
         </button>
+      </div>
+
+      <div class="ribbon ribbon-lancamentos">
+        <button class="ribbon-action" data-open="novaDespesa">
+          <span>💰</span>
+          Despesa
+        </button>
+        <button class="ribbon-action" data-open="novaReceita">
+          <span>💵</span>
+          Receita
+        </button>
+        <button class="ribbon-action" data-open="novaTransferencia">
+          <span>⇄</span>
+          Transferir
+        </button>
+        <button class="ribbon-action" id="btnReconciliarLancamentos" disabled title="Será configurado na etapa de conciliação">
+          <span>✓</span>
+          Reconciliar
+        </button>
+        <button class="ribbon-action" data-open="listaContas">
+          <span>🏦</span>
+          Lista de Contas
+        </button>
+      </div>
+
+      <div class="ribbon ribbon-principal">
+        <button class="ribbon-action" data-page="relatorios">
+          <span>📊</span>
+          Relatórios
+        </button>
+        <button class="ribbon-action" data-page="planejamento">
+          <span>📈</span>
+          Previsão do Fluxo de Caixa
+        </button>
+        <button class="ribbon-action" data-page="relatorios">
+          <span>📑</span>
+          Demonstrativo Financeiro
+        </button>
+        <button class="ribbon-action" data-page="relatorios">
+          <span>📉</span>
+          Receitas x Despesas
+        </button>
+        <button class="ribbon-action" data-page="pessoas">
+          <span>❓</span>
+          Guia Prático
+        </button>
+        <button class="ribbon-action" data-page="categorias">
+          <span>⚙️</span>
+          Configurações
+        </button>
+      </div>
+
+      <div class="ribbon ribbon-programacao">
+        <button class="ribbon-action" type="button" id="btnProgReceber"><span>💰</span>Conta a Receber</button>
+        <button class="ribbon-action" type="button" id="btnProgPagar"><span>💸</span>Conta a Pagar</button>
+        <button class="ribbon-action" type="button" id="btnProgTransferir"><span>⇄</span>Transferência</button>
+        <button class="ribbon-action" type="button" id="btnProgPagas"><span>✓</span>Contas Pagas</button>
+        <button class="ribbon-action" type="button" id="btnProgNovo"><span>＋</span><small id="btnProgNovoTexto">Nova Conta a Receber</small></button>
+        <button class="ribbon-action" type="button" id="btnEditarProgramacao" disabled><span>✎</span>Editar</button>
+        <button class="ribbon-action" type="button" id="btnExcluirProgramacao" disabled><span>⊖</span>Excluir</button>
       </div>
 
       <div class="ribbon ribbon-categorias">
@@ -513,86 +1080,88 @@ body.categories-mode #legacyToolbar{display:none !important}
 
       <section class="content">
         <!-- PRINCIPAL -->
-        <section id="principal" class="page active">
-          <div class="page-heading">
-            <div>
-              <h1>Principal</h1>
-              <p>Visão geral da sua vida financeira.</p>
-            </div>
-            <div class="period-nav">
-              <button id="mesAnterior" type="button">‹</button>
-              <strong id="nomeMes"></strong>
-              <button id="mesSeguinte" type="button">›</button>
-            </div>
-          </div>
-
-          <div class="summary-grid">
-            <article class="summary-card">
-              <span>Saldo atual</span>
-              <strong id="saldoAtual">R$ 0,00</strong>
-            </article>
-            <article class="summary-card income">
-              <span>Receitas do mês</span>
-              <strong id="receitasMes">R$ 0,00</strong>
-            </article>
-            <article class="summary-card expense">
-              <span>Despesas do mês</span>
-              <strong id="despesasMes">R$ 0,00</strong>
-            </article>
-            <article class="summary-card">
-              <span>Saldo previsto</span>
-              <strong id="saldoPrevisto">R$ 0,00</strong>
-            </article>
-          </div>
-
-          <div class="dashboard-grid">
-            <article class="panel">
-              <div class="panel-head">
-                <h2>Contas</h2>
-                <button class="text-action" data-page="contas">Gerenciar</button>
+        <section id="principal" class="page active legacy-home-page">
+          <div class="legacy-home-top">
+            <article class="legacy-home-panel legacy-home-bars">
+              <div class="legacy-home-panel-head">
+                <strong>Receitas x Despesas</strong>
+                <div class="period-nav compact-period">
+                  <button id="mesAnterior" type="button">‹</button>
+                  <strong id="nomeMes"></strong>
+                  <button id="mesSeguinte" type="button">›</button>
+                </div>
               </div>
-              <div id="contasResumo"></div>
-            </article>
-
-            <article class="panel">
-              <div class="panel-head">
-                <h2>Receitas x Despesas</h2>
-              </div>
-              <div class="bars">
-                <div class="bar-column">
-                  <div id="barraReceita" class="bar income-bar"></div>
+              <div class="legacy-chart-bars">
+                <div class="legacy-bar-group">
+                  <div class="legacy-bar-track">
+                    <div id="barraReceita" class="legacy-bar-fill receita"></div>
+                  </div>
                   <span>Receitas</span>
+                  <strong id="receitasMes">R$ 0,00</strong>
                 </div>
-                <div class="bar-column">
-                  <div id="barraDespesa" class="bar expense-bar"></div>
+                <div class="legacy-bar-group">
+                  <div class="legacy-bar-track">
+                    <div id="barraDespesa" class="legacy-bar-fill despesa"></div>
+                  </div>
                   <span>Despesas</span>
+                  <strong id="despesasMes">R$ 0,00</strong>
                 </div>
               </div>
             </article>
 
-            <article class="panel">
-              <div class="panel-head">
-                <h2>Despesas por categoria</h2>
+            <article class="legacy-home-panel legacy-home-donut">
+              <div class="legacy-home-panel-head">
+                <strong>Despesas do Mês</strong>
               </div>
-              <div id="resumoCategorias" class="category-summary"></div>
+              <div class="legacy-donut-wrap">
+                <div id="homeDonut" class="legacy-donut"></div>
+                <div id="homeDonutLegenda" class="legacy-donut-legend"></div>
+              </div>
             </article>
           </div>
 
-          <article class="panel">
-            <div class="panel-head">
-              <h2>Próximos vencimentos</h2>
-              <button class="text-action" data-page="programacao">Ver programação</button>
+          <article class="legacy-home-panel legacy-home-forecast">
+            <div class="legacy-home-panel-head">
+              <strong>Previsão de saldo total para os próximos 90 dias</strong>
             </div>
-            <div id="proximosVencimentos" class="compact-list"></div>
+            <div id="homeForecastChart" class="forecast-chart">
+              <div class="forecast-zero"></div>
+              <div id="forecastArea" class="forecast-area"></div>
+              <div id="forecastLine" class="forecast-line"></div>
+              <div class="forecast-label start">Hoje</div>
+              <div class="forecast-label end">90 dias</div>
+            </div>
           </article>
 
-          <article class="panel">
-            <div class="panel-head">
-              <h2>Últimos lançamentos</h2>
-              <button class="text-action" data-page="lancamentos">Ver todos</button>
-            </div>
-            <div id="ultimosLancamentos" class="compact-list"></div>
-          </article>
+          <div class="legacy-home-bottom">
+            <section class="legacy-balance-box">
+              <span>Saldo</span>
+              <strong id="saldoAtual">R$ 0,00</strong>
+              <small>Saldo previsto: <b id="saldoPrevisto">R$ 0,00</b></small>
+            </section>
+
+            <section class="legacy-programacao-box">
+              <div class="legacy-home-panel-head"><strong>Programação</strong></div>
+              <div class="legacy-programacao-cols">
+                <div>
+                  <span>Para Hoje</span>
+                  <b class="money-income" id="progHojeReceita">R$ 0,00 ▲</b>
+                  <b class="money-expense" id="progHojeDespesa">R$ 0,00 ▼</b>
+                </div>
+                <div>
+                  <span>Próximos Dias</span>
+                  <b class="money-income" id="progProxReceita">R$ 0,00 ▲</b>
+                  <b class="money-expense" id="progProxDespesa">R$ 0,00 ▼</b>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- mantidos para compatibilidade com funções e futuras telas -->
+          <div class="hidden" id="contasResumo"></div>
+          <div class="hidden" id="resumoCategorias"></div>
+          <div class="hidden" id="proximosVencimentos"></div>
+          <div class="hidden" id="ultimosLancamentos"></div>
         </section>
 
         <!-- CONTAS -->
@@ -613,27 +1182,54 @@ body.categories-mode #legacyToolbar{display:none !important}
           <div class="page-heading">
             <div>
               <h1>Lançamentos</h1>
-              <p>Receitas e despesas realizadas ou pendentes.</p>
-            </div>
-            <div class="heading-actions">
-              <button class="btn success" data-open="novaReceita">Nova receita</button>
-              <button class="btn danger" data-open="novaDespesa">Nova despesa</button>
+              <p>Receitas e despesas da conta selecionada.</p>
             </div>
           </div>
 
-          <div class="filters">
-            <input id="buscaTransacao" type="search" placeholder="Pesquisar lançamento...">
-            <select id="filtroTipo">
-              <option value="todos">Todos os tipos</option>
-              <option value="receita">Receitas</option>
-              <option value="despesa">Despesas</option>
-            </select>
-            <select id="filtroStatus">
-              <option value="todos">Todas as situações</option>
-              <option value="efetivada">Efetivadas</option>
-              <option value="pendente">Pendentes</option>
-              <option value="prevista">Previstas</option>
-            </select>
+          <div id="contaLancamentosCabecalho" class="launch-account-header">
+            <div>
+              <small>Conta selecionada</small>
+              <strong id="contaLancamentosNome">Selecione uma conta</strong>
+            </div>
+            <div class="right">
+              <small>Saldo da conta</small>
+              <strong id="contaLancamentosSaldo">R$ 0,00</strong>
+            </div>
+          </div>
+
+          <div class="launch-filters">
+            <div class="launch-filter-search">
+              <input id="buscaTransacao" type="search" placeholder="Pesquisar...">
+            </div>
+
+            <div class="launch-filter-controls">
+              <label>
+                <span>Situação</span>
+                <select id="filtroStatus">
+                  <option value="todos">Todos</option>
+                  <option value="efetivada">Efetivadas</option>
+                  <option value="pendente">Pendentes</option>
+                  <option value="prevista">Previstas</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Período</span>
+                <select id="filtroPeriodo">
+                  <option value="todos">Todos</option>
+                  <option value="30">Últimos 30 dias</option>
+                  <option value="60" selected>Últimos 60 dias</option>
+                  <option value="90">Últimos 90 dias</option>
+                  <option value="mes_atual">Mês atual</option>
+                  <option value="mes_anterior">Mês anterior</option>
+                </select>
+              </label>
+
+              <label class="launch-filter-check">
+                <input id="filtroExtrato" type="checkbox">
+                <span>Ver como Extrato</span>
+              </label>
+            </div>
           </div>
 
           <div class="table-wrap">
@@ -641,9 +1237,12 @@ body.categories-mode #legacyToolbar{display:none !important}
               <thead>
                 <tr>
                   <th>Data</th>
-                  <th>Descrição</th>
+                  <th>Histórico</th>
+                  <th>Favorecido</th>
+                  <th>Número</th>
                   <th>Conta</th>
-                  <th>Plano de conta</th>
+                  <th>Plano de Conta</th>
+                  <th>Centro de Custo</th>
                   <th>Situação</th>
                   <th class="right">Valor</th>
                   <th></th>
@@ -655,42 +1254,30 @@ body.categories-mode #legacyToolbar{display:none !important}
         </section>
 
         <!-- PROGRAMAÇÃO -->
-        <section id="programacao" class="page">
-          <div class="page-heading">
-            <div>
-              <h1>Programação</h1>
-              <p>Contas a pagar, contas a receber e recorrências.</p>
+        <section id="programacao" class="page programacao-page">
+          <div class="programacao-layout">
+            <div class="programacao-main">
+              <div class="programacao-titlebar"><strong id="programacaoTitulo">Contas a Receber</strong></div>
+              <div style="overflow:auto">
+                <table class="programacao-table">
+                  <thead><tr>
+                    <th>Conta</th><th>Núm-Parcela</th><th id="progPessoaHeader">Receber de</th>
+                    <th>Plano de Conta</th><th class="right">Valor</th><th>Vencimento</th><th>Frequência</th>
+                  </tr></thead>
+                  <tbody id="tabelaProgramacao"></tbody>
+                </table>
+              </div>
             </div>
-            <button class="btn primary" data-open="novaProgramacao">Nova programação</button>
+            <aside class="programacao-side">
+              <div class="programacao-side-search"><input id="buscaProgramacao" type="search" placeholder="Filtrar..."></div>
+              <div class="programacao-filter-title" id="progFiltroTitulo">Receitas</div>
+              <button class="programacao-filter-item active" type="button" data-prog-filtro="todos">Todos</button>
+              <button class="programacao-filter-item" type="button" data-prog-filtro="vencidas">Vencidas</button>
+              <button class="programacao-filter-item" type="button" data-prog-filtro="hoje">Vencendo Hoje</button>
+              <button class="programacao-filter-item programacao-filter-new" type="button" id="btnProgNovoLateral">⊕ Novo...</button>
+            </aside>
           </div>
-
-          <div class="summary-grid small">
-            <article class="summary-card income">
-              <span>A receber</span>
-              <strong id="totalAReceber">R$ 0,00</strong>
-            </article>
-            <article class="summary-card expense">
-              <span>A pagar</span>
-              <strong id="totalAPagar">R$ 0,00</strong>
-            </article>
-          </div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Vencimento</th>
-                  <th>Descrição</th>
-                  <th>Tipo</th>
-                  <th>Parcela</th>
-                  <th>Status</th>
-                  <th class="right">Valor</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="tabelaProgramacao"></tbody>
-            </table>
-          </div>
+          <div class="hidden"><strong id="totalAReceber">R$ 0,00</strong><strong id="totalAPagar">R$ 0,00</strong></div>
         </section>
 
         <!-- PLANEJAMENTO -->
@@ -958,13 +1545,18 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let usuarioAtual = null;
 let contas = [];
+let contaLancamentosSelecionadaId = null;
 let transacoes = [];
+let transacaoRateios = [];
 let pessoas = [];
 let planoContas = [];
 let centrosCusto = [];
 let formasPagamento = [];
 let programacoes = [];
 let parcelas = [];
+let programacaoTipoAtual = "receita";
+let programacaoFiltroAtual = "todos";
+let programacaoSelecionadaId = null;
 let orcamentos = [];
 let orcamentoItens = [];
 let orcamentoSelecionadoId = null;
@@ -1115,6 +1707,9 @@ $("btnSair").addEventListener("click", async () => {
 
 function abrirPagina(nome) {
   document.body.classList.toggle("categories-mode", nome === "categorias");
+  document.body.classList.toggle("lancamentos-mode", nome === "lancamentos");
+  document.body.classList.toggle("principal-mode", nome === "principal");
+  document.body.classList.toggle("programacao-mode", nome === "programacao");
 
   if (nome === "mobileMais") {
     abrirModal("Mais", `
@@ -1143,6 +1738,11 @@ function abrirPagina(nome) {
   document.querySelectorAll("[data-page]").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.page === nome);
   });
+
+  if (nome === "programacao") {
+    configurarBotoesProgramacao();
+    mostrarProgramacao();
+  }
 }
 
 document.addEventListener("click", (e) => {
@@ -1151,7 +1751,136 @@ document.addEventListener("click", (e) => {
 
   const abrir = e.target.closest("[data-open]");
   if (abrir) tratarAbertura(abrir.dataset.open);
+
 });
+
+function abrirProgramacaoTipo(tipo) {
+  programacaoTipoAtual = tipo;
+  programacaoFiltroAtual = "todos";
+  programacaoSelecionadaId = null;
+  abrirPagina("programacao");
+  mostrarProgramacao();
+
+  if ($("btnEditarProgramacao")) $("btnEditarProgramacao").disabled = true;
+  if ($("btnExcluirProgramacao")) $("btnExcluirProgramacao").disabled = true;
+}
+
+function abrirContasPagasProgramacao() {
+  programacaoFiltroAtual = "efetivada";
+  programacaoSelecionadaId = null;
+  abrirPagina("programacao");
+  mostrarProgramacao();
+
+  if ($("btnEditarProgramacao")) $("btnEditarProgramacao").disabled = true;
+  if ($("btnExcluirProgramacao")) $("btnExcluirProgramacao").disabled = true;
+}
+
+function aplicarFiltroProgramacao(filtro) {
+  programacaoFiltroAtual = filtro;
+  programacaoSelecionadaId = null;
+  mostrarProgramacao();
+
+  if ($("btnEditarProgramacao")) $("btnEditarProgramacao").disabled = true;
+  if ($("btnExcluirProgramacao")) $("btnExcluirProgramacao").disabled = true;
+}
+
+function editarProgramacaoSelecionada() {
+  const p = programacoes.find(x => Number(x.id) === Number(programacaoSelecionadaId));
+  if (!p) return alert("Selecione uma programação na lista.");
+  abrirFormularioProgramacao(p);
+}
+
+function configurarBotoesProgramacao() {
+  const ligar = (id, fn) => {
+    const el = $(id);
+    if (!el || el.dataset.listenerOk === "1") return;
+    el.dataset.listenerOk = "1";
+    el.addEventListener("click", fn);
+  };
+
+  ligar("btnProgReceber", () => {
+    programacaoTipoAtual = "receita";
+    programacaoFiltroAtual = "todos";
+    programacaoSelecionadaId = null;
+    abrirPagina("programacao");
+    mostrarProgramacao();
+  });
+
+  ligar("btnProgPagar", () => {
+    programacaoTipoAtual = "despesa";
+    programacaoFiltroAtual = "todos";
+    programacaoSelecionadaId = null;
+    abrirPagina("programacao");
+    mostrarProgramacao();
+  });
+
+  ligar("btnProgTransferir", () => {
+    abrirFormularioTransferencia();
+  });
+
+  ligar("btnProgPagas", () => {
+    programacaoFiltroAtual = "efetivada";
+    programacaoSelecionadaId = null;
+    abrirPagina("programacao");
+    mostrarProgramacao();
+  });
+
+  ligar("btnProgNovo", () => {
+    abrirFormularioProgramacao(null, programacaoTipoAtual);
+  });
+
+  ligar("btnProgNovoLateral", () => {
+    abrirFormularioProgramacao(null, programacaoTipoAtual);
+  });
+
+  ligar("btnEditarProgramacao", () => {
+    editarProgramacaoSelecionada();
+  });
+
+  ligar("btnExcluirProgramacao", () => {
+    excluirProgramacaoSelecionada();
+  });
+
+  const busca = $("buscaProgramacao");
+  if (busca && busca.dataset.listenerOk !== "1") {
+    busca.dataset.listenerOk = "1";
+    busca.addEventListener("input", mostrarProgramacao);
+  }
+
+  document.querySelectorAll("[data-prog-filtro]").forEach(btn => {
+    if (btn.dataset.listenerOk === "1") return;
+    btn.dataset.listenerOk = "1";
+    btn.addEventListener("click", () => {
+      programacaoFiltroAtual = btn.dataset.progFiltro;
+      programacaoSelecionadaId = null;
+      mostrarProgramacao();
+    });
+  });
+}
+
+async function excluirProgramacaoSelecionada() {
+  const p = programacoes.find(x=>Number(x.id)===Number(programacaoSelecionadaId));
+  if (!p) return;
+  if (!confirm(`Excluir a programação "${p.descricao}" e as parcelas ainda não efetivadas?`)) return;
+
+  const delParc = await supabaseClient.from("fin_programacao_parcelas")
+    .delete().eq("programacao_id",p.id).eq("user_id",usuarioAtual.id).neq("status","efetivada");
+  if (delParc.error) return alert("Erro ao excluir parcelas: " + delParc.error.message);
+
+  const temEfetivada = parcelas.some(x=>Number(x.programacao_id)===Number(p.id) && x.status==="efetivada");
+  if (temEfetivada) {
+    const upd = await supabaseClient.from("fin_programacoes")
+      .update({ativo:false}).eq("id",p.id).eq("user_id",usuarioAtual.id);
+    if (upd.error) return alert("Erro: " + upd.error.message);
+  } else {
+    const del = await supabaseClient.from("fin_programacoes")
+      .delete().eq("id",p.id).eq("user_id",usuarioAtual.id);
+    if (del.error) return alert("Erro: " + del.error.message);
+  }
+
+  programacaoSelecionadaId = null;
+  await carregarDados();
+}
 
 $("mesAnterior").addEventListener("click", () => {
   mesAtual--;
@@ -1210,6 +1939,7 @@ async function carregarDados() {
   const [
     contasResp,
     transResp,
+    rateiosResp,
     pessoasResp,
     planoResp,
     centrosResp,
@@ -1229,6 +1959,7 @@ async function carregarDados() {
   ] = await Promise.all([
     supabaseClient.from("fin_contas").select("*").eq("user_id", uid).order("ordem").order("nome"),
     supabaseClient.from("fin_transacoes").select("*").eq("user_id", uid).order("data_lancamento", { ascending: false }).order("id", { ascending: false }),
+    supabaseClient.from("fin_transacao_rateios").select("*").eq("user_id", uid).order("id"),
     supabaseClient.from("fin_pessoas").select("*").eq("user_id", uid).order("nome"),
     supabaseClient.from("fin_plano_contas").select("*").eq("user_id", uid).order("ordem").order("nome"),
     supabaseClient.from("fin_centros_custo").select("*").eq("user_id", uid).order("ordem").order("nome"),
@@ -1248,7 +1979,7 @@ async function carregarDados() {
   ]);
 
   const erros = [
-    contasResp,transResp,pessoasResp,planoResp,centrosResp,formasResp,
+    contasResp,transResp,rateiosResp,pessoasResp,planoResp,centrosResp,formasResp,
     progResp,parcelasResp,orcResp,orcItensResp,cargosResp,categoriasPessoasResp,
     classificacoesResp,estadosResp,bancosResp,tiposDocumentoResp,tiposContaResp,moedasResp
   ].map(x => x.error).filter(Boolean);
@@ -1260,6 +1991,7 @@ async function carregarDados() {
 
   contas = contasResp.data || [];
   transacoes = transResp.data || [];
+  transacaoRateios = rateiosResp.data || [];
   pessoas = pessoasResp.data || [];
   planoContas = planoResp.data || [];
   centrosCusto = centrosResp.data || [];
@@ -1324,15 +2056,29 @@ function atualizarInterface() {
 // ============================================================
 
 function mostrarContas() {
-  const ativas = contas.filter(c => c.ativo !== false);
+  const ativas = contas.filter(c => c.ativo !== false && c.mostrar_principal !== false);
+
+  if (ativas.length && !ativas.some(c => Number(c.id) === Number(contaLancamentosSelecionadaId))) {
+    contaLancamentosSelecionadaId = ativas[0].id;
+  }
+  if (!ativas.length) contaLancamentosSelecionadaId = null;
 
   $("listaContasSidebar").innerHTML = ativas.length ? ativas.map(c => `
-    <div class="account-item">
+    <div class="account-item ${Number(c.id)===Number(contaLancamentosSelecionadaId) ? "selected" : ""}" data-select-conta-lancamentos="${c.id}">
       <div class="account-icon">🏦</div>
       <div><strong>${escapeHTML(c.nome)}</strong><small>${escapeHTML(c.tipo)}</small></div>
       <div class="account-value">${dinheiro(saldoConta(c.id))}</div>
     </div>
   `).join("") : `<div class="empty">Nenhuma conta cadastrada.</div>`;
+
+  document.querySelectorAll("[data-select-conta-lancamentos]").forEach(el => {
+    el.addEventListener("click", () => {
+      contaLancamentosSelecionadaId = Number(el.dataset.selectContaLancamentos);
+      abrirPagina("lancamentos");
+      mostrarContas();
+      mostrarTransacoes();
+    });
+  });
 
   $("saldoSidebar").textContent = dinheiro(saldoTotal());
 
@@ -1380,11 +2126,19 @@ function mostrarContas() {
 
 function mostrarDashboard() {
   const mes = transacoes.filter(doMes);
-  const receitas = mes.filter(t => t.tipo === "receita" && t.status === "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
-  const despesas = mes.filter(t => t.tipo === "despesa" && t.status === "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+  const receitas = mes
+    .filter(t => t.tipo === "receita" && t.status === "efetivada")
+    .reduce((s,t) => s + Number(t.valor || 0), 0);
+  const despesas = mes
+    .filter(t => t.tipo === "despesa" && t.status === "efetivada")
+    .reduce((s,t) => s + Number(t.valor || 0), 0);
 
-  const pendReceita = mes.filter(t => t.tipo === "receita" && t.status !== "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
-  const pendDespesa = mes.filter(t => t.tipo === "despesa" && t.status !== "efetivada").reduce((s,t) => s + Number(t.valor || 0), 0);
+  const pendReceita = mes
+    .filter(t => t.tipo === "receita" && t.status !== "efetivada")
+    .reduce((s,t) => s + Number(t.valor || 0), 0);
+  const pendDespesa = mes
+    .filter(t => t.tipo === "despesa" && t.status !== "efetivada")
+    .reduce((s,t) => s + Number(t.valor || 0), 0);
 
   $("saldoAtual").textContent = dinheiro(saldoTotal());
   $("receitasMes").textContent = dinheiro(receitas);
@@ -1392,42 +2146,103 @@ function mostrarDashboard() {
   $("saldoPrevisto").textContent = dinheiro(saldoTotal() + pendReceita - pendDespesa);
 
   const max = Math.max(receitas, despesas, 1);
-  $("barraReceita").style.height = `${Math.max(5, (receitas / max) * 115)}px`;
-  $("barraDespesa").style.height = `${Math.max(5, (despesas / max) * 115)}px`;
+  $("barraReceita").style.height = `${Math.max(2, (receitas / max) * 125)}px`;
+  $("barraDespesa").style.height = `${Math.max(2, (despesas / max) * 125)}px`;
 
+  // Despesas do mês por Plano de Conta: usa também os rateios.
   const despPorCat = {};
   for (const t of mes.filter(t => t.tipo === "despesa" && t.status === "efetivada")) {
-    const nome = idNome(planoContas, t.plano_conta_id, "Sem categoria");
-    despPorCat[nome] = (despPorCat[nome] || 0) + Number(t.valor || 0);
+    const rateios = transacaoRateios.filter(r => Number(r.transacao_id) === Number(t.id));
+
+    if (rateios.length) {
+      for (const r of rateios) {
+        const nome = idNome(planoContas, r.plano_conta_id, "Sem categoria");
+        despPorCat[nome] = (despPorCat[nome] || 0) + Number(r.valor || 0);
+      }
+    } else {
+      const nome = idNome(planoContas, t.plano_conta_id, "Sem categoria");
+      despPorCat[nome] = (despPorCat[nome] || 0) + Number(t.valor || 0);
+    }
   }
 
-  const catOrdenadas = Object.entries(despPorCat).sort((a,b) => b[1] - a[1]).slice(0,5);
-  const maior = catOrdenadas[0]?.[1] || 1;
+  const cats = Object.entries(despPorCat).sort((a,b) => b[1] - a[1]).slice(0,5);
+  const totalCats = cats.reduce((s,x) => s + x[1], 0);
 
-  $("resumoCategorias").innerHTML = catOrdenadas.length ? catOrdenadas.map(([nome,valor]) => `
-    <div class="category-row">
-      <div class="category-row-top"><span>${escapeHTML(nome)}</span><strong>${dinheiro(valor)}</strong></div>
-      <div class="progress"><span style="width:${Math.max(4,valor/maior*100)}%"></span></div>
-    </div>
-  `).join("") : `<div class="empty">Sem despesas neste mês.</div>`;
+  const tons = ["#557aa9","#ef982e","#9bb0c8","#c9ced4","#7c8fa8"];
+  if (cats.length && totalCats > 0) {
+    let acumulado = 0;
+    const partes = cats.map(([nome,valor],i) => {
+      const inicio = acumulado;
+      acumulado += (valor / totalCats) * 100;
+      return `${tons[i % tons.length]} ${inicio.toFixed(2)}% ${acumulado.toFixed(2)}%`;
+    });
+    $("homeDonut").style.background = `conic-gradient(${partes.join(",")})`;
 
-  const ultimos = transacoes.slice(0,6);
-  $("ultimosLancamentos").innerHTML = ultimos.length ? ultimos.map(t => `
-    <div class="compact-row">
-      <div><strong>${escapeHTML(t.descricao)}</strong><small>${dataBR(referenciaData(t))} · ${escapeHTML(idNome(contas,t.conta_id,""))}</small></div>
-      <strong class="${t.tipo === "receita" ? "money-income" : "money-expense"}">${t.tipo === "receita" ? "+" : "-"} ${dinheiro(t.valor)}</strong>
-    </div>
-  `).join("") : `<div class="empty">Nenhum lançamento.</div>`;
+    $("homeDonutLegenda").innerHTML = cats.map(([nome,valor],i) => `
+      <div>
+        <i style="background:${tons[i % tons.length]}"></i>
+        <span>${escapeHTML(nome)} · ${((valor/totalCats)*100).toFixed(1)}%</span>
+      </div>
+    `).join("");
+  } else {
+    $("homeDonut").style.background = "conic-gradient(#d9dde2 0 100%)";
+    $("homeDonutLegenda").innerHTML = `<div><i style="background:#d9dde2"></i><span>Sem despesas no período</span></div>`;
+  }
 
+  // Programação: hoje e próximos 30 dias.
   const hoje = hojeISO();
-  const futuros = parcelas.filter(p => p.status === "pendente" && p.data_vencimento >= hoje).slice(0,6);
-  $("proximosVencimentos").innerHTML = futuros.length ? futuros.map(p => {
-    const prog = programacoes.find(x => Number(x.id) === Number(p.programacao_id));
-    return `<div class="compact-row">
-      <div><strong>${escapeHTML(prog?.descricao || "Programação")}</strong><small>${dataBR(p.data_vencimento)} · Parcela ${p.numero_parcela}/${p.total_parcelas}</small></div>
-      <strong>${dinheiro(p.valor)}</strong>
-    </div>`;
-  }).join("") : `<div class="empty">Nenhum vencimento programado.</div>`;
+  const limite = new Date();
+  limite.setDate(limite.getDate() + 30);
+  const limiteISO = limite.toISOString().slice(0,10);
+
+  const parcelasPendentes = parcelas.filter(p => p.status === "pendente");
+  const tipoParcela = p => programacoes.find(x => Number(x.id) === Number(p.programacao_id))?.tipo || "despesa";
+
+  const hojeParcelas = parcelasPendentes.filter(p => p.data_vencimento === hoje);
+  const proximasParcelas = parcelasPendentes.filter(p => p.data_vencimento > hoje && p.data_vencimento <= limiteISO);
+
+  const somar = (lista,tipo) => lista
+    .filter(p => tipoParcela(p) === tipo)
+    .reduce((s,p)=>s+Number(p.valor||0),0);
+
+  $("progHojeReceita").textContent = `${dinheiro(somar(hojeParcelas,"receita"))} ▲`;
+  $("progHojeDespesa").textContent = `${dinheiro(somar(hojeParcelas,"despesa"))} ▼`;
+  $("progProxReceita").textContent = `${dinheiro(somar(proximasParcelas,"receita"))} ▲`;
+  $("progProxDespesa").textContent = `${dinheiro(somar(proximasParcelas,"despesa"))} ▼`;
+
+  // Previsão simples de saldo em 90 dias baseada em parcelas pendentes.
+  const limite90 = new Date();
+  limite90.setDate(limite90.getDate() + 90);
+  const limite90ISO = limite90.toISOString().slice(0,10);
+
+  const futuros90 = parcelasPendentes
+    .filter(p => p.data_vencimento >= hoje && p.data_vencimento <= limite90ISO);
+
+  let futuroReceita = 0;
+  let futuroDespesa = 0;
+  for (const p of futuros90) {
+    if (tipoParcela(p) === "receita") futuroReceita += Number(p.valor || 0);
+    else futuroDespesa += Number(p.valor || 0);
+  }
+
+  const saldoAgora = saldoTotal();
+  const saldo90 = saldoAgora + futuroReceita - futuroDespesa;
+  const base = Math.max(Math.abs(saldoAgora), Math.abs(saldo90), 1);
+  const deslocamento = Math.max(-38, Math.min(38, ((saldo90 - saldoAgora) / base) * 35));
+
+  if ($("forecastLine")) {
+    $("forecastLine").style.transform = `rotate(${(-deslocamento/3).toFixed(2)}deg)`;
+    $("forecastLine").style.transformOrigin = "left center";
+  }
+  if ($("forecastArea")) {
+    $("forecastArea").style.height = `${Math.max(18, Math.min(78, 42 + deslocamento))}%`;
+  }
+
+  // Elementos antigos ficam vazios, mas preservados por compatibilidade.
+  if ($("contasResumo")) $("contasResumo").innerHTML = "";
+  if ($("resumoCategorias")) $("resumoCategorias").innerHTML = "";
+  if ($("proximosVencimentos")) $("proximosVencimentos").innerHTML = "";
+  if ($("ultimosLancamentos")) $("ultimosLancamentos").innerHTML = "";
 }
 
 // ============================================================
@@ -1436,22 +2251,83 @@ function mostrarDashboard() {
 
 function mostrarTransacoes() {
   const busca = ($("buscaTransacao")?.value || "").toLowerCase();
-  const tipo = $("filtroTipo")?.value || "todos";
   const status = $("filtroStatus")?.value || "todos";
+  const periodo = $("filtroPeriodo")?.value || "todos";
+  const verExtrato = $("filtroExtrato")?.checked || false;
+
+  const contaSelecionada = contas.find(c => Number(c.id) === Number(contaLancamentosSelecionadaId));
+  if ($("contaLancamentosNome")) {
+    $("contaLancamentosNome").textContent = contaSelecionada?.nome || "Selecione uma conta";
+  }
+  if ($("contaLancamentosSaldo")) {
+    $("contaLancamentosSaldo").textContent = contaSelecionada ? dinheiro(saldoConta(contaSelecionada.id)) : dinheiro(0);
+  }
+
+  const hojeFiltro = new Date();
+  hojeFiltro.setHours(0,0,0,0);
+
+  const dentroPeriodo = (t) => {
+    if (periodo === "todos") return true;
+
+    const ref = referenciaData(t);
+    if (!ref) return false;
+    const data = new Date(ref + "T00:00:00");
+    if (Number.isNaN(data.getTime())) return false;
+
+    if (periodo === "mes_atual") {
+      return data.getFullYear() === hojeFiltro.getFullYear() &&
+             data.getMonth() === hojeFiltro.getMonth();
+    }
+
+    if (periodo === "mes_anterior") {
+      const inicio = new Date(hojeFiltro.getFullYear(), hojeFiltro.getMonth() - 1, 1);
+      const fim = new Date(hojeFiltro.getFullYear(), hojeFiltro.getMonth(), 0);
+      fim.setHours(23,59,59,999);
+      return data >= inicio && data <= fim;
+    }
+
+    const dias = Number(periodo);
+    if (Number.isFinite(dias) && dias > 0) {
+      const limite = new Date(hojeFiltro);
+      limite.setDate(limite.getDate() - dias);
+      return data >= limite && data <= hojeFiltro;
+    }
+
+    return true;
+  };
 
   const lista = transacoes.filter(t => {
-    if (tipo !== "todos" && t.tipo !== tipo) return false;
+    if (contaLancamentosSelecionadaId && Number(t.conta_id) !== Number(contaLancamentosSelecionadaId)) return false;
     if (status !== "todos" && t.status !== status) return false;
-    if (busca && !String(t.descricao || "").toLowerCase().includes(busca)) return false;
+    if (!dentroPeriodo(t)) return false;
+
+    if (busca) {
+      const textoBusca = [
+        t.descricao,
+        t.favorecido,
+        t.numero,
+        idNome(contas,t.conta_id,""),
+        idNome(planoContas,t.plano_conta_id,""),
+        idNome(centrosCusto,t.centro_custo_id,""),
+        idNome(pessoas,t.pessoa_id,"")
+      ].join(" ").toLowerCase();
+
+      if (!textoBusca.includes(busca)) return false;
+    }
     return true;
   });
+
+  document.getElementById("lancamentos")?.classList.toggle("extrato-mode", verExtrato);
 
   $("tabelaTransacoes").innerHTML = lista.length ? lista.map(t => `
     <tr>
       <td>${dataBR(referenciaData(t))}</td>
-      <td><strong>${escapeHTML(t.descricao)}</strong></td>
+      <td><strong>${escapeHTML(t.descricao || "")}</strong></td>
+      <td>${escapeHTML(t.favorecido || idNome(pessoas,t.pessoa_id,""))}</td>
+      <td>${escapeHTML(t.numero || "")}</td>
       <td>${escapeHTML(idNome(contas,t.conta_id,""))}</td>
       <td>${escapeHTML(idNome(planoContas,t.plano_conta_id,"Sem categoria"))}</td>
+      <td>${escapeHTML(idNome(centrosCusto,t.centro_custo_id,"Sem centro"))}</td>
       <td><span class="status-pill ${escapeHTML(t.status)}">${escapeHTML(t.status)}</span></td>
       <td class="right ${t.tipo === "receita" ? "money-income" : "money-expense"}">${t.tipo === "receita" ? "+" : "-"} ${dinheiro(t.valor)}</td>
       <td><div class="row-actions">
@@ -1459,7 +2335,7 @@ function mostrarTransacoes() {
         <button class="mini-btn" data-del-transacao="${t.id}">Excluir</button>
       </div></td>
     </tr>
-  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhum lançamento encontrado.</div></td></tr>`;
+  `).join("") : `<tr><td colspan="10"><div class="empty">${contaSelecionada ? "Nenhum lançamento encontrado para esta conta." : "Selecione uma conta para visualizar os lançamentos."}</div></td></tr>`;
 
   document.querySelectorAll("[data-edit-transacao]").forEach(btn => {
     btn.addEventListener("click", () => abrirFormularioTransacao(transacoes.find(t => Number(t.id) === Number(btn.dataset.editTransacao))));
@@ -1471,8 +2347,9 @@ function mostrarTransacoes() {
 }
 
 $("buscaTransacao").addEventListener("input", mostrarTransacoes);
-$("filtroTipo").addEventListener("change", mostrarTransacoes);
 $("filtroStatus").addEventListener("change", mostrarTransacoes);
+$("filtroPeriodo").addEventListener("change", mostrarTransacoes);
+$("filtroExtrato").addEventListener("change", mostrarTransacoes);
 
 async function excluirTransacao(id) {
   if (!confirm("Excluir este lançamento?")) return;
@@ -1486,40 +2363,79 @@ async function excluirTransacao(id) {
 // ============================================================
 
 function mostrarProgramacao() {
-  const linhas = parcelas.map(p => {
+  const hoje = hojeISO();
+  const busca = ($("buscaProgramacao")?.value || "").toLowerCase();
+
+  let linhas = parcelas.map(p => {
     const prog = programacoes.find(x => Number(x.id) === Number(p.programacao_id));
     return { ...p, prog };
-  });
+  }).filter(x => x.prog && x.prog.tipo === programacaoTipoAtual);
+
+  if (programacaoFiltroAtual === "vencidas") {
+    linhas = linhas.filter(x => x.status === "pendente" && x.data_vencimento < hoje);
+  } else if (programacaoFiltroAtual === "hoje") {
+    linhas = linhas.filter(x => x.status === "pendente" && x.data_vencimento === hoje);
+  } else if (programacaoFiltroAtual === "efetivada") {
+    linhas = linhas.filter(x => x.status === "efetivada");
+  }
+
+  if (busca) {
+    linhas = linhas.filter(x => [
+      x.prog?.descricao,
+      idNome(contas,x.prog?.conta_id,""),
+      idNome(pessoas,x.prog?.pessoa_id,""),
+      idNome(planoContas,x.prog?.plano_conta_id,""),
+      x.prog?.frequencia
+    ].join(" ").toLowerCase().includes(busca));
+  }
+
+  if ($("programacaoTitulo")) $("programacaoTitulo").textContent = programacaoTipoAtual === "receita" ? "Contas a Receber" : "Contas a Pagar";
+  if ($("progPessoaHeader")) $("progPessoaHeader").textContent = programacaoTipoAtual === "receita" ? "Receber de" : "Pagar para";
+  if ($("progFiltroTitulo")) $("progFiltroTitulo").textContent = programacaoTipoAtual === "receita" ? "Receitas" : "Despesas";
+  if ($("btnProgNovoTexto")) $("btnProgNovoTexto").textContent =
+    programacaoTipoAtual === "receita" ? "Nova Conta a Receber" : "Nova Conta a Pagar";
+
+  if ($("btnProgReceber")) $("btnProgReceber").classList.toggle("active", programacaoTipoAtual === "receita" && programacaoFiltroAtual !== "efetivada");
+  if ($("btnProgPagar")) $("btnProgPagar").classList.toggle("active", programacaoTipoAtual === "despesa" && programacaoFiltroAtual !== "efetivada");
+  if ($("btnProgPagas")) $("btnProgPagas").classList.toggle("active", programacaoFiltroAtual === "efetivada");
 
   $("tabelaProgramacao").innerHTML = linhas.length ? linhas.map(p => `
-    <tr>
-      <td>${dataBR(p.data_vencimento)}</td>
-      <td>${escapeHTML(p.prog?.descricao || "")}</td>
-      <td>${escapeHTML(p.prog?.tipo || "")}</td>
+    <tr class="${Number(p.programacao_id)===Number(programacaoSelecionadaId)?"selected":""}" data-prog-row="${p.programacao_id}">
+      <td>${escapeHTML(idNome(contas,p.prog?.conta_id,""))}</td>
       <td>${p.numero_parcela}/${p.total_parcelas}</td>
-      <td><span class="status-pill ${escapeHTML(p.status)}">${escapeHTML(p.status)}</span></td>
-      <td class="right ${p.prog?.tipo === "receita" ? "money-income" : "money-expense"}">${dinheiro(p.valor)}</td>
-      <td><div class="row-actions">
-        ${p.status === "pendente" ? `<button class="mini-btn" data-efetivar-parcela="${p.id}">Efetivar</button>` : ""}
-        ${p.status === "pendente" ? `<button class="mini-btn" data-cancelar-parcela="${p.id}">Cancelar</button>` : ""}
-      </div></td>
+      <td>${escapeHTML(idNome(pessoas,p.prog?.pessoa_id,""))}</td>
+      <td>${escapeHTML(idNome(planoContas,p.prog?.plano_conta_id,""))}</td>
+      <td class="right">${dinheiro(p.valor)}</td>
+      <td>${dataBR(p.data_vencimento)}</td>
+      <td>${escapeHTML(p.prog?.frequencia || "")}</td>
     </tr>
-  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhuma programação cadastrada.</div></td></tr>`;
+  `).join("") : `<tr><td colspan="7"><div class="empty">Nenhum item para ser exibido.</div></td></tr>`;
 
-  document.querySelectorAll("[data-efetivar-parcela]").forEach(btn => {
-    btn.addEventListener("click", () => efetivarParcela(Number(btn.dataset.efetivarParcela)));
-  });
-  document.querySelectorAll("[data-cancelar-parcela]").forEach(btn => {
-    btn.addEventListener("click", () => cancelarParcela(Number(btn.dataset.cancelarParcela)));
+  document.querySelectorAll("[data-prog-row]").forEach(tr => {
+    tr.onclick = () => {
+      programacaoSelecionadaId = Number(tr.dataset.progRow);
+      mostrarProgramacao();
+      if ($("btnEditarProgramacao")) $("btnEditarProgramacao").disabled = false;
+      if ($("btnExcluirProgramacao")) $("btnExcluirProgramacao").disabled = false;
+    };
+    tr.ondblclick = () => {
+      const p = programacoes.find(x=>Number(x.id)===Number(tr.dataset.progRow));
+      if (p) abrirFormularioProgramacao(p);
+    };
   });
 
   let receber = 0, pagar = 0;
-  for (const p of linhas.filter(x => x.status === "pendente")) {
-    if (p.prog?.tipo === "receita") receber += Number(p.valor || 0);
-    if (p.prog?.tipo === "despesa") pagar += Number(p.valor || 0);
+  for (const p of parcelas.filter(x => x.status === "pendente")) {
+    const prog = programacoes.find(x => Number(x.id) === Number(p.programacao_id));
+    if (prog?.tipo === "receita") receber += Number(p.valor || 0);
+    if (prog?.tipo === "despesa") pagar += Number(p.valor || 0);
   }
   $("totalAReceber").textContent = dinheiro(receber);
   $("totalAPagar").textContent = dinheiro(pagar);
+
+  document.querySelectorAll("[data-prog-filtro]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.progFiltro === programacaoFiltroAtual);
+  });
 }
 
 // ============================================================
@@ -2337,6 +3253,7 @@ function exportarRelatorioCSV() {
 // ============================================================
 
 function tratarAbertura(tipo) {
+  if (tipo === "listaContas") return abrirListaContas();
   if (tipo === "novaConta") return abrirFormularioConta();
   if (tipo === "novaTransferencia") return abrirFormularioTransferencia();
   if (tipo === "novaReceita") return abrirFormularioTransacao(null,"receita");
@@ -2344,7 +3261,9 @@ function tratarAbertura(tipo) {
   if (tipo === "novaPessoa") return abrirFormularioPessoa();
   if (tipo === "novoPlano") return abrirFormularioPlano();
   if (tipo === "novoCentro") return abrirFormularioCentro();
-  if (tipo === "novaProgramacao") return abrirFormularioProgramacao();
+  if (tipo === "novaProgramacao") return abrirFormularioProgramacao(null, programacaoTipoAtual);
+  if (tipo === "novaProgramacaoReceita") return abrirFormularioProgramacao(null, "receita");
+  if (tipo === "novaProgramacaoDespesa") return abrirFormularioProgramacao(null, "despesa");
   if (tipo === "novoOrcamento") return abrirFormularioOrcamento();
 
   if (tipo === "mobileNovo") {
@@ -2363,35 +3282,356 @@ function tratarAbertura(tipo) {
   }
 }
 
+function abrirListaContas() {
+  let contaSelecionadaLista = null;
+
+  function nomeBancoConta(conta) {
+    const b = (cadastrosSimples.bancos || []).find(x => Number(x.id) === Number(conta.banco_id));
+    return b?.banco || "";
+  }
+
+  function numeroContaFormatado(conta) {
+    const n = conta.numero_conta || "";
+    const d = conta.numero_digito || "";
+    return n ? `${n}${d ? "-" + d : ""}` : "";
+  }
+
+  function renderLista() {
+    const grupos = {};
+    [...contas].sort((a,b)=>String(a.tipo||"").localeCompare(String(b.tipo||""),"pt-BR") || String(a.nome||"").localeCompare(String(b.nome||""),"pt-BR"))
+      .forEach(c => {
+        const grupo = c.tipo || "Outras Contas";
+        (grupos[grupo] ||= []).push(c);
+      });
+
+    const linhas = Object.entries(grupos).map(([grupo,itens]) => `
+      <tr class="account-group-row"><td colspan="4">${escapeHTML(grupo)}</td></tr>
+      ${itens.map(c => `
+        <tr class="account-list-row ${Number(c.id)===Number(contaSelecionadaLista)?"selected":""}" data-account-list-id="${c.id}">
+          <td>${escapeHTML(c.nome || "")}${c.ativo===false?' <span style="color:#999">(encerrada)</span>':""}</td>
+          <td>${escapeHTML(numeroContaFormatado(c))}</td>
+          <td>${escapeHTML(nomeBancoConta(c))}</td>
+          <td class="right">${dinheiro(saldoConta(c.id))}</td>
+        </tr>
+      `).join("")}
+    `).join("");
+
+    $("listaContasTabelaBody").innerHTML = linhas || `<tr><td colspan="4"><div class="empty">Nenhuma conta cadastrada.</div></td></tr>`;
+
+    document.querySelectorAll("[data-account-list-id]").forEach(tr => {
+      tr.onclick = () => {
+        contaSelecionadaLista = Number(tr.dataset.accountListId);
+        renderLista();
+        $("btnEditarContaLista").disabled = false;
+        $("btnExcluirContaLista").disabled = false;
+      };
+      tr.ondblclick = () => {
+        const c = contas.find(x => Number(x.id) === Number(tr.dataset.accountListId));
+        if (c) abrirFormularioConta(c);
+      };
+    });
+  }
+
+  abrirModal("Lista de Contas", `
+    <div class="account-list-modal">
+      <div class="account-list-toolbar">
+        <button type="button" class="btn" id="btnNovaContaLista">➕ Nova Conta</button>
+        <button type="button" class="btn" id="btnEditarContaLista" disabled>✏️ Editar</button>
+        <button type="button" class="btn" id="btnExcluirContaLista" disabled>⛔ Excluir</button>
+        <button type="button" class="btn" id="btnExportarContas">📊 Exportar para Excel</button>
+      </div>
+      <div style="overflow:auto;max-height:440px;">
+        <table class="legacy-data-table account-list-table">
+          <thead>
+            <tr><th>Nome</th><th>Número</th><th>Banco</th><th class="right">Saldo atual</th></tr>
+          </thead>
+          <tbody id="listaContasTabelaBody"></tbody>
+        </table>
+      </div>
+      <div class="form-actions" style="margin-top:10px;">
+        <button type="button" class="btn primary" data-close-modal>Fechar</button>
+      </div>
+    </div>
+  `);
+
+  renderLista();
+
+  $("btnNovaContaLista").onclick = () => abrirFormularioConta();
+
+  $("btnEditarContaLista").onclick = () => {
+    const c = contas.find(x => Number(x.id) === Number(contaSelecionadaLista));
+    if (c) abrirFormularioConta(c);
+  };
+
+  $("btnExcluirContaLista").onclick = async () => {
+    const c = contas.find(x => Number(x.id) === Number(contaSelecionadaLista));
+    if (!c) return;
+
+    const possuiLancamentos = transacoes.some(t => Number(t.conta_id) === Number(c.id));
+    if (possuiLancamentos) {
+      if (!confirm(`A conta "${c.nome}" possui lançamentos.\n\nEm vez de apagar os dados, deseja marcar esta conta como encerrada?`)) return;
+      const { error } = await supabaseClient.from("fin_contas")
+        .update({ativo:false})
+        .eq("id",c.id)
+        .eq("user_id",usuarioAtual.id);
+      if (error) return alert("Erro: " + error.message);
+    } else {
+      if (!confirm(`Excluir a conta "${c.nome}"?`)) return;
+      const { error } = await supabaseClient.from("fin_contas")
+        .delete()
+        .eq("id",c.id)
+        .eq("user_id",usuarioAtual.id);
+      if (error) return alert("Erro: " + error.message);
+    }
+
+    await carregarDados();
+    contaSelecionadaLista = null;
+    renderLista();
+    $("btnEditarContaLista").disabled = true;
+    $("btnExcluirContaLista").disabled = true;
+  };
+
+  $("btnExportarContas").onclick = () => {
+    const linhas = [
+      ["Nome","Número","Banco","Tipo","Saldo atual"],
+      ...contas.map(c => [
+        c.nome || "",
+        numeroContaFormatado(c),
+        nomeBancoConta(c),
+        c.tipo || "",
+        Number(saldoConta(c.id)).toFixed(2).replace(".",",")
+      ])
+    ];
+    const csv = "\ufeff" + linhas.map(l => l.map(v => `"${String(v).replace(/"/g,'""')}"`).join(";")).join("\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "lista_de_contas.csv";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+}
+
 function abrirFormularioConta(item = null) {
-  abrirModal(item ? "Editar conta" : "Nova conta", `
-    <form id="formConta" class="form-grid">
-      <div class="form-field full-span"><label>Nome</label><input id="contaNome" value="${escapeHTML(item?.nome || "")}" required></div>
-      <div class="form-field"><label>Tipo</label><select id="contaTipo">
-        ${["corrente","poupanca","dinheiro","cartao","investimento","carteira_digital","outro"].map(v => `<option value="${v}" ${item?.tipo===v?"selected":""}>${v}</option>`).join("")}
-      </select></div>
-      <div class="form-field"><label>Saldo inicial</label><input id="contaSaldo" type="number" step="0.01" value="${item?.saldo_inicial ?? 0}"></div>
-      <div class="form-field full-span"><label>Observação</label><textarea id="contaObs">${escapeHTML(item?.observacao || "")}</textarea></div>
-      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+  let saldoInicialEdicao = Number(item?.saldo_inicial || 0);
+
+  const normalizarTipoConta = (texto = "") => {
+    const t = String(texto)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .toLowerCase()
+      .replace(/[-_]/g," ")
+      .replace(/\s+/g," ")
+      .trim();
+
+    if (t.includes("conta corrente") || t === "corrente") return "corrente";
+    if (t.includes("poupanca")) return "poupanca";
+    if (t.includes("dinheiro") || t.includes("caixa")) return "dinheiro";
+    if (t.includes("cartao")) return "cartao";
+    if (t.includes("investimento")) return "investimento";
+    if (t.includes("carteira digital") || t.includes("digital")) return "carteira_digital";
+    return "outro";
+  };
+
+  const rotuloTipoConta = (codigo = "") => {
+    const mapa = {
+      corrente:"Conta-Corrente",
+      poupanca:"Poupança",
+      dinheiro:"Dinheiro",
+      cartao:"Cartão de Crédito",
+      investimento:"Investimento",
+      carteira_digital:"Carteira Digital",
+      outro:"Outro"
+    };
+    return mapa[codigo] || "Outro";
+  };
+
+  const tiposCadastro = (cadastrosSimples.tipos_conta || []);
+  const tiposMap = new Map();
+
+  // Usa os cadastros feitos pelo usuário para definir os rótulos,
+  // mas sempre converte para os códigos internos aceitos pelo banco.
+  tiposCadastro.forEach(x => {
+    const rotulo = x.conta || x.tipo || "Outro";
+    const codigo = normalizarTipoConta(x.tipo || x.conta || "");
+    if (!tiposMap.has(codigo)) tiposMap.set(codigo,{valor:codigo,rotulo});
+  });
+
+  // Garante as opções básicas, mesmo que o cadastro esteja vazio.
+  [
+    {valor:"corrente",rotulo:"Conta-Corrente"},
+    {valor:"poupanca",rotulo:"Poupança"},
+    {valor:"dinheiro",rotulo:"Dinheiro"},
+    {valor:"cartao",rotulo:"Cartão de Crédito"},
+    {valor:"investimento",rotulo:"Investimento"},
+    {valor:"carteira_digital",rotulo:"Carteira Digital"},
+    {valor:"outro",rotulo:"Outro"}
+  ].forEach(x => {
+    if (!tiposMap.has(x.valor)) tiposMap.set(x.valor,x);
+  });
+
+  const tipos = [...tiposMap.values()];
+  const tipoAtualNormalizado = normalizarTipoConta(item?.tipo || "corrente");
+
+  const bancos = cadastrosSimples.bancos || [];
+  const moedas = cadastrosSimples.moedas || [];
+
+  abrirModal(item ? `Conta | ${escapeHTML(item.nome || "")}` : "Nova Conta", `
+    <form id="formConta" class="account-config-form">
+      <div class="account-tabs">
+        <button type="button" class="account-tab active" data-account-tab="geral">Geral</button>
+        <button type="button" class="account-tab" data-account-tab="outras">Outras Informações</button>
+      </div>
+
+      <div id="accountTabGeral" class="account-tab-panel active">
+        <div class="account-config-grid">
+          <div class="account-fields">
+            <div class="account-row full">
+              <label>Nome</label>
+              <input id="contaNome" value="${escapeHTML(item?.nome || "")}" required autofocus>
+            </div>
+
+            <div class="account-row full">
+              <label>Tipo da Conta</label>
+              <select id="contaTipo">
+                ${tipos.map(x=>`<option value="${escapeHTML(x.valor)}" ${String(tipoAtualNormalizado)===String(x.valor)?"selected":""}>${escapeHTML(x.rotulo)}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="account-row full">
+              <label>Banco</label>
+              <select id="contaBanco">
+                <option value="">Nenhum</option>
+                ${bancos.map(b=>`<option value="${b.id}" ${Number(item?.banco_id)===Number(b.id)?"selected":""}>${escapeHTML(b.banco||"")}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="account-row">
+              <label>Agência</label>
+              <div class="account-number-pair">
+                <input id="contaAgencia" value="${escapeHTML(item?.agencia || "")}">
+                <span>-</span>
+                <input id="contaAgenciaDigito" class="digit-input" maxlength="3" value="${escapeHTML(item?.agencia_digito || "")}">
+              </div>
+            </div>
+
+            <div class="account-row">
+              <label>Número da Conta</label>
+              <div class="account-number-pair">
+                <input id="contaNumero" value="${escapeHTML(item?.numero_conta || "")}">
+                <span>-</span>
+                <input id="contaNumeroDigito" class="digit-input" maxlength="3" value="${escapeHTML(item?.numero_digito || "")}">
+              </div>
+            </div>
+
+            <div class="account-divider"></div>
+
+            <div class="account-row full">
+              <label>Moeda</label>
+              <select id="contaMoeda">
+                <option value="">Padrão</option>
+                ${moedas.map(mo=>`<option value="${mo.id}" ${Number(item?.moeda_id)===Number(mo.id)?"selected":""}>${escapeHTML(mo.sigla || mo.nome || "")}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="account-row full">
+              <label>Limite de Crédito</label>
+              <input id="contaLimite" type="number" min="0" step="0.01" value="${item?.limite_credito ?? ""}">
+            </div>
+
+            <div class="account-row full">
+              <label>Vencimento do Limite</label>
+              <input id="contaVencimentoLimite" type="number" min="1" max="31" step="1" placeholder="Dia" value="${item?.vencimento_limite ?? ""}">
+            </div>
+          </div>
+
+          <aside class="account-balance-box">
+            <strong>Saldo Atual da Conta</strong>
+            <div id="contaSaldoAtual">${dinheiro(item ? saldoConta(item.id) : saldoInicialEdicao)}</div>
+            <button type="button" class="btn" id="btnAlterarSaldoInicial">Alterar Saldo Inicial</button>
+          </aside>
+        </div>
+
+        <div class="account-options">
+          <label><input id="contaMostrarPrincipal" type="checkbox" ${item?.mostrar_principal===false?"":"checked"}> Mostrar Conta na Página Principal</label>
+          <label><input id="contaEncerrada" type="checkbox" ${item?.ativo===false?"checked":""}> Esta Conta está encerrada</label>
+          <label><input id="contaPrevisoes" type="checkbox" ${item?.incluir_previsoes===false?"":"checked"}> Incluir Conta nas Previsões Financeiras da Página Principal</label>
+        </div>
+      </div>
+
+      <div id="accountTabOutras" class="account-tab-panel">
+        <div class="form-field">
+          <label>Observações</label>
+          <textarea id="contaObs" rows="8">${escapeHTML(item?.observacao || "")}</textarea>
+        </div>
+      </div>
+
+      <div class="form-actions account-form-actions">
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">OK</button>
+      </div>
     </form>
   `);
 
+  document.querySelectorAll("[data-account-tab]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("[data-account-tab]").forEach(x=>x.classList.remove("active"));
+      btn.classList.add("active");
+      $("accountTabGeral").classList.toggle("active", btn.dataset.accountTab === "geral");
+      $("accountTabOutras").classList.toggle("active", btn.dataset.accountTab === "outras");
+    };
+  });
+
+  $("btnAlterarSaldoInicial").onclick = () => {
+    const atual = prompt("Informe o novo Saldo Inicial da conta:", String(saldoInicialEdicao).replace(".",","));
+    if (atual === null) return;
+    const valor = Number(String(atual).replace(",","."));
+    if (!Number.isFinite(valor)) return alert("Informe um valor válido.");
+    saldoInicialEdicao = valor;
+
+    if (item) {
+      // Mostra uma prévia do saldo atual considerando a alteração do saldo inicial.
+      const atualSaldo = saldoConta(item.id);
+      const diferenca = saldoInicialEdicao - Number(item.saldo_inicial || 0);
+      $("contaSaldoAtual").textContent = dinheiro(atualSaldo + diferenca);
+    } else {
+      $("contaSaldoAtual").textContent = dinheiro(saldoInicialEdicao);
+    }
+  };
+
   $("formConta").addEventListener("submit", async e => {
     e.preventDefault();
+
     const registro = {
       user_id: usuarioAtual.id,
       nome: $("contaNome").value.trim(),
       tipo: $("contaTipo").value,
-      saldo_inicial: Number($("contaSaldo").value || 0),
+      banco_id: $("contaBanco").value ? Number($("contaBanco").value) : null,
+      agencia: $("contaAgencia").value.trim() || null,
+      agencia_digito: $("contaAgenciaDigito").value.trim() || null,
+      numero_conta: $("contaNumero").value.trim() || null,
+      numero_digito: $("contaNumeroDigito").value.trim() || null,
+      moeda_id: $("contaMoeda").value ? Number($("contaMoeda").value) : null,
+      limite_credito: $("contaLimite").value ? Number($("contaLimite").value) : null,
+      vencimento_limite: $("contaVencimentoLimite").value ? Number($("contaVencimentoLimite").value) : null,
+      saldo_inicial: saldoInicialEdicao,
+      mostrar_principal: $("contaMostrarPrincipal").checked,
+      incluir_previsoes: $("contaPrevisoes").checked,
       observacao: $("contaObs").value.trim() || null,
-      ativo: true
+      ativo: !$("contaEncerrada").checked
     };
+
+    if (!registro.nome) return alert("Informe o nome da conta.");
 
     let resp;
     if (item) resp = await supabaseClient.from("fin_contas").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
-    else resp = await supabaseClient.from("fin_contas").insert([registro]);
+    else resp = await supabaseClient.from("fin_contas").insert([registro]).select("*").single();
 
     if (resp.error) return alert("Erro: " + resp.error.message);
+
     fecharModal();
     await carregarDados();
   });
@@ -2399,61 +3639,534 @@ function abrirFormularioConta(item = null) {
 
 function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
   const tipo = item?.tipo || tipoInicial;
-  abrirModal(item ? "Editar lançamento" : (tipo === "receita" ? "Nova receita" : "Nova despesa"), `
-    <form id="formTransacao" class="form-grid">
-      <div class="form-field full-span"><label>Descrição</label><input id="trDescricao" value="${escapeHTML(item?.descricao || "")}" required></div>
-      <div class="form-field"><label>Tipo</label><select id="trTipo">
-        <option value="receita" ${tipo==="receita"?"selected":""}>Receita</option>
-        <option value="despesa" ${tipo==="despesa"?"selected":""}>Despesa</option>
-      </select></div>
-      <div class="form-field"><label>Valor</label><input id="trValor" type="number" min="0" step="0.01" value="${item?.valor ?? ""}" required></div>
-      <div class="form-field"><label>Conta</label><select id="trConta" required>${optionLista(contas.filter(c=>c.ativo!==false),item?.conta_id)}</select></div>
-      <div class="form-field"><label>Situação</label><select id="trStatus">
-        <option value="efetivada" ${item?.status==="efetivada"?"selected":""}>Efetivada</option>
-        <option value="pendente" ${item?.status==="pendente"?"selected":""}>Pendente</option>
-        <option value="prevista" ${item?.status==="prevista"?"selected":""}>Prevista</option>
-      </select></div>
-      <div class="form-field"><label>Data lançamento</label><input id="trData" type="date" value="${item?.data_lancamento || hojeISO()}"></div>
-      <div class="form-field"><label>Data vencimento</label><input id="trVencimento" type="date" value="${item?.data_vencimento || hojeISO()}"></div>
-      <div class="form-field"><label>Plano de conta</label><select id="trPlano">${optionLista(planoContas,item?.plano_conta_id,"Sem categoria")}</select></div>
-      <div class="form-field"><label>Centro de custo</label><select id="trCentro">${optionLista(centrosCusto,item?.centro_custo_id,"Sem centro")}</select></div>
-      <div class="form-field"><label>Cliente / Fornecedor</label><select id="trPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select></div>
-      <div class="form-field"><label>Forma de pagamento</label><select id="trForma">${optionLista(formasPagamento,item?.forma_pagamento_id,"Nenhuma")}</select></div>
-      <div class="form-field full-span"><label>Observação</label><textarea id="trObs">${escapeHTML(item?.observacao || "")}</textarea></div>
-      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+  let dividirAtivo = false;
+  let rateiosEdicao = item
+    ? transacaoRateios.filter(r => Number(r.transacao_id) === Number(item.id))
+    : [];
+
+  function opcoesPlanoPorTipo(tipoAtual, selecionado = "") {
+    const raiz = raizTipoPlano(tipoAtual);
+    let htmlOpcoes = `<option value="">Sem categoria</option>`;
+    if (!raiz) return htmlOpcoes;
+
+    const ordenar = (a, b) => {
+      const ordemA = Number(a?.ordem || 0);
+      const ordemB = Number(b?.ordem || 0);
+      if (ordemA !== ordemB) return ordemA - ordemB;
+      return String(a?.nome || "").localeCompare(String(b?.nome || ""), 'pt-BR');
+    };
+
+    const filhosDe = (parentId) => planoContas
+      .filter(p => Number(p.parent_id) === Number(parentId) && p.ativo !== false)
+      .sort(ordenar);
+
+    const montar = (parentId, nivel = 0) => {
+      const filhos = filhosDe(parentId);
+      for (const item of filhos) {
+        const prefixo = nivel > 0 ? " ".repeat(nivel) : "";
+        htmlOpcoes += `<option value="${item.id}" ${String(item.id)===String(selecionado)?"selected":""}>${escapeHTML(prefixo + item.nome)}</option>`;
+        montar(item.id, nivel + 1);
+      }
+    };
+
+    montar(raiz.id, 0);
+    return htmlOpcoes;
+  }
+
+  function opcoesCentroCustoFinais(selecionado = "") {
+    let htmlOpcoes = `<option value="">Sem centro</option>`;
+
+    const ordenar = (a, b) => {
+      const ordemA = Number(a?.ordem || 0);
+      const ordemB = Number(b?.ordem || 0);
+      if (ordemA !== ordemB) return ordemA - ordemB;
+      return String(a?.nome || "").localeCompare(String(b?.nome || ""), 'pt-BR');
+    };
+
+    const filhosDe = (parentId) => centrosCusto
+      .filter(c => {
+        if (c.ativo === false) return false;
+        if (parentId == null) return c.parent_id == null;
+        return Number(c.parent_id) === Number(parentId);
+      })
+      .sort(ordenar);
+
+    const montar = (parentId = null, nivel = 0) => {
+      const filhos = filhosDe(parentId);
+      for (const item of filhos) {
+        const prefixo = nivel > 0 ? " ".repeat(nivel) : "";
+        htmlOpcoes += `<option value="${item.id}" ${String(item.id)===String(selecionado)?"selected":""}>${escapeHTML(prefixo + item.nome)}</option>`;
+        montar(item.id, nivel + 1);
+      }
+    };
+
+    montar(null, 0);
+    return htmlOpcoes;
+  }
+
+  abrirModal(
+    item ? "Editar lançamento" : (tipo === "receita" ? "Novo lançamento de receita" : "Novo lançamento de despesa"),
+    `
+    <form id="formTransacao" class="form-grid launch-form">
+
+      <div class="launch-section-title">Dados do lançamento</div>
+
+      <div class="form-field span-2">
+        <label>${tipo === "receita" ? "Receber de" : "Pagar para"}</label>
+        <select id="trPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select>
+      </div>
+
+      <div class="form-field">
+        <label>Data</label>
+        <input id="trData" type="date" value="${item?.data_lancamento || hojeISO()}" required>
+      </div>
+
+      <div class="form-field">
+        <label>Número</label>
+        <input id="trNumero" maxlength="20" value="${escapeHTML(item?.numero || "")}">
+      </div>
+
+      <div class="form-field span-2">
+        <label>Conta</label>
+        <select id="trConta" required>${optionLista(
+          contas.filter(c=>c.ativo!==false),
+          item?.conta_id || contaLancamentosSelecionadaId || "",
+          "Selecione"
+        )}</select>
+      </div>
+
+      <div class="form-field span-2">
+        <label>Plano de Conta</label>
+        <select id="trPlano">${opcoesPlanoPorTipo(tipo,item?.plano_conta_id)}</select>
+      </div>
+
+      <div class="form-field span-2">
+        <label>Valor</label>
+        <div style="display:flex;gap:8px;">
+          <input id="trValor" type="number" min="0" step="0.01" value="${item?.valor ?? ""}" required style="flex:1;">
+          <button id="btnDividirValor" class="btn" type="button">Dividir Valor</button>
+        </div>
+      </div>
+
+      <div class="form-field span-2">
+        <label>Centro de Custos</label>
+        <select id="trCentro">${opcoesCentroCustoFinais(item?.centro_custo_id)}</select>
+      </div>
+
+      <div class="form-field span-2">
+        <label>Forma de Pagamento</label>
+        <select id="trForma">${optionLista(formasPagamento,item?.forma_pagamento_id,"Nenhuma")}</select>
+      </div>
+
+      <div class="form-field span-4">
+        <label>Histórico / Descrição</label>
+        <input id="trDescricao" maxlength="150" value="${escapeHTML(item?.descricao || "")}" required placeholder="Descrição do lançamento">
+      </div>
+
+      <div id="boxDivisaoValor" class="split-box hidden">
+        <div class="split-toolbar">
+          <strong>Divisão do lançamento</strong><span style="font-size:11px;color:var(--muted);">Digite o valor e pressione Enter para confirmar cada divisão.</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn" id="btnAdicionarDivisao">+ Adicionar divisão</button>
+            <button type="button" class="btn danger" id="btnCancelarDivisao">Cancelar divisão</button>
+          </div>
+        </div>
+        <div style="overflow:auto;">
+          <table class="split-table">
+            <thead>
+              <tr>
+                <th>Plano de Conta</th>
+                <th>Centro de Custo</th>
+                <th>Observação</th>
+                <th style="width:130px;">Valor</th>
+                <th style="width:60px;"></th>
+              </tr>
+            </thead>
+            <tbody id="tbodyDivisoes"></tbody>
+          </table>
+        </div>
+        <div class="split-totals">
+          <span>Soma: <span id="somaDivisoes">R$ 0,00</span></span>
+          <span>Diferença: <span id="diferencaDivisoes">R$ 0,00</span></span>
+        </div>
+      </div>
+
+      <div class="launch-section-title">Situação</div>
+
+      <div class="form-field">
+        <label>Situação</label>
+        <select id="trStatus">
+          <option value="efetivada" ${item?.status==="efetivada"?"selected":""}>Efetivada</option>
+          <option value="pendente" ${item?.status==="pendente"?"selected":""}>Pendente</option>
+          <option value="prevista" ${item?.status==="prevista"?"selected":""}>Prevista</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Vencimento</label>
+        <input id="trVencimento" type="date" value="${item?.data_vencimento || hojeISO()}">
+      </div>
+
+      <div class="form-field">
+        <label>Compensação</label>
+        <input id="trCompensacao" type="date" value="${item?.data_efetivacao || item?.data_lancamento || hojeISO()}">
+      </div>
+
+      <div class="form-field launch-check">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:700;">
+          <input id="trCompensado" type="checkbox" ${item ? (item.compensado ? "checked" : "") : "checked"}>
+          Compensado
+        </label>
+      </div>
+
+      <div class="launch-section-title">Observações</div>
+
+      <div class="form-field span-4">
+        <label>Observações</label>
+        <textarea id="trObs" rows="3">${escapeHTML(item?.observacao || "")}</textarea>
+      </div>
+
+      <div class="form-actions span-4">
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn" type="button" id="btnSalvarNovoLancamento">Salvar e Novo</button>
+        <button class="btn primary" type="submit">OK</button>
+      </div>
     </form>
   `);
 
-  $("formTransacao").addEventListener("submit", async e => {
-    e.preventDefault();
+  const linhasDivisao = [];
+
+  function novaLinhaRateio(dados = {}) {
+    return {
+      plano_conta_id: dados.plano_conta_id || "",
+      centro_custo_id: dados.centro_custo_id || "",
+      observacao: dados.observacao || "",
+      valor: Number(dados.valor || 0)
+    };
+  }
+
+  function renderDivisoes() {
+    $("tbodyDivisoes").innerHTML = linhasDivisao.length ? linhasDivisao.map((r,i)=>`
+      <tr>
+        <td><select data-rateio-plano="${i}">${opcoesPlanoPorTipo($("trTipo")?.value || tipo,r.plano_conta_id)}</select></td>
+        <td><select data-rateio-centro="${i}">${opcoesCentroCustoFinais(r.centro_custo_id)}</select></td>
+        <td><input data-rateio-obs="${i}" value="${escapeHTML(r.observacao || "")}"></td>
+        <td><input data-rateio-valor="${i}" type="number" min="0" step="0.01" value="${r.valor || ""}"></td>
+        <td><button type="button" class="mini-btn" data-rateio-remover="${i}">✕</button></td>
+      </tr>
+    `).join("") : `<tr><td colspan="5"><div class="empty">Nenhuma divisão adicionada.</div></td></tr>`;
+
+    document.querySelectorAll("[data-rateio-plano]").forEach(el => {
+      el.onchange = () => linhasDivisao[Number(el.dataset.rateioPlano)].plano_conta_id = el.value;
+    });
+    document.querySelectorAll("[data-rateio-centro]").forEach(el => {
+      el.onchange = () => linhasDivisao[Number(el.dataset.rateioCentro)].centro_custo_id = el.value;
+    });
+    document.querySelectorAll("[data-rateio-obs]").forEach(el => {
+      el.oninput = () => linhasDivisao[Number(el.dataset.rateioObs)].observacao = el.value;
+    });
+    document.querySelectorAll("[data-rateio-valor]").forEach(el => {
+      el.oninput = () => {
+        const indice = Number(el.dataset.rateioValor);
+        linhasDivisao[indice].valor = Number(el.value || 0);
+        atualizarTotaisDivisao();
+      };
+
+      el.onkeydown = (ev) => {
+        if (ev.key !== "Enter") return;
+        ev.preventDefault();
+
+        const indice = Number(el.dataset.rateioValor);
+        linhasDivisao[indice].valor = Number(el.value || 0);
+        confirmarValorRateio(indice);
+      };
+    });
+    document.querySelectorAll("[data-rateio-remover]").forEach(el => {
+      el.onclick = () => {
+        linhasDivisao.splice(Number(el.dataset.rateioRemover),1);
+        renderDivisoes();
+        atualizarTotaisDivisao();
+      };
+    });
+
+    atualizarTotaisDivisao();
+  }
+
+  function atualizarTotaisDivisao() {
+    const total = linhasDivisao.reduce((s,r)=>s+Number(r.valor||0),0);
+    const valorLancamento = Number($("trValor").value || 0);
+    const diferenca = valorLancamento - total;
+
+    $("somaDivisoes").textContent = dinheiro(total);
+    $("diferencaDivisoes").textContent = dinheiro(diferenca);
+
+    $("diferencaDivisoes").style.color =
+      Math.abs(diferenca) <= 0.009 ? "#16803c" :
+      diferenca < 0 ? "#c62828" : "#b26a00";
+  }
+
+  function linhaRateioVazia(r) {
+    return !r.plano_conta_id &&
+           !r.centro_custo_id &&
+           !String(r.observacao || "").trim() &&
+           Number(r.valor || 0) === 0;
+  }
+
+  function confirmarValorRateio(indiceEditado) {
+    const valorLancamento = Number($("trValor").value || 0);
+    const soma = linhasDivisao.reduce((s,r)=>s+Number(r.valor||0),0);
+    const diferenca = valorLancamento - soma;
+
+    const linhaAtual = linhasDivisao[indiceEditado];
+    if (!linhaAtual || Number(linhaAtual.valor || 0) <= 0) {
+      atualizarTotaisDivisao();
+      return;
+    }
+
+    // Só cria a próxima linha depois que o usuário confirma o valor com Enter.
+    if (diferenca > 0.009 && indiceEditado === linhasDivisao.length - 1) {
+      linhasDivisao.push(novaLinhaRateio());
+      renderDivisoes();
+
+      const proximo = document.querySelector(`[data-rateio-plano="${linhasDivisao.length - 1}"]`);
+      if (proximo) proximo.focus();
+      return;
+    }
+
+    // Se zerou a diferença, remove uma linha vazia extra que tenha sobrado.
+    if (
+      Math.abs(diferenca) <= 0.009 &&
+      linhasDivisao.length > 1 &&
+      linhaRateioVazia(linhasDivisao[linhasDivisao.length - 1])
+    ) {
+      linhasDivisao.pop();
+      renderDivisoes();
+      return;
+    }
+
+    atualizarTotaisDivisao();
+  }
+
+  function ativarDivisao() {
+    dividirAtivo = true;
+    $("boxDivisaoValor").classList.remove("hidden");
+
+    if (!linhasDivisao.length) {
+      linhasDivisao.push(novaLinhaRateio({
+        plano_conta_id: $("trPlano").value,
+        centro_custo_id: $("trCentro").value,
+        valor: 0
+      }));
+    }
+    renderDivisoes();
+  }
+
+  if (rateiosEdicao.length) {
+    rateiosEdicao.forEach(r => linhasDivisao.push(novaLinhaRateio(r)));
+    ativarDivisao();
+  }
+
+  $("btnDividirValor").onclick = ativarDivisao;
+  $("btnAdicionarDivisao").onclick = () => {
+    if (!linhasDivisao.length || !linhaRateioVazia(linhasDivisao[linhasDivisao.length - 1])) {
+      linhasDivisao.push(novaLinhaRateio());
+      renderDivisoes();
+    }
+  };
+
+  $("btnCancelarDivisao").onclick = () => {
+    const preenchidas = linhasDivisao.filter(r => !linhaRateioVazia(r));
+
+    if (preenchidas.length) {
+      const continuar = confirm(
+        "Cancelar a divisão do valor?\n\nAs divisões serão descartadas e o lançamento voltará a usar um único Plano de Conta e Centro de Custo."
+      );
+      if (!continuar) return;
+
+      // Se houver uma primeira divisão preenchida, reaproveita sua classificação.
+      const primeira = preenchidas[0];
+      if (primeira.plano_conta_id) $("trPlano").value = String(primeira.plano_conta_id);
+      if (primeira.centro_custo_id) $("trCentro").value = String(primeira.centro_custo_id);
+    }
+
+    linhasDivisao.splice(0, linhasDivisao.length);
+    dividirAtivo = false;
+    $("boxDivisaoValor").classList.add("hidden");
+    atualizarTotaisDivisao();
+  };
+  $("trValor").addEventListener("input", atualizarTotaisDivisao);
+
+  const atualizarSituacao = () => {
+    const efetivada = $("trStatus").value === "efetivada";
+    $("trCompensado").disabled = !efetivada;
+    $("trCompensacao").disabled = !efetivada;
+    if (!efetivada) $("trCompensado").checked = false;
+  };
+  $("trStatus").addEventListener("change", atualizarSituacao);
+  atualizarSituacao();
+
+  function ultimoLancamentoDaPessoa(pessoaId) {
+    if (!pessoaId) return null;
+
+    // Prefere o último lançamento do mesmo tipo (receita/despesa).
+    // A lista já vem do banco em ordem decrescente de data/id.
+    return transacoes.find(t =>
+      Number(t.pessoa_id) === Number(pessoaId) &&
+      t.tipo === tipo &&
+      Number(t.id) !== Number(item?.id || 0)
+    ) || null;
+  }
+
+  function aplicarUltimaClassificacaoPessoa() {
+    if (item) return; // ao editar não altera automaticamente o lançamento existente
+
+    const pessoaId = Number($("trPessoa").value || 0);
+    if (!pessoaId) return;
+
+    const ultimo = ultimoLancamentoDaPessoa(pessoaId);
+    if (!ultimo) return;
+
+    let planoId = ultimo.plano_conta_id || null;
+    let centroId = ultimo.centro_custo_id || null;
+
+    // Se o último lançamento foi dividido, reaproveita a primeira divisão gravada.
+    if (!planoId || !centroId) {
+      const primeiroRateio = transacaoRateios
+        .filter(r => Number(r.transacao_id) === Number(ultimo.id))
+        .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0))[0];
+
+      if (primeiroRateio) {
+        if (!planoId) planoId = primeiroRateio.plano_conta_id || null;
+        if (!centroId) centroId = primeiroRateio.centro_custo_id || null;
+      }
+    }
+
+    if (planoId) {
+      const opcaoPlano = [...$("trPlano").options].some(o => Number(o.value) === Number(planoId));
+      if (opcaoPlano) $("trPlano").value = String(planoId);
+    }
+
+    if (centroId) {
+      const opcaoCentro = [...$("trCentro").options].some(o => Number(o.value) === Number(centroId));
+      if (opcaoCentro) $("trCentro").value = String(centroId);
+    }
+
+    if (ultimo.forma_pagamento_id) {
+      const opcaoForma = [...$("trForma").options].some(o => Number(o.value) === Number(ultimo.forma_pagamento_id));
+      if (opcaoForma) $("trForma").value = String(ultimo.forma_pagamento_id);
+    }
+  }
+
+  $("trPessoa").addEventListener("change", aplicarUltimaClassificacaoPessoa);
+
+  async function salvarLancamento(abrirNovoDepois = false) {
     const status = $("trStatus").value;
+    const compensado = status === "efetivada" && $("trCompensado").checked;
+
+    const valorTotal = Number($("trValor").value || 0);
+    if (!valorTotal || valorTotal <= 0) return alert("Informe um Valor maior que zero.");
+    if (!$("trDescricao").value.trim()) return alert("Informe o Histórico / Descrição.");
+
+    let rateiosValidos = [];
+
+    if (dividirAtivo) {
+      rateiosValidos = linhasDivisao.filter(r =>
+        Number(r.valor || 0) > 0 ||
+        r.plano_conta_id ||
+        r.centro_custo_id ||
+        String(r.observacao || "").trim()
+      );
+
+      if (!rateiosValidos.length) return alert("Adicione pelo menos uma divisão.");
+
+      if (rateiosValidos.some(r => Number(r.valor||0) <= 0)) {
+        return alert("As divisões preenchidas precisam ter valor maior que zero.");
+      }
+
+      const soma = rateiosValidos.reduce((s,r)=>s+Number(r.valor||0),0);
+      const diferenca = valorTotal - soma;
+
+      if (diferenca < -0.009) {
+        return alert("A soma das divisões não pode ultrapassar o valor do lançamento.");
+      }
+
+      if (diferenca > 0.009) {
+        const continuar = confirm(
+          `Ainda existe uma diferença de ${dinheiro(diferenca)} sem dividir.\n\nDeseja salvar o lançamento mesmo assim?`
+        );
+        if (!continuar) return;
+      }
+    }
+
     const registro = {
       user_id: usuarioAtual.id,
-      conta_id: Number($("trConta").value),
+      conta_id: $("trConta")?.value ? Number($("trConta").value) : (item?.conta_id || null),
       pessoa_id: $("trPessoa").value ? Number($("trPessoa").value) : null,
-      plano_conta_id: $("trPlano").value ? Number($("trPlano").value) : null,
-      centro_custo_id: $("trCentro").value ? Number($("trCentro").value) : null,
+      plano_conta_id: dividirAtivo ? null : ($("trPlano").value ? Number($("trPlano").value) : null),
+      centro_custo_id: dividirAtivo ? null : ($("trCentro").value ? Number($("trCentro").value) : null),
       forma_pagamento_id: $("trForma").value ? Number($("trForma").value) : null,
-      tipo: $("trTipo").value,
+      tipo,
       descricao: $("trDescricao").value.trim(),
-      valor: Number($("trValor").value || 0),
+      numero: $("trNumero").value.trim() || null,
+      favorecido: null,
+      valor: valorTotal,
       data_lancamento: $("trData").value,
       data_vencimento: $("trVencimento").value || null,
-      data_efetivacao: status === "efetivada" ? $("trData").value : null,
+      data_efetivacao: compensado ? ($("trCompensacao").value || $("trData").value) : null,
       status,
-      compensado: status === "efetivada",
+      compensado,
       observacao: $("trObs").value.trim() || null,
       origem: item?.origem || "manual"
     };
 
-    let resp;
-    if (item) resp = await supabaseClient.from("fin_transacoes").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
-    else resp = await supabaseClient.from("fin_transacoes").insert([registro]);
+    if (!registro.conta_id) return alert("Selecione a Conta.");
 
-    if (resp.error) return alert("Erro: " + resp.error.message);
+    let transacaoId = item?.id || null;
+
+    if (item) {
+      const resp = await supabaseClient.from("fin_transacoes")
+        .update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+      if (resp.error) return alert("Erro ao salvar lançamento: " + resp.error.message);
+    } else {
+      const resp = await supabaseClient.from("fin_transacoes")
+        .insert([registro]).select("id").single();
+      if (resp.error) return alert("Erro ao salvar lançamento: " + resp.error.message);
+      transacaoId = resp.data.id;
+    }
+
+    const del = await supabaseClient.from("fin_transacao_rateios")
+      .delete().eq("transacao_id",transacaoId).eq("user_id",usuarioAtual.id);
+    if (del.error) return alert("Lançamento salvo, mas houve erro ao atualizar a divisão: " + del.error.message);
+
+    if (dividirAtivo && rateiosValidos.length) {
+      const registrosRateio = rateiosValidos.map((r,idx)=>({
+        user_id: usuarioAtual.id,
+        transacao_id: transacaoId,
+        plano_conta_id: r.plano_conta_id ? Number(r.plano_conta_id) : null,
+        centro_custo_id: r.centro_custo_id ? Number(r.centro_custo_id) : null,
+        observacao: r.observacao?.trim() || null,
+        valor: Number(r.valor || 0),
+        ordem: idx
+      }));
+
+      const ins = await supabaseClient.from("fin_transacao_rateios").insert(registrosRateio);
+      if (ins.error) return alert("Lançamento salvo, mas houve erro ao salvar a divisão: " + ins.error.message);
+    }
+
     fecharModal();
     await carregarDados();
+
+    if (abrirNovoDepois) abrirFormularioTransacao(null,tipo);
+  }
+
+  $("formTransacao").addEventListener("submit", async e => {
+    e.preventDefault();
+    await salvarLancamento(false);
   });
+
+  $("btnSalvarNovoLancamento").onclick = async () => {
+    await salvarLancamento(true);
+  };
 }
 
 function abrirFormularioPessoa(item = null) {
@@ -3015,41 +4728,101 @@ function abrirFormularioTransferencia() {
   });
 }
 
-function abrirFormularioProgramacao() {
-  abrirModal("Nova programação", `
-    <form id="formProgramacao" class="form-grid">
-      <div class="form-field full-span"><label>Descrição</label><input id="prDescricao" required></div>
-      <div class="form-field"><label>Tipo</label><select id="prTipo"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></div>
-      <div class="form-field"><label>Valor por parcela</label><input id="prValor" type="number" step="0.01" min="0" required></div>
-      <div class="form-field"><label>Primeiro vencimento</label><input id="prData" type="date" value="${hojeISO()}" required></div>
-      <div class="form-field"><label>Quantidade</label><input id="prQtd" type="number" min="1" max="240" value="1" required></div>
-      <div class="form-field"><label>Frequência</label><select id="prFreq">
-        <option value="unica">Única</option><option value="diaria">Diária</option><option value="semanal">Semanal</option>
-        <option value="quinzenal">Quinzenal</option><option value="mensal" selected>Mensal</option><option value="bimestral">Bimestral</option>
-        <option value="trimestral">Trimestral</option><option value="semestral">Semestral</option><option value="anual">Anual</option>
-      </select></div>
-      <div class="form-field"><label>Conta</label><select id="prConta">${optionLista(contas.filter(c=>c.ativo!==false),"","Nenhuma")}</select></div>
-      <div class="form-field"><label>Plano de conta</label><select id="prPlano">${optionLista(planoContas,"","Sem categoria")}</select></div>
-      <div class="form-field"><label>Centro de custo</label><select id="prCentro">${optionLista(centrosCusto,"","Sem centro")}</select></div>
-      <div class="form-field"><label>Cliente / Fornecedor</label><select id="prPessoa">${optionLista(pessoas,"","Nenhum")}</select></div>
-      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar programação</button></div>
+function abrirFormularioProgramacao(item = null, tipoInicial = "receita") {
+  const tipo = item?.tipo || tipoInicial;
+  const raiz = raizTipoPlano(tipo);
+
+  function opcoesPlanoProg(selecionado = "") {
+    let out = `<option value="">Sem categoria</option>`;
+    if (!raiz) return out;
+    const filhos = parent => planoContas
+      .filter(x=>Number(x.parent_id)===Number(parent) && x.ativo!==false)
+      .sort((a,b)=>Number(a.ordem||0)-Number(b.ordem||0) || String(a.nome).localeCompare(String(b.nome),"pt-BR"));
+    const montar = (pai,n=0) => {
+      for (const x of filhos(pai)) {
+        out += `<option value="${x.id}" ${Number(selecionado)===Number(x.id)?"selected":""}>${escapeHTML(" ".repeat(n)+x.nome)}</option>`;
+        montar(x.id,n+1);
+      }
+    };
+    montar(raiz.id,0);
+    return out;
+  }
+
+  abrirModal(
+    item ? (tipo==="receita" ? "Contas a Receber | Editar" : "Contas a Pagar | Editar")
+         : (tipo==="receita" ? "Contas a Receber | Novo" : "Contas a Pagar | Novo"),
+    `
+    <form id="formProgramacao" class="prog-form">
+      <div class="prog-tabs">
+        <button type="button" class="prog-tab active" data-prog-tab="geral">Geral</button>
+        <button type="button" class="prog-tab" data-prog-tab="adicionais">Informações Adicionais</button>
+      </div>
+      <div id="progTabGeral" class="prog-panel active">
+        <div class="prog-grid">
+          <div class="prog-section-title">Origem</div>
+          <div class="prog-field full"><label>${tipo==="receita"?"Receber de":"Pagar para"}</label><select id="prPessoa">${optionLista(pessoas,item?.pessoa_id,"Nenhum")}</select></div>
+          <div class="prog-field full"><label>Histórico</label><input id="prDescricao" value="${escapeHTML(item?.descricao||"")}" required></div>
+          <div class="prog-field"><label>Documento</label><input id="prDocumento" value="${escapeHTML(item?.documento||"")}"></div>
+          <div class="prog-field"><label>Data Emissão</label><input id="prEmissao" type="date" value="${item?.data_emissao||hojeISO()}"></div>
+          <div class="prog-field"><label>Número</label><input id="prNumero" value="${escapeHTML(item?.numero||"")}"></div>
+
+          <div class="prog-section-title">${tipo==="receita"?"Recebimento":"Pagamento"}</div>
+          <div class="prog-field"><label>Conta</label><select id="prConta">${optionLista(contas.filter(c=>c.ativo!==false),item?.conta_id,"Nenhuma")}</select></div>
+          <div class="prog-field"><label>Vencimento</label><input id="prData" type="date" value="${item?.data_inicio||hojeISO()}" required></div>
+          <div class="prog-field"><label>Meio de Pagamento</label><select id="prForma">${optionLista(formasPagamento,item?.forma_pagamento_id,"Nenhum")}</select></div>
+          <div class="prog-field"><label>Frequência</label><select id="prFreq">
+            <option value="unica" ${item?.frequencia==="unica"?"selected":""}>Uma única vez</option>
+            <option value="diaria" ${item?.frequencia==="diaria"?"selected":""}>Diária</option>
+            <option value="semanal" ${item?.frequencia==="semanal"?"selected":""}>Semanal</option>
+            <option value="quinzenal" ${item?.frequencia==="quinzenal"?"selected":""}>Quinzenal</option>
+            <option value="mensal" ${!item || item?.frequencia==="mensal"?"selected":""}>Mensal</option>
+            <option value="bimestral" ${item?.frequencia==="bimestral"?"selected":""}>Bimestral</option>
+            <option value="trimestral" ${item?.frequencia==="trimestral"?"selected":""}>Trimestral</option>
+            <option value="semestral" ${item?.frequencia==="semestral"?"selected":""}>Semestral</option>
+            <option value="anual" ${item?.frequencia==="anual"?"selected":""}>Anual</option>
+          </select></div>
+          <div class="prog-field"><label>Plano de Contas</label><select id="prPlano">${opcoesPlanoProg(item?.plano_conta_id)}</select></div>
+          <div class="prog-field"><label>Valor</label><input id="prValor" type="number" min="0.01" step="0.01" value="${item?.valor??""}" required></div>
+          <div class="prog-field"><label>Centro de Custos</label><select id="prCentro">${optionLista(centrosCusto,item?.centro_custo_id,"Sem centro")}</select></div>
+          <div class="prog-field"><label>Parcelas</label><input id="prQtd" type="number" min="1" max="240" value="${item?.quantidade_parcelas||1}" required></div>
+        </div>
+      </div>
+      <div id="progTabAdicionais" class="prog-panel">
+        <div class="form-field"><label>Observações</label><textarea id="prObs" rows="8">${escapeHTML(item?.observacao||"")}</textarea></div>
+      </div>
+      <div class="prog-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">OK</button></div>
     </form>
   `);
+
+  document.querySelectorAll("[data-prog-tab]").forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll("[data-prog-tab]").forEach(x=>x.classList.remove("active"));
+      btn.classList.add("active");
+      $("progTabGeral").classList.toggle("active",btn.dataset.progTab==="geral");
+      $("progTabAdicionais").classList.toggle("active",btn.dataset.progTab==="adicionais");
+    };
+  });
 
   $("formProgramacao").addEventListener("submit", async e => {
     e.preventDefault();
     const quantidade = Math.max(1, Number($("prQtd").value || 1));
     const valor = Number($("prValor").value || 0);
     const freq = quantidade === 1 ? "unica" : $("prFreq").value;
+    if (!valor || valor <= 0) return alert("Informe um valor maior que zero.");
 
     const registro = {
       user_id: usuarioAtual.id,
-      tipo: $("prTipo").value,
+      tipo,
       descricao: $("prDescricao").value.trim(),
       pessoa_id: $("prPessoa").value ? Number($("prPessoa").value) : null,
       conta_id: $("prConta").value ? Number($("prConta").value) : null,
       plano_conta_id: $("prPlano").value ? Number($("prPlano").value) : null,
       centro_custo_id: $("prCentro").value ? Number($("prCentro").value) : null,
+      forma_pagamento_id: $("prForma").value ? Number($("prForma").value) : null,
+      documento: $("prDocumento").value.trim() || null,
+      data_emissao: $("prEmissao").value || null,
+      numero: $("prNumero").value.trim() || null,
+      observacao: $("prObs").value.trim() || null,
       valor,
       data_inicio: $("prData").value,
       quantidade_parcelas: quantidade,
@@ -3058,14 +4831,26 @@ function abrirFormularioProgramacao() {
       ativo: true
     };
 
-    const { data: criada, error } = await supabaseClient.from("fin_programacoes").insert([registro]).select("*").single();
-    if (error) return alert("Erro: " + error.message);
+    let progId = item?.id || null;
+    if (item) {
+      const upd = await supabaseClient.from("fin_programacoes").update(registro).eq("id",item.id).eq("user_id",usuarioAtual.id);
+      if (upd.error) return alert("Erro: " + upd.error.message);
 
+      const del = await supabaseClient.from("fin_programacao_parcelas")
+        .delete().eq("programacao_id",item.id).eq("user_id",usuarioAtual.id).neq("status","efetivada");
+      if (del.error) return alert("Programação atualizada, mas houve erro ao recriar parcelas: " + del.error.message);
+    } else {
+      const ins = await supabaseClient.from("fin_programacoes").insert([registro]).select("*").single();
+      if (ins.error) return alert("Erro: " + ins.error.message);
+      progId = ins.data.id;
+    }
+
+    const efetivadas = item ? parcelas.filter(p=>Number(p.programacao_id)===Number(item.id) && p.status==="efetivada").length : 0;
     const itens = [];
-    for (let i=0;i<quantidade;i++) {
+    for (let i=efetivadas;i<quantidade;i++) {
       itens.push({
         user_id: usuarioAtual.id,
-        programacao_id: criada.id,
+        programacao_id: progId,
         numero_parcela: i+1,
         total_parcelas: quantidade,
         data_vencimento: calcularVencimento(registro.data_inicio, freq, i),
@@ -3074,13 +4859,16 @@ function abrirFormularioProgramacao() {
       });
     }
 
-    const respParc = await supabaseClient.from("fin_programacao_parcelas").insert(itens);
-    if (respParc.error) return alert("Programação criada, mas houve erro nas parcelas: " + respParc.error.message);
+    if (itens.length) {
+      const respParc = await supabaseClient.from("fin_programacao_parcelas").insert(itens);
+      if (respParc.error) return alert("Programação salva, mas houve erro nas parcelas: " + respParc.error.message);
+    }
 
     fecharModal();
     await carregarDados();
   });
 }
+
 
 function abrirFormularioOrcamento() {
   abrirModal("Novo orçamento", `
@@ -3148,6 +4936,8 @@ async function iniciarSistema() {
   if (usuarioAtual) iniciarSistema();
   else mostrarTelaLogin();
 })();
+
+configurarBotoesProgramacao();
 
 </script>
 </body>
