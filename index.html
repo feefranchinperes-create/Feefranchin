@@ -2414,6 +2414,44 @@ body.principal-mode .ribbon-programacao{display:none!important}
   }
 }
 
+
+/* ============================================================
+   V63 - Excluir dentro do cadastro de Plano de Contas
+   ============================================================ */
+.plano-form-actions{
+  display:flex!important;
+  align-items:center;
+  gap:8px;
+}
+.plano-form-actions .form-actions-spacer{
+  flex:1;
+}
+.plano-delete-btn{
+  margin-right:auto;
+}
+
+@media(max-width:980px){
+  .plano-form-actions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .plano-form-actions .form-actions-spacer{
+    display:none;
+  }
+  .plano-delete-btn{
+    grid-column:1 / -1;
+    width:100%;
+    margin:0 0 4px;
+  }
+  .plano-form-actions .btn[data-close-modal]{
+    width:100%;
+  }
+  .plano-form-actions .btn[type="submit"]{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body class="principal-mode">
@@ -6978,7 +7016,12 @@ function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPres
 
       <div class="form-field"><label>Ordem</label><input id="pcOrdem" type="number" step="1" value="${Number(item?.ordem || 0)}"></div>
       <div class="form-field"><label class="inline-check"><input id="pcAtivo" type="checkbox" ${item?.ativo===false?"":"checked"}> Ativo</label></div>
-      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">Salvar</button></div>
+      <div class="form-actions plano-form-actions">
+        ${item ? `<button type="button" class="btn danger plano-delete-btn" id="pcExcluirItem">Excluir</button>` : ""}
+        <span class="form-actions-spacer"></span>
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">Salvar</button>
+      </div>
     </form>`);
 
   const montarPaisHierarquicosPlano = (tipoSelecionado) => {
@@ -7130,6 +7173,44 @@ function abrirFormularioPlano(item = null, parentPreselecionado = null, tipoPres
 
   atualizarPaisPlano();
   atualizarEstrutura();
+
+  if (item && $("pcExcluirItem")) {
+    $("pcExcluirItem").addEventListener("click", async () => {
+      const descendentes = categoriaDescendentes(planoContas, item.id);
+      const temFilhos = descendentes.length > 0;
+
+      const mensagem = temFilhos
+        ? `Excluir "${item.nome}"?\n\nEste item possui ${descendentes.length} subitem(ns) dentro dele.\nAo excluir este item, todos os subitens abaixo dele também serão excluídos.`
+        : `Excluir "${item.nome}" do Plano de Contas?`;
+
+      if (!confirm(mensagem)) return;
+
+      const { error } = await supabaseClient
+        .from("fin_plano_contas")
+        .delete()
+        .eq("id", item.id)
+        .eq("user_id", usuarioAtual.id);
+
+      if (error) {
+        return alert("Erro ao excluir o Plano de Conta: " + error.message);
+      }
+
+      categoriaSelecionadaId = null;
+      fecharModal();
+      await carregarDados();
+
+      // Se estiver no mobile dentro do Plano de Contas,
+      // mantém a tela aberta e atualiza a lista após a exclusão.
+      if (
+        window.innerWidth <= 980 &&
+        categoriaTelaAtual === "plano" &&
+        $("mobileCategoryDetail") &&
+        !$("mobileCategoryDetail").classList.contains("hidden")
+      ) {
+        abrirListaCategoriaMobile("plano");
+      }
+    });
+  }
 
   $("formPlano").addEventListener("submit", async e => {
     e.preventDefault();
