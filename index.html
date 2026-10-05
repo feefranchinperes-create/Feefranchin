@@ -2452,6 +2452,120 @@ body.principal-mode .ribbon-programacao{display:none!important}
   }
 }
 
+
+/* ============================================================
+   V64 - excluir Centro de Custo + cadastro rápido no lançamento
+   ============================================================ */
+.centro-form-actions,
+.plano-form-actions{
+  display:flex!important;
+  align-items:center;
+  gap:8px;
+}
+.centro-form-actions .form-actions-spacer,
+.plano-form-actions .form-actions-spacer{
+  flex:1;
+}
+.centro-delete-btn,
+.plano-delete-btn{
+  margin-right:auto;
+}
+
+.quick-catalog-field{
+  overflow:visible!important;
+}
+.quick-catalog-select-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:7px;
+  align-items:center;
+}
+.quick-catalog-add{
+  min-width:82px;
+  white-space:nowrap;
+}
+.quick-catalog-box{
+  margin-top:8px;
+  padding:10px;
+  border:1px solid #d9e1e9;
+  border-radius:9px;
+  background:#f8fafc;
+}
+.quick-catalog-box.hidden{
+  display:none!important;
+}
+.quick-catalog-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+  padding-bottom:8px;
+  border-bottom:1px solid #e2e7ed;
+}
+.quick-catalog-title strong{
+  font-size:12px;
+}
+.quick-catalog-close{
+  width:30px;
+  height:30px;
+  min-height:30px!important;
+  font-size:20px;
+}
+.quick-catalog-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.quick-catalog-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:9px;
+}
+.quick-catalog-box select,
+.quick-catalog-box input{
+  background:#fff;
+}
+
+@media(max-width:980px){
+  .centro-form-actions,
+  .plano-form-actions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .centro-form-actions .form-actions-spacer,
+  .plano-form-actions .form-actions-spacer{
+    display:none;
+  }
+  .centro-delete-btn,
+  .plano-delete-btn{
+    grid-column:1 / -1;
+    width:100%;
+    margin:0 0 4px;
+  }
+
+  .quick-catalog-select-row{
+    grid-template-columns:minmax(0,1fr) 78px;
+  }
+  .quick-catalog-add{
+    min-width:0;
+    padding-left:7px;
+    padding-right:7px;
+  }
+  .quick-catalog-grid{
+    grid-template-columns:1fr;
+  }
+  .quick-catalog-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+  .quick-catalog-actions .btn{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body class="principal-mode">
@@ -6212,9 +6326,49 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
         )}</select>
       </div>
 
-      <div class="form-field span-2">
+      <div class="form-field span-2 quick-catalog-field">
         <label>Plano de Conta</label>
-        <select id="trPlano">${opcoesPlanoPorTipo(tipo,item?.plano_conta_id)}</select>
+        <div class="quick-catalog-select-row">
+          <select id="trPlano">${opcoesPlanoPorTipo(tipo,item?.plano_conta_id)}</select>
+          <button type="button" class="btn quick-catalog-add" id="btnNovoPlanoLancamento">＋ Novo</button>
+        </div>
+
+        <div id="quickPlanoBox" class="quick-catalog-box hidden">
+          <div class="quick-catalog-title">
+            <strong>Novo Plano de Conta</strong>
+            <button type="button" class="icon-btn quick-catalog-close" id="btnFecharQuickPlano">×</button>
+          </div>
+
+          <div class="quick-catalog-grid">
+            <div class="form-field full-span">
+              <label>Nome</label>
+              <input id="quickPlanoNome" maxlength="120" placeholder="Nome do Plano de Conta">
+            </div>
+
+            <div class="form-field">
+              <label>Tipo</label>
+              <input value="${tipo === "receita" ? "Receita" : "Despesa"}" disabled>
+            </div>
+
+            <div class="form-field">
+              <label>Estrutura</label>
+              <select id="quickPlanoEstrutura">
+                <option value="principal">Principal</option>
+                <option value="sub">Subcategoria</option>
+              </select>
+            </div>
+
+            <div id="quickPlanoPaiBox" class="form-field full-span hidden">
+              <label>Dentro de</label>
+              <select id="quickPlanoPai"></select>
+            </div>
+          </div>
+
+          <div class="quick-catalog-actions">
+            <button type="button" class="btn" id="btnCancelarQuickPlano">Cancelar</button>
+            <button type="button" class="btn primary" id="btnSalvarQuickPlano">Salvar Plano de Conta</button>
+          </div>
+        </div>
       </div>
 
       <div class="form-field span-2">
@@ -6225,9 +6379,44 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
         </div>
       </div>
 
-      <div class="form-field span-2">
+      <div class="form-field span-2 quick-catalog-field">
         <label>Centro de Custos</label>
-        <select id="trCentro">${opcoesCentroCustoFinais(item?.centro_custo_id)}</select>
+        <div class="quick-catalog-select-row">
+          <select id="trCentro">${opcoesCentroCustoFinais(item?.centro_custo_id)}</select>
+          <button type="button" class="btn quick-catalog-add" id="btnNovoCentroLancamento">＋ Novo</button>
+        </div>
+
+        <div id="quickCentroBox" class="quick-catalog-box hidden">
+          <div class="quick-catalog-title">
+            <strong>Novo Centro de Custo</strong>
+            <button type="button" class="icon-btn quick-catalog-close" id="btnFecharQuickCentro">×</button>
+          </div>
+
+          <div class="quick-catalog-grid">
+            <div class="form-field full-span">
+              <label>Nome</label>
+              <input id="quickCentroNome" maxlength="120" placeholder="Nome do Centro de Custo">
+            </div>
+
+            <div class="form-field">
+              <label>Estrutura</label>
+              <select id="quickCentroEstrutura">
+                <option value="principal">Principal</option>
+                <option value="sub">Subcategoria</option>
+              </select>
+            </div>
+
+            <div id="quickCentroPaiBox" class="form-field full-span hidden">
+              <label>Dentro de</label>
+              <select id="quickCentroPai"></select>
+            </div>
+          </div>
+
+          <div class="quick-catalog-actions">
+            <button type="button" class="btn" id="btnCancelarQuickCentro">Cancelar</button>
+            <button type="button" class="btn primary" id="btnSalvarQuickCentro">Salvar Centro de Custo</button>
+          </div>
+        </div>
       </div>
 
       <div class="form-field span-2">
@@ -6270,13 +6459,12 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
 
       <div class="launch-section-title">Situação</div>
 
-      <div class="form-field">
-        <label>Situação</label>
-        <select id="trStatus">
-          <option value="efetivada" ${item?.status==="efetivada"?"selected":""}>Efetivada</option>
-          <option value="pendente" ${item?.status==="pendente"?"selected":""}>Pendente</option>
-          <option value="prevista" ${item?.status==="prevista"?"selected":""}>Prevista</option>
-        </select>
+      <div class="form-field launch-check">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:700;">
+          <input id="trCompensado" type="checkbox" ${item ? ((item.compensado || item.status === "efetivada") ? "checked" : "") : "checked"}>
+          Compensado
+        </label>
+        <small style="color:#6b7280;display:block;margin-top:6px;">Marcado = efetivada. Desmarcado = pendente.</small>
       </div>
 
       <div class="form-field">
@@ -6287,13 +6475,6 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
       <div class="form-field">
         <label>Compensação</label>
         <input id="trCompensacao" type="date" value="${item?.data_efetivacao || item?.data_lancamento || hojeISO()}">
-      </div>
-
-      <div class="form-field launch-check">
-        <label style="display:flex;align-items:center;gap:8px;font-weight:700;">
-          <input id="trCompensado" type="checkbox" ${item ? (item.compensado ? "checked" : "") : "checked"}>
-          Compensado
-        </label>
       </div>
 
       <div class="launch-section-title">Observações</div>
@@ -6310,6 +6491,268 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
       </div>
     </form>
   `);
+
+  // ----------------------------------------------------------
+  // Cadastro rápido de Plano de Conta e Centro de Custo
+  // sem sair da tela de lançamento.
+  // ----------------------------------------------------------
+  const montarOpcoesPaisPlanoRapido = () => {
+    const raiz = raizTipoPlano(tipo);
+    let opcoes = `<option value="">Selecione</option>`;
+    if (!raiz) return opcoes;
+
+    const filhos = parentId => planoContas
+      .filter(x => Number(x.parent_id) === Number(parentId) && x.ativo !== false && String(x.tipo || "").toLowerCase() === tipo)
+      .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
+
+    const montar = (parentId, nivel = 0) => {
+      filhos(parentId).forEach(x => {
+        const recuo = "\u2003".repeat(nivel);
+        opcoes += `<option value="${x.id}">${escapeHTML(recuo + x.nome)}</option>`;
+        montar(x.id, nivel + 1);
+      });
+    };
+
+    montar(raiz.id, 0);
+    return opcoes;
+  };
+
+  const montarOpcoesPaisCentroRapido = () => {
+    let opcoes = `<option value="">Selecione</option>`;
+
+    const filhos = parentId => centrosCusto
+      .filter(x => {
+        if (x.ativo === false) return false;
+        if (parentId == null) return x.parent_id == null;
+        return Number(x.parent_id) === Number(parentId);
+      })
+      .sort((a,b) => Number(a.ordem || 0) - Number(b.ordem || 0) || String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
+
+    const montar = (parentId = null, nivel = 0) => {
+      filhos(parentId).forEach(x => {
+        const recuo = "\u2003".repeat(nivel);
+        opcoes += `<option value="${x.id}">${escapeHTML(recuo + x.nome)}</option>`;
+        montar(x.id, nivel + 1);
+      });
+    };
+
+    montar(null, 0);
+    return opcoes;
+  };
+
+  const atualizarSelectPlanoLancamento = (selecionado = "") => {
+    const select = $("trPlano");
+    if (select) {
+      select.innerHTML = opcoesPlanoPorTipo(tipo, selecionado);
+
+      if (selecionado && [...select.options].some(o => String(o.value) === String(selecionado))) {
+        select.value = String(selecionado);
+        select.dispatchEvent(new Event("change", { bubbles:true }));
+      }
+    }
+
+    // Atualiza também selects das divisões já abertas.
+    document.querySelectorAll("[data-rateio-plano]").forEach(el => {
+      const valorAtual = el.value;
+      el.innerHTML = opcoesPlanoPorTipo(tipo, valorAtual);
+
+      if (valorAtual && [...el.options].some(o => String(o.value) === String(valorAtual))) {
+        el.value = String(valorAtual);
+      }
+    });
+  };
+
+  const atualizarSelectCentroLancamento = (selecionado = "") => {
+    const select = $("trCentro");
+    if (select) {
+      select.innerHTML = opcoesCentroCustoFinais(selecionado);
+
+      if (selecionado && [...select.options].some(o => String(o.value) === String(selecionado))) {
+        select.value = String(selecionado);
+        select.dispatchEvent(new Event("change", { bubbles:true }));
+      }
+    }
+
+    document.querySelectorAll("[data-rateio-centro]").forEach(el => {
+      const valorAtual = el.value;
+      el.innerHTML = opcoesCentroCustoFinais(valorAtual);
+
+      if (valorAtual && [...el.options].some(o => String(o.value) === String(valorAtual))) {
+        el.value = String(valorAtual);
+      }
+    });
+  };
+
+  const atualizarQuickPlanoEstrutura = () => {
+    const sub = $("quickPlanoEstrutura").value === "sub";
+    $("quickPlanoPaiBox").classList.toggle("hidden", !sub);
+    if (sub) $("quickPlanoPai").innerHTML = montarOpcoesPaisPlanoRapido();
+  };
+
+  const atualizarQuickCentroEstrutura = () => {
+    const sub = $("quickCentroEstrutura").value === "sub";
+    $("quickCentroPaiBox").classList.toggle("hidden", !sub);
+    if (sub) $("quickCentroPai").innerHTML = montarOpcoesPaisCentroRapido();
+  };
+
+  const fecharQuickPlano = () => {
+    $("quickPlanoBox").classList.add("hidden");
+    $("quickPlanoNome").value = "";
+    $("quickPlanoEstrutura").value = "principal";
+    atualizarQuickPlanoEstrutura();
+  };
+
+  const fecharQuickCentro = () => {
+    $("quickCentroBox").classList.add("hidden");
+    $("quickCentroNome").value = "";
+    $("quickCentroEstrutura").value = "principal";
+    atualizarQuickCentroEstrutura();
+  };
+
+  $("btnNovoPlanoLancamento").onclick = () => {
+    $("quickPlanoBox").classList.toggle("hidden");
+    $("quickCentroBox").classList.add("hidden");
+    atualizarQuickPlanoEstrutura();
+    if (!$("quickPlanoBox").classList.contains("hidden")) {
+      setTimeout(() => $("quickPlanoNome")?.focus(), 20);
+    }
+  };
+
+  $("btnNovoCentroLancamento").onclick = () => {
+    $("quickCentroBox").classList.toggle("hidden");
+    $("quickPlanoBox").classList.add("hidden");
+    atualizarQuickCentroEstrutura();
+    if (!$("quickCentroBox").classList.contains("hidden")) {
+      setTimeout(() => $("quickCentroNome")?.focus(), 20);
+    }
+  };
+
+  $("btnFecharQuickPlano").onclick = fecharQuickPlano;
+  $("btnCancelarQuickPlano").onclick = fecharQuickPlano;
+  $("btnFecharQuickCentro").onclick = fecharQuickCentro;
+  $("btnCancelarQuickCentro").onclick = fecharQuickCentro;
+
+  $("quickPlanoEstrutura").onchange = atualizarQuickPlanoEstrutura;
+  $("quickCentroEstrutura").onchange = atualizarQuickCentroEstrutura;
+
+  $("btnSalvarQuickPlano").onclick = async () => {
+    const nome = $("quickPlanoNome").value.trim();
+    if (!nome) return alert("Informe o nome do Plano de Conta.");
+
+    const estrutura = $("quickPlanoEstrutura").value;
+    const raiz = raizTipoPlano(tipo);
+    if (!raiz) return alert(`A raiz de ${tipo === "receita" ? "Receitas" : "Despesas"} não foi encontrada.`);
+
+    let parent_id = Number(raiz.id);
+
+    if (estrutura === "sub") {
+      parent_id = Number($("quickPlanoPai").value || 0);
+      if (!parent_id) return alert("Selecione onde esta subcategoria será criada.");
+    }
+
+    const registro = {
+      user_id: usuarioAtual.id,
+      parent_id,
+      nome,
+      codigo: null,
+      tipo,
+      observacao: null,
+      ativo: true,
+      ordem: 0
+    };
+
+    const resp = await supabaseClient
+      .from("fin_plano_contas")
+      .insert([registro])
+      .select("*")
+      .single();
+
+    if (resp.error) return alert("Erro ao cadastrar Plano de Conta: " + resp.error.message);
+
+    planoContas.push(resp.data);
+
+    // Atualiza a lista imediatamente na própria tela do lançamento.
+    atualizarSelectPlanoLancamento(resp.data.id);
+
+    if (dividirAtivo) {
+      renderDivisoes();
+
+      // Depois do re-render das divisões, garante que os selects novos
+      // também recebam a lista atualizada.
+      document.querySelectorAll("[data-rateio-plano]").forEach(el => {
+        const valorAtual = el.value;
+        el.innerHTML = opcoesPlanoPorTipo(tipo, valorAtual);
+        if (valorAtual && [...el.options].some(o => String(o.value) === String(valorAtual))) {
+          el.value = String(valorAtual);
+        }
+      });
+    }
+
+    fecharQuickPlano();
+
+    // Feedback visual: deixa o item recém-criado selecionado.
+    requestAnimationFrame(() => {
+      if ($("trPlano")) $("trPlano").value = String(resp.data.id);
+    });
+  };
+
+  $("btnSalvarQuickCentro").onclick = async () => {
+    const nome = $("quickCentroNome").value.trim();
+    if (!nome) return alert("Informe o nome do Centro de Custo.");
+
+    const estrutura = $("quickCentroEstrutura").value;
+    let parent_id = null;
+
+    if (estrutura === "sub") {
+      parent_id = Number($("quickCentroPai").value || 0);
+      if (!parent_id) return alert("Selecione onde este Centro de Custo será criado.");
+    }
+
+    const registro = {
+      user_id: usuarioAtual.id,
+      parent_id,
+      nome,
+      codigo: null,
+      observacao: null,
+      ativo: true,
+      ordem: 0
+    };
+
+    const resp = await supabaseClient
+      .from("fin_centros_custo")
+      .insert([registro])
+      .select("*")
+      .single();
+
+    if (resp.error) return alert("Erro ao cadastrar Centro de Custo: " + resp.error.message);
+
+    centrosCusto.push(resp.data);
+
+    // Atualiza a lista imediatamente na própria tela do lançamento.
+    atualizarSelectCentroLancamento(resp.data.id);
+
+    if (dividirAtivo) {
+      renderDivisoes();
+
+      document.querySelectorAll("[data-rateio-centro]").forEach(el => {
+        const valorAtual = el.value;
+        el.innerHTML = opcoesCentroCustoFinais(valorAtual);
+        if (valorAtual && [...el.options].some(o => String(o.value) === String(valorAtual))) {
+          el.value = String(valorAtual);
+        }
+      });
+    }
+
+    fecharQuickCentro();
+
+    // Mantém o Centro de Custo recém-criado selecionado.
+    requestAnimationFrame(() => {
+      if ($("trCentro")) $("trCentro").value = String(resp.data.id);
+    });
+  };
+
+  atualizarQuickPlanoEstrutura();
+  atualizarQuickCentroEstrutura();
 
   const linhasDivisao = [];
 
@@ -6474,12 +6917,11 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
   $("trValor").addEventListener("input", atualizarTotaisDivisao);
 
   const atualizarSituacao = () => {
-    const efetivada = $("trStatus").value === "efetivada";
-    $("trCompensado").disabled = !efetivada;
+    const efetivada = $("trCompensado").checked;
     $("trCompensacao").disabled = !efetivada;
-    if (!efetivada) $("trCompensado").checked = false;
+    $("trCompensacao").closest(".form-field").style.opacity = efetivada ? "1" : ".65";
   };
-  $("trStatus").addEventListener("change", atualizarSituacao);
+  $("trCompensado").addEventListener("change", atualizarSituacao);
   atualizarSituacao();
 
   function ultimoLancamentoDaPessoa(pessoaId) {
@@ -6684,8 +7126,8 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
   }
 
   async function salvarLancamento(abrirNovoDepois = false) {
-    const status = $("trStatus").value;
-    const compensado = status === "efetivada" && $("trCompensado").checked;
+    const compensado = $("trCompensado").checked;
+    const status = compensado ? "efetivada" : "pendente";
 
     const valorTotal = Number($("trValor").value || 0);
     if (!valorTotal || valorTotal <= 0) return alert("Informe um Valor maior que zero.");
@@ -7327,7 +7769,12 @@ function abrirFormularioCentro(item = null, parentPreselecionado = null) {
         </div>
       </div>
 
-      <div class="form-actions"><button type="button" class="btn" data-close-modal>Cancelar</button><button class="btn primary" type="submit">OK</button></div>
+      <div class="form-actions centro-form-actions">
+        ${item ? `<button type="button" class="btn danger centro-delete-btn" id="ccExcluirItem">Excluir</button>` : ""}
+        <span class="form-actions-spacer"></span>
+        <button type="button" class="btn" data-close-modal>Cancelar</button>
+        <button class="btn primary" type="submit">OK</button>
+      </div>
     </form>`);
 
   const atualizarEstrutura = () => {
@@ -7336,6 +7783,40 @@ function abrirFormularioCentro(item = null, parentPreselecionado = null) {
   };
   document.querySelectorAll('input[name="ccEstrutura"]').forEach(r=>r.addEventListener("change",atualizarEstrutura));
   atualizarEstrutura();
+
+  if (item && $("ccExcluirItem")) {
+    $("ccExcluirItem").addEventListener("click", async () => {
+      const descendentes = categoriaDescendentes(centrosCusto, item.id);
+      const temFilhos = descendentes.length > 0;
+
+      const mensagem = temFilhos
+        ? `Excluir "${item.nome}"?\n\nEste Centro de Custo possui ${descendentes.length} subitem(ns).\nAo excluir este item, os subitens abaixo dele também serão excluídos.`
+        : `Excluir "${item.nome}" dos Centros de Custo?`;
+
+      if (!confirm(mensagem)) return;
+
+      const { error } = await supabaseClient
+        .from("fin_centros_custo")
+        .delete()
+        .eq("id", item.id)
+        .eq("user_id", usuarioAtual.id);
+
+      if (error) return alert("Erro ao excluir Centro de Custo: " + error.message);
+
+      categoriaSelecionadaId = null;
+      fecharModal();
+      await carregarDados();
+
+      if (
+        window.innerWidth <= 980 &&
+        categoriaTelaAtual === "centro" &&
+        $("mobileCategoryDetail") &&
+        !$("mobileCategoryDetail").classList.contains("hidden")
+      ) {
+        abrirListaCategoriaMobile("centro");
+      }
+    });
+  }
 
   $("formCentro").addEventListener("submit", async e => {
     e.preventDefault();
