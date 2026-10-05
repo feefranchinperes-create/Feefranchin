@@ -6425,8 +6425,8 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
       </div>
 
       <div class="form-field span-4">
-        <label>Histórico / Descrição</label>
-        <input id="trDescricao" maxlength="150" value="${escapeHTML(item?.descricao || "")}" required placeholder="Descrição do lançamento">
+        <label>Histórico / Descrição <span style="font-weight:400;color:#8a94a3;">(opcional)</span></label>
+        <input id="trDescricao" maxlength="150" value="${escapeHTML(item?.descricao || "")}" placeholder="Descrição do lançamento (opcional)">
       </div>
 
       <div id="boxDivisaoValor" class="split-box hidden">
@@ -7131,7 +7131,6 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
 
     const valorTotal = Number($("trValor").value || 0);
     if (!valorTotal || valorTotal <= 0) return alert("Informe um Valor maior que zero.");
-    if (!$("trDescricao").value.trim()) return alert("Informe o Histórico / Descrição.");
 
     let rateiosValidos = [];
 
@@ -7179,7 +7178,7 @@ function abrirFormularioTransacao(item = null, tipoInicial = "despesa") {
       centro_custo_id: dividirAtivo ? null : ($("trCentro").value ? Number($("trCentro").value) : null),
       forma_pagamento_id: $("trForma").value ? Number($("trForma").value) : null,
       tipo,
-      descricao: $("trDescricao").value.trim(),
+      descricao: $("trDescricao").value.trim() || "",
       numero: $("trNumero").value.trim() || null,
       favorecido: pessoaResolvida.favorecido,
       valor: valorTotal,
